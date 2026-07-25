@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Touch, Sound, Motion — Yueyi Wang</title>
+  <meta name="description" content="Touch, Sound, Motion: an exploration of interactive installation at the Barnard Movement Lab.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html#top" class="logo" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="12" height="12" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="17" cy="17" r="4" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+        <span class="logo-word">YW</span>
+      </a>
+      <nav class="site-nav">
+        <a href="../index.html#projects" class="nav-link">Projects</a>
+        <a href="../about.html" class="nav-link">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="project-detail-visual">
+      <div class="project-visual">
+        <img src="../assets/images/creative-destruction/cover.png" alt="Touch, Sound, Motion">
+      </div>
+    </div>
+
+    <section class="project-detail-hero">
+      <a href="../index.html#projects" class="back-link">&larr; Back to work</a>
+      <h1>Touch, Sound, Motion</h1>
+      <p class="project-subtitle">An Exploration of Interactive Installation at the Barnard Movement Lab.</p>
+    </section>
+
+    <div class="project-detail-split">
+      <aside class="project-meta-col">
+        <div>
+          <span class="meta-label">Type</span>
+          <span class="meta-value">Interactive Performance-Installation</span>
+        </div>
+        <div>
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Artistic &amp; Technical Lead</span>
+        </div>
+        <div>
+          <span class="meta-label">Duration</span>
+          <span class="meta-value">Oct 2025–Apr 2026, Display Apr 2026</span>
+        </div>
+        <div>
+          <span class="meta-label">Tools</span>
+          <span class="meta-value">ESP32 · QLab · ETC Eos · OSC · Python · Raspberry Pi · Custom Robotics</span>
+        </div>
+      </aside>
+
+      <section class="project-detail-body">
+      <p>
+        Selected as the 2025–26 Barnard Movement Lab Student Artist-in-Residence, I led a series
+        of explorations into interactive installations, focusing on connecting these systems to
+        the lab's spatial resources—specifically the ETC Eos lighting console. The work spans
+        several levels of interaction:
+      </p>
+
+      <div class="project-section">
+        <h2>Sound to Robotic Movement &amp; Lighting Change</h2>
+        <p>
+          Could a clap—rather than conventional code—activate
+          a robot? I wanted to create a more interactive, multisensory relationship between human
+          gesture and robotic movement. Using Python-based sound detection and custom code, I
+          networked a custom-designed robotic tentacle with the ETC lighting console. The result
+          is an interactive loop: when the audience claps, the lighting shifts and the robot moves
+          in response, simultaneously.
+        </p>
+
+        <div class="media-columns">
+          <div class="media-column">
+            <div class="project-visual">
+              <iframe src="https://www.youtube.com/embed/4R0qSw57JNY" title="Sound to robotic movement, without lighting" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <p class="media-caption">An immediate sound-to-robotic-movement route, without lighting. When the audience claps, the robotic tentacle "crawls."</p>
+          </div>
+          <div class="media-column">
+            <div class="project-visual">
+              <iframe src="https://www.youtube.com/embed/urj86VMSwUk" title="Sound to movement and lighting" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <p class="media-caption">A combined sound-to-movement-and-lighting route. Each clap shifts the light color. On the 13th clap, the light turns red, zooms to 100%, and the robotic tentacle begins moving.</p>
+          </div>
+        </div>
+
+        <p class="media-note">(Note: To read how I built the robotics from scratch, see <a href="the-roro.html">The Roro</a>.)</p>
+      </div>
+
+      <div class="project-section">
+        <h2>Touch to Sound Movement</h2>
+        <div class="split-layout">
+          <div class="split-media">
+            <div class="project-visual">
+              <iframe src="https://www.youtube.com/embed/_-lUSP3zuBE" title="Touch to sound movement" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="split-text">
+            <p>
+              Beyond sound, I wanted to explore touch as an input. Touch is a baby's first way of
+              exploring curiosity, yet it's a sense we increasingly overlook in the digital era.
+              This piece asks whether a touch-directed instrument can reclaim that curiosity,
+              inviting people to co-create sound art together through physical contact.
+            </p>
+            <p>
+              I built the piece using the coil method to form a ceramic vessel. After the glaze
+              firing, I applied five strips of copper tape to the surface, soldered connections on
+              top of them, and wired the tape to ESP32 touch pins housed inside the vessel.
+              Touching each soldered section triggers a corresponding synthesized note
+              (do-re-mi-fa-so), and touching the sections in sequence shifts the tone itself—for
+              example, moving between a sine wave and a sawtooth wave.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-section">
+        <h2>More Experiments</h2>
+        <p>
+          I combined my explorations of touch, sound, and robotic movement into a single
+          interactive installation that pairs the touch-triggered instrument with the robotics.
+          When certain notes are touched in sequence, the robot begins to move.
+        </p>
+        <div class="project-visual">
+          <iframe src="https://player.vimeo.com/video/1195036035?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" title="Tactone" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="project-section">
+        <h2>Related Exploration</h2>
+        <p>Tech Experiment: Triggering ETC lighting cues through smile detection.</p>
+        <div class="project-visual">
+          <iframe src="https://www.youtube.com/embed/0LtHfLvud5Q" title="ETC lighting cues through smile detection" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+      </section>
+    </div>
+
+    <section class="related-projects">
+      <p class="section-label">Related Projects</p>
+      <div class="related-grid">
+        <a href="generative-disco.html" class="related-card">
+          <div>
+            <span class="related-card-label">Previous Project</span>
+            <span class="related-card-title">Generative Disco</span>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="the-roro.html" class="related-card">
+          <div>
+            <span class="related-card-label">Next Project</span>
+            <span class="related-card-title">The Roro</span>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 Yueyi Wang</span>
+      <div class="footer-links">
+        <a href="mailto:lulu.yueyi.wang@gmail.com">Email</a>
+        <a href="https://github.com/luluwangyy" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

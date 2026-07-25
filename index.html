@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yueyi Wang — Engineer and Artist</title>
+  <meta name="description" content="Portfolio of Yueyi Wang, an engineer and artist working across code, design, and interactive media.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=VT323&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="home-top">
+    <header class="site-header">
+      <div class="header-inner">
+        <!-- Logo mark: swap "YN" for your own initials/wordmark -->
+        <a href="index.html#top" class="logo" aria-label="Home">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="12" height="12" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="17" cy="17" r="4" stroke="currentColor" stroke-width="1.4"/>
+          </svg>
+          <span class="logo-word">YW</span>
+        </a>
+        <nav class="site-nav">
+          <a href="index.html#projects" class="nav-link">Projects</a>
+          <a href="about.html" class="nav-link">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <section id="top" class="hero">
+      <div class="hero-inner">
+        <h1 class="hero-title">
+          <span class="mono-accent">Code</span>
+          <span class="symbol-cycle" aria-hidden="true">
+            <span class="sym sym-amp">&amp;</span>
+            <span class="sym sym-plus">+</span>
+            <span class="sym sym-x">X</span>
+            <span class="sym sym-tilde">~</span>
+          </span>
+          <span class="mono-accent">Craft</span>
+        </h1>
+        <p class="hero-sub">
+          I'm Yueyi Wang, an engineer and artist building interactive systems
+          that connect conceptual design, generative code, and physical hardware.
+        </p>
+        <button class="scroll-cue" data-scroll-target="#projects">
+          <span>Selected work</span>
+          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 1v11M2 8l5 5 5-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <main>
+    <section id="projects" class="projects">
+      <div class="section-heading">
+        <h2>Selected Work</h2>
+      </div>
+
+      <div class="project-grid">
+        <a href="projects/creative-destruction.html" class="project-card">
+          <div class="project-visual">
+            <img src="assets/images/creative-destruction/cover.png" alt="Touch, Sound, Motion">
+          </div>
+          <div class="project-info">
+            <h3>Touch, Sound, Motion</h3>
+            <div class="card-meta">
+              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Barnard Movement Lab</span></span>
+              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Artistic &amp; Technical Lead</span></span>
+              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025–2026</span></span>
+            </div>
+            <p>An interactive performance-installation of robotic creatures housed inside handbuilt ceramic vessels, exploring the boundary between being creative and destructive.</p>
+            <ul class="tag-list">
+              <li>ESP32</li>
+              <li>QLab</li>
+              <li>Eos</li>
+              <li>OSC</li>
+              <li>Python</li>
+              <li>Raspberry Pi</li>
+              <li>Experience Design</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="projects/the-roro.html" class="project-card">
+          <div class="project-visual">
+            <video muted loop playsinline preload="metadata" poster="assets/images/the-roro/cover.jpg" aria-label="The Roro">
+              <source src="assets/videos/the-roro/cover.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="project-info">
+            <h3>Quadruped</h3>
+            <div class="card-meta">
+              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Columbia Robotics Studio</span></span>
+              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Full-Stack Software &amp; Hardware Engineer</span></span>
+              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025</span></span>
+            </div>
+            <p>A custom-fabricated, programmed quadruped robot designed for robotics studio class.</p>
+            <ul class="tag-list">
+              <li>Raspberry Pi</li>
+              <li>Python</li>
+              <li>3D Printing</li>
+              <li>Fusion 360</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="projects/audiovisual.html" class="project-card">
+          <div class="project-visual">
+            <video muted loop playsinline preload="metadata" poster="assets/images/audiovisual/cover.png" aria-label="Audiovisual">
+              <source src="assets/videos/audiovisual/cover.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="project-info">
+            <h3>Audiovisual Piano+ Performance</h3>
+            <div class="card-meta">
+              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Ades Performance Space</span></span>
+              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Creative Technologist / TouchDesigner Artist</span></span>
+              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025</span></span>
+            </div>
+            <p>A live audiovisual performance exploring meditation's tranquil energy through sound and image, performed at Ades Performance Space, Trinity Episcopal Church, and Indiana State University.</p>
+            <ul class="tag-list">
+              <li>Adobe Premiere Pro</li>
+              <li>TouchDesigner</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="projects/urbansky.html" class="project-card">
+          <div class="project-visual">
+            <img src="assets/images/urbansky/cover.jpg" alt="UrbanSky">
+          </div>
+          <div class="project-info">
+            <h3>UrbanSky</h3>
+            <div class="card-meta">
+              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Columbia Computer Vision Lab</span></span>
+              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Full-Stack Web Engineer</span></span>
+              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025</span></span>
+            </div>
+            <p>A full-stack web application with interactive 360° panoramic interfaces for exploring over 1,000 HDR lighting environments captured across New York City.</p>
+            <ul class="tag-list">
+              <li>Full-Stack Web Development</li>
+              <li>Python</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="projects/ai-storytelling.html" class="project-card">
+          <div class="project-visual">
+            <video muted loop playsinline preload="metadata" poster="assets/images/ai-storytelling/cover.jpg" aria-label="AI & Storytelling">
+              <source src="assets/videos/ai-storytelling/cover.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="project-info">
+            <h3>AI &amp; Storytelling</h3>
+            <div class="card-meta">
+              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Columbia Computational Design Lab</span></span>
+              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Teaching Assistant</span></span>
+              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025</span></span>
+            </div>
+            <p>Curriculum development and creative AI workflows guiding students through AI video generation with Runway, Veo3, and the Replicate API.</p>
+            <ul class="tag-list">
+              <li>Generative AI Workflow</li>
+              <li>Python</li>
+              <li>Adobe Premiere Pro</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="projects/generative-disco.html" class="project-card">
+          <div class="project-visual">
+            <img src="assets/images/generative-disco/cover.png" alt="Generative Disco">
+          </div>
+          <div class="project-info">
+            <h3>Generative Disco</h3>
+            <div class="card-meta">
+              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Columbia Computational Design Lab</span></span>
+              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Research Assistant</span></span>
+              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2024–2025</span></span>
+            </div>
+            <p>An end-to-end generative AI system that creates dynamic music visualizations using Large Language Models and text-to-video generation.</p>
+            <ul class="tag-list">
+              <li>Generative AI Workflow</li>
+              <li>Python</li>
+            </ul>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 Yueyi Wang</span>
+      <div class="footer-links">
+        <a href="mailto:lulu.yueyi.wang@gmail.com">Email</a>
+        <a href="https://github.com/luluwangyy" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
