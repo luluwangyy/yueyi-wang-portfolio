@@ -107,3 +107,23 @@ if (scrollAutoplayVideos.length) {
 
   scrollAutoplayVideos.forEach((video) => scrollPlayObserver.observe(video));
 }
+
+// YouTube/Vimeo embeds: load the real iframe only once the facade is
+// clicked, instead of every embed on the page loading upfront.
+document.querySelectorAll(".video-facade").forEach((facade) => {
+  facade.addEventListener(
+    "click",
+    () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = facade.dataset.embedSrc;
+      iframe.title = facade.dataset.embedTitle || "";
+      iframe.allow = facade.dataset.embedAllow || "";
+      iframe.allowFullscreen = true;
+      if (facade.dataset.embedReferrer) {
+        iframe.referrerPolicy = facade.dataset.embedReferrer;
+      }
+      facade.replaceWith(iframe);
+    },
+    { once: true }
+  );
+});
