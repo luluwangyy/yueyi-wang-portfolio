@@ -903,4 +903,8 @@ a:focus-visible, button:focus-visible {
   .site-nav {
     gap: 1.25rem;
   }
+
+  .project-detail-split {
+    padding: 0 var(--gutter);
+  }
 }
