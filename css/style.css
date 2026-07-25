@@ -606,6 +606,21 @@ a:focus-visible, button:focus-visible {
   border: 0;
 }
 
+/* For images whose own aspect ratio should be kept as-is (no cropping) —
+   the box sizes to the image instead of the image being cover-fit into a
+   fixed box. */
+.project-section .project-visual.visual-auto {
+  position: static;
+  aspect-ratio: auto;
+}
+
+.project-visual.visual-auto img {
+  position: static;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 /* Homepage cards: the video shows its poster (first frame) by default
    and only plays while hovered (play/pause handled in main.js) */
 
@@ -658,6 +673,7 @@ a:focus-visible, button:focus-visible {
 .media-caption {
   margin-top: 0.75rem;
   font-size: 0.9rem;
+  font-style: italic;
   color: var(--color-text-muted);
 }
 
