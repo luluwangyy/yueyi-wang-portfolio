@@ -88,14 +88,15 @@ a:focus-visible, button:focus-visible {
   position: relative;
 }
 
-.home-top::before {
-  content: "";
+.liquid-ether-root {
   position: absolute;
   inset: 0;
-  background-image: url("../assets/images/home/2.jpg");
-  background-size: cover;
-  background-position: center;
   z-index: 0;
+  background: var(--color-bg);
+}
+
+.liquid-ether-root canvas {
+  display: block;
 }
 
 .home-top .site-header {
@@ -109,7 +110,7 @@ a:focus-visible, button:focus-visible {
   padding: 1.1rem var(--gutter);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .logo {
@@ -175,6 +176,10 @@ a:focus-visible, button:focus-visible {
   max-width: var(--content-max);
   margin-inline: auto;
   width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .eyebrow {
@@ -275,6 +280,72 @@ a:focus-visible, button:focus-visible {
   width: 14px;
   height: 14px;
   animation: bob 1.8s ease-in-out infinite;
+}
+
+/* ============================================
+   Specular button (hero CTA)
+   ============================================ */
+.specular-button {
+  --sb-radius: 999px;
+  --sb-tint: #ffffff;
+  --sb-tint-opacity: 0;
+  --sb-blur: 0px;
+  --sb-text-color: #f5f5f5;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  color: var(--sb-text-color);
+  background: color-mix(in srgb, var(--sb-tint) calc(var(--sb-tint-opacity) * 100%), transparent);
+  border-radius: var(--sb-radius);
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.15s ease;
+}
+
+.specular-button:active {
+  transform: scale(0.97);
+}
+
+.specular-button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--sb-text-color) 60%, transparent);
+  outline-offset: 3px;
+}
+
+.specular-button--lg {
+  font-size: 1.05rem;
+  padding: 16px 36px;
+}
+
+.specular-button__fx {
+  position: absolute;
+  inset: -20px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.specular-button__fx canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.specular-button__label {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-cta {
+  margin-top: 3rem;
+  opacity: 0;
+  animation: rise 0.8s var(--ease) 0.45s forwards;
 }
 
 @keyframes rise {
