@@ -2,11 +2,11 @@
    Tokens
    ============================================ */
 :root {
-  --color-bg: rgb(1, 6, 10);
-  --color-bg-alt: #14181c;
-  --color-text: #ffffff;
-  --color-text-muted: #a3a3a3;
-  --color-border: rgba(255, 255, 255, 0.14);
+  --color-bg: #ffffff;
+  --color-bg-alt: #f4f4f2;
+  --color-text: #232a35;
+  --color-text-muted: #5b6472;
+  --color-border: rgba(35, 42, 53, 0.14);
 
   --font-display: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-body: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -31,10 +31,11 @@ html {
 }
 
 body {
-  background: var(--color-bg);
+  position: relative;
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: 16px;
+  background: #ffffff;
 }
 
 h1, h2, h3 {
@@ -78,8 +79,10 @@ a:focus-visible, button:focus-visible {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
+  /* No solid bar/border — the nav floats directly over the page (the pill
+     component itself carries its own translucent background), everywhere
+     on the site, not just the homepage. */
+  background: transparent;
 }
 
 /* On the homepage, the header sits transparently over the hero image so
@@ -92,7 +95,7 @@ a:focus-visible, button:focus-visible {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: var(--color-bg);
+  background: #ffffff;
 }
 
 .liquid-ether-root canvas {
@@ -157,6 +160,118 @@ a:focus-visible, button:focus-visible {
 .nav-link:hover::after {
   left: 0;
   right: 0;
+}
+
+/* Floating segmented control (every page's header) — a pill-track
+   "Home / About" switcher. Both items are real links; which one carries
+   .is-active is fixed per page (no client-side tab state, since this is a
+   static multi-page site, not an SPA). A white pill (.segmented-control__pill)
+   slides beneath whichever item is hovered, tracked in JS (see main.js),
+   and rests under the active item — or stays hidden if neither is active,
+   as on project detail pages. */
+.segmented-control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px;
+  background: color-mix(in srgb, var(--color-bg-alt) 85%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 999px;
+}
+
+.segmented-control__pill {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  height: calc(100% - 12px);
+  width: 0;
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 1px 3px rgba(35, 42, 53, 0.08);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), width 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s var(--ease);
+}
+
+.segmented-control__item {
+  position: relative;
+  z-index: 1;
+  padding: 0.5rem 1.15rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-text-muted);
+  border-radius: 999px;
+  transition: color 0.25s var(--ease);
+}
+
+.segmented-control__item:hover,
+.segmented-control__item.is-active {
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .segmented-control__pill {
+    transition: opacity 0.2s var(--ease);
+  }
+}
+
+/* Collapsed nav (project detail pages): a plain circular icon button at
+   rest, cross-fading in place into the same Home/About segmented-control
+   when clicked/tapped open (.is-open, toggled in main.js). */
+.nav-morph {
+  position: relative;
+  width: 44px;
+  height: 44px;
+}
+
+.nav-morph__trigger {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-bg-alt) 85%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.nav-morph__icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-muted);
+}
+
+.nav-morph .segmented-control {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.nav-morph.is-open .nav-morph__trigger {
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
+}
+
+.nav-morph.is-open .segmented-control {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
 }
 
 /* ============================================
@@ -290,7 +405,7 @@ a:focus-visible, button:focus-visible {
   --sb-tint: #ffffff;
   --sb-tint-opacity: 0;
   --sb-blur: 0px;
-  --sb-text-color: #f5f5f5;
+  --sb-text-color: #232a35;
 
   position: relative;
   display: inline-flex;
@@ -340,6 +455,27 @@ a:focus-visible, button:focus-visible {
 .specular-button__label {
   position: relative;
   z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-cta-arrow {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  animation: heroCtaArrowBob 1.8s var(--ease) infinite;
+}
+
+@keyframes heroCtaArrowBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta-arrow {
+    animation: none;
+  }
 }
 
 .hero-cta {
@@ -376,6 +512,39 @@ a:focus-visible, button:focus-visible {
 .section-heading p {
   margin-top: 0.75rem;
   max-width: 50ch;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  max-width: var(--content-max);
+  margin: 0 auto 2.5rem;
+  padding: 0 var(--gutter);
+}
+
+.filter-pill {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.filter-pill:hover {
+  color: var(--color-text);
+}
+
+.filter-pill.is-active {
+  color: var(--color-text);
+  background: var(--color-bg-alt);
+  border-color: transparent;
 }
 
 /* ============================================
@@ -520,6 +689,78 @@ a:focus-visible, button:focus-visible {
 .about-hero h1 {
   font-size: clamp(2rem, 5vw, 3.2rem);
   max-width: 20ch;
+}
+
+/* Minimal about page: no eyebrow, no header divider — just a headline and
+   the bio text on plain white, floated below the header. The page is short,
+   so pin the footer to the bottom of the viewport (rather than letting it
+   ride up right under the text) via a full-height flex column. */
+.minimal-page .site-header {
+  border-bottom-color: transparent;
+}
+
+.minimal-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.minimal-page main {
+  flex: 1;
+}
+
+.about-body--minimal {
+  padding-top: 7rem;
+}
+
+.about-headline {
+  /* Same font/size treatment as the index hero's accent words
+     (.hero-title .mono-accent) — that selector is scoped to .hero-title,
+     so it's repeated here rather than reused directly. */
+  font-family: "VT323", monospace;
+  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  margin-bottom: 2.5rem;
+}
+
+/* Sequential reveal: design -> prototype -> build, once on load. Each
+   clause fades up in turn, echoing the order of the process itself. */
+.about-headline .reveal-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.3em);
+  animation: revealWord 0.7s var(--ease) forwards;
+}
+
+/* nth-of-type (not nth-child): the <br> and &nbsp; between these spans
+   would otherwise throw off a plain child-index count. */
+.about-headline .reveal-word:nth-of-type(1) { animation-delay: 0.1s; }
+.about-headline .reveal-word:nth-of-type(2) { animation-delay: 0.7s; }
+.about-headline .reveal-word:nth-of-type(3) { animation-delay: 1.3s; }
+
+.about-headline .reveal-arrow {
+  display: inline-block;
+  color: var(--color-text-muted);
+  font-size: 0.65em;
+  margin: 0 0.05em;
+  transform: translateY(-0.08em);
+}
+
+@keyframes revealWord {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-headline .reveal-word {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .about-body {
@@ -976,7 +1217,7 @@ a:focus-visible, button:focus-visible {
 }
 
 .link-button:hover {
-  background: #1f2428;
+  background: #cfc8ba;
   opacity: 1;
 }
 

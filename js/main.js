@@ -17,6 +17,78 @@ if (revealTargets.length) {
   revealTargets.forEach((el) => observer.observe(el));
 }
 
+// Collapsed nav (project detail pages): click/tap the circular trigger to
+// toggle the Home/About switcher open. Clicking outside, or the trigger
+// again, closes it.
+document.querySelectorAll(".nav-morph").forEach((morph) => {
+  const trigger = morph.querySelector(".nav-morph__trigger");
+  if (!trigger) return;
+
+  function setOpen(open) {
+    morph.classList.toggle("is-open", open);
+    trigger.setAttribute("aria-expanded", String(open));
+  }
+
+  trigger.addEventListener("click", () => {
+    setOpen(!morph.classList.contains("is-open"));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!morph.contains(event.target)) setOpen(false);
+  });
+});
+
+// Segmented control (Home/About nav): a white pill slides beneath whichever
+// item is hovered, and rests under the active item (or stays hidden if
+// neither is active, as on project detail pages).
+document.querySelectorAll(".segmented-control").forEach((nav) => {
+  const pill = nav.querySelector(".segmented-control__pill");
+  const items = nav.querySelectorAll(".segmented-control__item");
+  if (!pill || !items.length) return;
+
+  function moveTo(item) {
+    pill.style.width = `${item.offsetWidth}px`;
+    pill.style.transform = `translateX(${item.offsetLeft - 6}px)`;
+    pill.style.opacity = "1";
+  }
+
+  const activeItem = nav.querySelector(".segmented-control__item.is-active");
+  if (activeItem) moveTo(activeItem);
+
+  items.forEach((item) => {
+    item.addEventListener("mouseenter", () => moveTo(item));
+  });
+
+  nav.addEventListener("mouseleave", () => {
+    if (activeItem) {
+      moveTo(activeItem);
+    } else {
+      pill.style.opacity = "0";
+    }
+  });
+});
+
+// Selected Work filter pills: show only cards whose data-tags include the
+// active filter ("all" shows everything). Cards can carry multiple tags.
+const filterBar = document.querySelector(".filter-bar");
+if (filterBar) {
+  const filterButtons = filterBar.querySelectorAll(".filter-pill");
+  const filterableCards = document.querySelectorAll(".project-grid .project-card");
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      filterButtons.forEach((b) => b.classList.remove("is-active"));
+      button.classList.add("is-active");
+
+      const filter = button.dataset.filter;
+      filterableCards.forEach((card) => {
+        const tags = (card.dataset.tags || "").split(" ");
+        card.style.display = filter === "all" || tags.includes(filter) ? "" : "none";
+      });
+    });
+  });
+}
+
 // Scroll cue on the hero jumps to whatever section it points at
 document.querySelectorAll("[data-scroll-target]").forEach((trigger) => {
   trigger.addEventListener("click", () => {

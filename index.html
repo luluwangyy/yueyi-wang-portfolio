@@ -20,8 +20,10 @@
 
     <header class="site-header">
       <div class="header-inner">
-        <nav class="site-nav">
-          <a href="about.html" class="nav-link">About</a>
+        <nav class="segmented-control" aria-label="Primary">
+          <span class="segmented-control__pill" aria-hidden="true"></span>
+          <a href="#projects" class="segmented-control__item is-active">Home</a>
+          <a href="about.html" class="segmented-control__item">About</a>
         </nav>
       </div>
     </header>
@@ -29,26 +31,26 @@
     <section id="top" class="hero">
       <div class="hero-inner">
         <h1 class="hero-title">
-          <span class="mono-accent">Code</span>
+          <span class="mono-accent">Design</span>
           <span class="symbol-cycle" aria-hidden="true">
             <span class="sym sym-amp">&amp;</span>
             <span class="sym sym-plus">+</span>
             <span class="sym sym-x">X</span>
             <span class="sym sym-tilde">~</span>
           </span>
-          <span class="mono-accent">Craft</span>
+          <span class="mono-accent">Engineer</span>
         </h1>
         <p class="hero-sub">
-          I'm Yueyi Lulu Wang, an engineer and designer building interactive systems
-          where creative ideas meet cutting-edge technology.
+          Hi, I'm Yueyi Wang. I design and build interactive experiences that
+          connect AI, robotics, and the physical world.
         </p>
         <button
           type="button"
           class="specular-button specular-button--lg hero-cta"
           data-scroll-target="#projects"
-          style="--sb-radius:999px; --sb-tint:#ffffff; --sb-tint-opacity:0; --sb-blur:0px; --sb-text-color:#f5f5f5;"
-          data-sb-line-color="#ffffff"
-          data-sb-base-color="#525252"
+          style="--sb-radius:999px; --sb-tint:#ffffff; --sb-tint-opacity:0; --sb-blur:0px; --sb-text-color:#232a35;"
+          data-sb-line-color="#2f4a68"
+          data-sb-base-color="#a9a196"
           data-sb-intensity="1"
           data-sb-shine-size="10"
           data-sb-shine-fade="40"
@@ -57,7 +59,12 @@
           data-sb-proximity="250"
         >
           <span class="specular-button__fx" aria-hidden="true"></span>
-          <span class="specular-button__label">Projects</span>
+          <span class="specular-button__label">
+            See Selected Work
+            <svg class="hero-cta-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 3v9M4 8.5 8 12.5 12 8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
         </button>
       </div>
     </section>
@@ -69,8 +76,15 @@
         <h2>Selected Work</h2>
       </div>
 
+      <div class="filter-bar" role="tablist" aria-label="Filter by category">
+        <button type="button" class="filter-pill is-active" data-filter="all">All</button>
+        <button type="button" class="filter-pill" data-filter="ui">User Interface</button>
+        <button type="button" class="filter-pill" data-filter="physical">Physical Computing</button>
+        <button type="button" class="filter-pill" data-filter="generative-ai">Generative AI</button>
+      </div>
+
       <div class="project-grid">
-        <a href="projects/flow.html" class="project-card">
+        <a href="projects/flow.html" class="project-card" data-tags="ui generative-ai">
           <div class="project-visual">
             <img src="assets/images/flow/cover.jpg" alt="Flow">
           </div>
@@ -92,7 +106,7 @@
           </div>
         </a>
 
-        <a href="projects/creative-destruction.html" class="project-card">
+        <a href="projects/creative-destruction.html" class="project-card" data-tags="physical">
           <div class="project-visual">
             <img src="assets/images/creative-destruction/cover.png" alt="Touch, Sound, Motion">
           </div>
@@ -116,7 +130,28 @@
           </div>
         </a>
 
-        <a href="projects/audiovisual.html" class="project-card">
+        <a href="projects/the-roro.html" class="project-card" data-tags="physical">
+          <div class="project-visual">
+            <img src="assets/images/the-roro/cover.jpg" alt="The Roro" loading="lazy">
+          </div>
+          <div class="project-info">
+            <h3>Quadruped</h3>
+            <div class="card-meta">
+              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Columbia Robotics Studio</span></span>
+              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Full-Stack Software &amp; Hardware Engineer</span></span>
+              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025</span></span>
+            </div>
+            <p>A custom-fabricated, programmed quadruped robot designed for robotics studio class.</p>
+            <ul class="tag-list">
+              <li>Raspberry Pi</li>
+              <li>Python</li>
+              <li>3D Printing</li>
+              <li>Fusion 360</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="projects/audiovisual.html" class="project-card" data-tags="physical">
           <div class="project-visual">
             <img src="assets/images/audiovisual/cover.png" alt="Audiovisual" loading="lazy">
           </div>
@@ -135,7 +170,7 @@
           </div>
         </a>
 
-        <a href="projects/urbansky.html" class="project-card">
+        <a href="projects/urbansky.html" class="project-card" data-tags="ui">
           <div class="project-visual">
             <img src="assets/images/urbansky/cover.jpg" alt="UrbanSky" loading="lazy">
           </div>
@@ -154,7 +189,7 @@
           </div>
         </a>
 
-        <a href="projects/ai-storytelling.html" class="project-card">
+        <a href="projects/ai-storytelling.html" class="project-card" data-tags="generative-ai">
           <div class="project-visual">
             <img src="assets/images/ai-storytelling/cover.jpg" alt="AI & Storytelling" loading="lazy">
           </div>
@@ -174,7 +209,7 @@
           </div>
         </a>
 
-        <a href="projects/generative-disco.html" class="project-card">
+        <a href="projects/generative-disco.html" class="project-card" data-tags="ui generative-ai">
           <div class="project-visual">
             <img src="assets/images/generative-disco/cover.jpg" alt="Generative Disco" loading="lazy">
           </div>

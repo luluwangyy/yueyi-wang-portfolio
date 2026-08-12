@@ -1,29 +1,26 @@
-// Homepage-only: mounts the LiquidEther background and the SpecularButton
-// CTA, and cross-fades the LiquidEther's visibility (opacity + interaction)
-// as the user scrolls from the hero into the Selected Work section.
-import { createLiquidEther } from "./liquid-ether.js";
+// Homepage-only: mounts the hero background and the SpecularButton CTA, and
+// cross-fades the background's visibility (opacity + interaction) as the
+// user scrolls from the hero into the Selected Work section.
+//
+// The background is a soft 3D sphere (see hero-sphere.js) — the earlier
+// LiquidEther fluid animation (liquid-ether.js) is hidden, not deleted, in
+// case we want it back.
+import { createHeroSphere } from "./hero-sphere.js";
 import { createSpecularButton } from "./specular-button.js";
 
 const liquidRoot = document.getElementById("liquid-ether-root");
 const homeTop = document.querySelector(".home-top");
 
 if (liquidRoot && homeTop && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  const fx = createLiquidEther(liquidRoot, {
-    colors: ["#1d346b", "#307878", "#81f8ff"],
-    mouseForce: 20,
-    cursorSize: 75,
-    isViscous: false,
-    viscous: 31,
-    iterationsViscous: 30,
-    iterationsPoisson: 38,
-    resolution: 0.5,
-    isBounce: false,
-    autoDemo: true,
-    autoSpeed: 0.5,
-    autoIntensity: 2.6,
-    takeoverDuration: 0.25,
-    autoResumeDelay: 3000,
-    autoRampDuration: 0.6
+  const fx = createHeroSphere(liquidRoot, {
+    // Pale blue-white (not pure white) so the lit side still reads as a
+    // shape against the white page, harmonizing with the cyan shadow side.
+    litColor: "#e6f4fa",
+    shadowColor: "#aee9f2",
+    fillFraction: 0.86,
+    blurPx: 4,
+    idleRotateSpeed: 0.12,
+    followEase: 0.055
   });
 
   let ticking = false;
@@ -64,7 +61,7 @@ if (liquidRoot && homeTop && !window.matchMedia("(prefers-reduced-motion: reduce
   updateFade();
 } else if (liquidRoot) {
   // Reduced-motion: keep a plain, still background instead of the sim.
-  liquidRoot.style.background = "var(--color-bg-alt)";
+  liquidRoot.style.background = "#ffffff";
 }
 
 const heroCta = document.querySelector(".hero-cta");

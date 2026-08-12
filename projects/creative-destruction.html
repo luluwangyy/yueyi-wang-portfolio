@@ -17,10 +17,18 @@
 
   <header class="site-header">
     <div class="header-inner">
-      <nav class="site-nav">
-        <a href="../index.html#projects" class="nav-link">Projects</a>
-        <a href="../about.html" class="nav-link">About</a>
-      </nav>
+      <div class="nav-morph">
+        <button type="button" class="nav-morph__trigger" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-nav">
+          <svg class="nav-morph__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <nav class="segmented-control" aria-label="Primary" id="primary-nav">
+          <span class="segmented-control__pill" aria-hidden="true"></span>
+          <a href="../index.html#projects" class="segmented-control__item">Home</a>
+          <a href="../about.html" class="segmented-control__item">About</a>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -155,10 +163,10 @@
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
-        <a href="audiovisual.html" class="related-card">
+        <a href="the-roro.html" class="related-card">
           <div>
             <span class="related-card-label">Next Project</span>
-            <span class="related-card-title">Audiovisual</span>
+            <span class="related-card-title">Quadruped</span>
           </div>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

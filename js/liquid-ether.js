@@ -22,6 +22,7 @@ export function createLiquidEther(container, opts = {}) {
     BFECC: true,
     resolution: 0.5,
     isBounce: false,
+    velocityDissipation: 1.0,
     colors: ["#5227FF", "#FF9FFC", "#B497CF"],
     autoDemo: true,
     autoSpeed: 0.5,
@@ -77,6 +78,12 @@ export function createLiquidEther(container, opts = {}) {
       this.container = container;
       this.pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
       this.resize();
+      // premultipliedAlpha stays at the three.js default (true): the standard
+      // SRC_ALPHA blend func three.js uses for transparent materials already
+      // multiplies our shader's straight-alpha color by alpha on the way
+      // into the framebuffer, so the stored pixels end up correctly
+      // premultiplied on their own — the browser's compositor (which assumes
+      // premultiplied data when this is true) needs no further correction.
       this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       this.renderer.autoClear = false;
       this.renderer.setClearColor(new THREE.Color(0x000000), 0);
@@ -363,6 +370,10 @@ export function createLiquidEther(container, opts = {}) {
     uniform bool isBFECC;
     uniform vec2 fboSize;
     uniform vec2 px;
+    // Per-frame velocity multiplier (<1.0) so a single touch loses energy
+    // and fades out within a couple seconds instead of swirling forever.
+    // 1.0 = no decay (original component behavior).
+    uniform float dissipation;
     varying vec2 uv;
     void main(){
     vec2 ratio = max(fboSize.x, fboSize.y) / fboSize;
@@ -370,7 +381,7 @@ export function createLiquidEther(container, opts = {}) {
         vec2 vel = texture2D(velocity, uv).xy;
         vec2 uv2 = uv - vel * dt * ratio;
         vec2 newVel = texture2D(velocity, uv2).xy;
-        gl_FragColor = vec4(newVel, 0.0, 0.0);
+        gl_FragColor = vec4(newVel * dissipation, 0.0, 0.0);
     } else {
         vec2 spot_new = uv;
         vec2 vel_old = texture2D(velocity, uv).xy;
@@ -382,7 +393,7 @@ export function createLiquidEther(container, opts = {}) {
         vec2 vel_2 = texture2D(velocity, spot_new3).xy;
         vec2 spot_old2 = spot_new3 - vel_2 * dt * ratio;
         vec2 newVel2 = texture2D(velocity, spot_old2).xy;
-        gl_FragColor = vec4(newVel2, 0.0, 0.0);
+        gl_FragColor = vec4(newVel2 * dissipation, 0.0, 0.0);
     }
 }
 `;
@@ -396,8 +407,18 @@ export function createLiquidEther(container, opts = {}) {
     vec2 vel = texture2D(velocity, uv).xy;
     float lenv = clamp(length(vel), 0.0, 1.0);
     vec3 c = texture2D(palette, vec2(lenv, 0.5)).rgb;
-    vec3 outRGB = mix(bgColor.rgb, c, lenv);
-    float outA = mix(bgColor.a, 1.0, lenv);
+    // Keep the palette color itself (don't fade it toward bgColor.rgb, which
+    // is black) — mixing toward black at partial velocity produced a muddy
+    // gray halo around the flow. Only alpha ramps with velocity, so the
+    // edges fade into transparency (revealing the page behind) instead.
+    vec3 outRGB = c;
+    // A plain linear ramp leaves a wide low-alpha "penumbra" around the
+    // flow; against a black background that just read as a subtle glow,
+    // but against a white page a low-alpha color pixel is mostly white and
+    // reads as a flat gray smudge instead of a color. smoothstep narrows
+    // that penumbra so alpha jumps from ~invisible to clearly colored over
+    // a short range instead of trailing off gradually.
+    float outA = mix(bgColor.a, 1.0, smoothstep(0.04, 0.3, lenv));
     gl_FragColor = vec4(outRGB, outA);
 }
 `;
@@ -524,7 +545,8 @@ export function createLiquidEther(container, opts = {}) {
             fboSize: { value: simProps.fboSize },
             velocity: { value: simProps.src.texture },
             dt: { value: simProps.dt },
-            isBFECC: { value: true }
+            isBFECC: { value: true },
+            dissipation: { value: simProps.dissipation ?? 1.0 }
           }
         },
         output: simProps.dst
@@ -550,10 +572,11 @@ export function createLiquidEther(container, opts = {}) {
       this.line = new THREE.LineSegments(boundaryG, boundaryM);
       this.scene.add(this.line);
     }
-    update({ dt, isBounce, BFECC }) {
+    update({ dt, isBounce, BFECC, dissipation }) {
       this.uniforms.dt.value = dt;
       this.line.visible = isBounce;
       this.uniforms.isBFECC.value = BFECC;
+      if (dissipation !== undefined) this.uniforms.dissipation.value = dissipation;
       super.update();
     }
   }
@@ -741,6 +764,7 @@ export function createLiquidEther(container, opts = {}) {
         dt: 0.014,
         isViscous: false,
         BFECC: true,
+        velocityDissipation: 1.0,
         ...simOptions
       };
       this.fbos = {
@@ -786,6 +810,7 @@ export function createLiquidEther(container, opts = {}) {
         cellScale: this.cellScale,
         fboSize: this.fboSize,
         dt: this.options.dt,
+        dissipation: this.options.velocityDissipation,
         src: this.fbos.vel_0,
         dst: this.fbos.vel_1
       });
@@ -849,7 +874,8 @@ export function createLiquidEther(container, opts = {}) {
       this.advection.update({
         dt: this.options.dt,
         isBounce: this.options.isBounce,
-        BFECC: this.options.BFECC
+        BFECC: this.options.BFECC,
+        dissipation: this.options.velocityDissipation
       });
       this.externalForce.update({
         cursor_size: this.options.cursor_size,
@@ -902,6 +928,11 @@ export function createLiquidEther(container, opts = {}) {
     }
     render() {
       Common.renderer.setRenderTarget(null);
+      // autoClear is off globally (the ping-pong sim passes manage their own
+      // clearing), so without this the on-screen framebuffer is never reset
+      // and alpha creeps toward fully opaque black over time even at rest.
+      // Clear it to transparent each frame before drawing the fluid on top.
+      Common.renderer.clear(true, true, true);
       Common.renderer.render(this.scene, this.camera);
     }
     update() {
@@ -1024,7 +1055,8 @@ export function createLiquidEther(container, opts = {}) {
     dt: options.dt,
     BFECC: options.BFECC,
     resolution: options.resolution,
-    isBounce: options.isBounce
+    isBounce: options.isBounce,
+    velocityDissipation: options.velocityDissipation
   });
 
   // Pause rendering when off-screen (perf), independent of the scroll-fade
