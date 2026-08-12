@@ -65,11 +65,11 @@ void main() {
   // Fresnel falloff: opaque near the center of the disc, fading to fully
   // transparent at the silhouette so the edge blends softly into the page
   // instead of a hard circular cutoff.
-  // Pushed even wider/earlier: the melt into the white page now starts
-  // well before the true silhouette and finishes gradually, so there's no
-  // point where it reads as a hard-ish ring — just a long, soft dissolve.
-  float fresnel = pow(1.0 - facing, 0.9);
-  float alpha = smoothstep(0.0, 0.85, 1.0 - fresnel);
+  // Pushed much wider/earlier: the melt into the white page now starts
+  // very close to the center and finishes gradually, so there's no point
+  // where it reads as a hard-ish ring — just a long, soft dissolve.
+  float fresnel = pow(1.0 - facing, 0.55);
+  float alpha = smoothstep(0.0, 0.97, 1.0 - fresnel);
 
   gl_FragColor = vec4(color, alpha);
 }
