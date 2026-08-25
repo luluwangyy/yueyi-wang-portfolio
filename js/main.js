@@ -74,19 +74,43 @@ const filterBar = document.querySelector(".filter-bar");
 if (filterBar) {
   const filterButtons = filterBar.querySelectorAll(".filter-pill");
   const filterableCards = document.querySelectorAll(".project-grid .project-card");
+  const validFilters = Array.from(filterButtons).map((b) => b.dataset.filter);
+
+  function applyFilter(filter, { updateUrl = false, scrollToProjects = false } = {}) {
+    filterButtons.forEach((b) => b.classList.toggle("is-active", b.dataset.filter === filter));
+    filterableCards.forEach((card) => {
+      const tags = (card.dataset.tags || "").split(" ");
+      card.style.display = filter === "all" || tags.includes(filter) ? "" : "none";
+    });
+
+    if (updateUrl) {
+      const url = new URL(window.location.href);
+      if (filter === "all") {
+        url.searchParams.delete("track");
+      } else {
+        url.searchParams.set("track", filter);
+      }
+      history.replaceState(null, "", url);
+    }
+
+    if (scrollToProjects) {
+      filterBar.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
 
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      filterButtons.forEach((b) => b.classList.remove("is-active"));
-      button.classList.add("is-active");
-
-      const filter = button.dataset.filter;
-      filterableCards.forEach((card) => {
-        const tags = (card.dataset.tags || "").split(" ");
-        card.style.display = filter === "all" || tags.includes(filter) ? "" : "none";
-      });
+      applyFilter(button.dataset.filter, { updateUrl: true });
     });
   });
+
+  // Shareable, pre-filtered links: ?track=ui / ?track=physical / ?track=generative-ai
+  // land straight on that category, already scrolled into view — e.g. for
+  // pointing a specific application at the relevant work.
+  const requestedTrack = new URLSearchParams(window.location.search).get("track");
+  if (requestedTrack && validFilters.includes(requestedTrack)) {
+    applyFilter(requestedTrack, { scrollToProjects: true });
+  }
 }
 
 // Scroll cue on the hero jumps to whatever section it points at
