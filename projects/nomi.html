@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nomi — Yueyi Wang</title>
+  <meta name="description" content="Nomi: a medication-routine companion designed around a tension, not a task.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="nav-morph">
+        <button type="button" class="nav-morph__trigger" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-nav">
+          <svg class="nav-morph__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <nav class="segmented-control" aria-label="Primary" id="primary-nav">
+          <span class="segmented-control__pill" aria-hidden="true"></span>
+          <a href="../index.html#projects" class="segmented-control__item">Home</a>
+          <a href="../about.html" class="segmented-control__item">About</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="project-detail-visual">
+      <div class="project-visual">
+        <img src="../assets/images/nomi/cover.jpg" alt="Nomi" loading="lazy">
+      </div>
+    </div>
+
+    <section class="project-detail-hero">
+      <a href="../index.html#projects" class="back-link">&larr; Back to work</a>
+      <h1>Nomi</h1>
+      <p class="project-subtitle">A medication-routine companion designed around a tension, not a task.</p>
+    </section>
+
+    <div class="project-detail-split">
+      <aside class="project-meta-col">
+        <div>
+          <span class="meta-label">Type</span>
+          <span class="meta-value">Product Design · UX Research · Design Engineering</span>
+        </div>
+        <div>
+          <span class="meta-label">Role</span>
+          <span class="meta-value">End-to-end (research, product strategy, UX, visual design, prototype build)</span>
+        </div>
+        <div>
+          <span class="meta-label">Duration</span>
+          <span class="meta-value">2026</span>
+        </div>
+        <div>
+          <span class="meta-label">Tools</span>
+          <span class="meta-value">Figma · React/TypeScript</span>
+        </div>
+      </aside>
+
+      <section class="project-detail-body">
+      <p>
+        Nomi started with a problem I had seen in a lot of families: adult children worry that
+        their parents might forget medication, while parents don't necessarily want to be
+        reminded or monitored all the time.
+      </p>
+      <p>
+        Most medication apps I looked at leaned heavily toward one person. They were either
+        tracking tools for caregivers or reminder apps for older adults. I wanted to explore
+        whether there was a way to support both sides without making the parent feel watched.
+      </p>
+
+      <div class="project-section">
+        <div class="project-visual visual-auto">
+          <img class="media" src="../assets/images/nomi/figma.jpg" alt="Nomi — Figma visual design and design system" loading="lazy">
+        </div>
+        <p class="media-caption">Figma visual design</p>
+      </div>
+
+      <div class="project-section">
+        <h2>Try the Prototype</h2>
+        <p>
+          Both phones below share the same live state. Send a gentle check-in from Emily's
+          caregiver view and it will appear immediately on Margaret's phone.
+        </p>
+        <div class="nomi-embed">
+          <iframe src="../nomi-demo/" title="Nomi interactive prototype" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="project-section">
+        <h2>Starting Point</h2>
+        <p>My initial question was:</p>
+        <p class="pull-quote">
+          How might we help older adults maintain medication routines without turning family
+          support into monitoring?
+        </p>
+        <p>
+          I started with this as a hypothesis rather than assuming a reminder app was already
+          the right solution.
+        </p>
+      </div>
+
+      <div class="project-section">
+        <h2>Research</h2>
+        <p>
+          I interviewed older adults who manage daily medication and adult children who help
+          support a parent from a distance.
+        </p>
+        <p>
+          Instead of asking whether they wanted a medication reminder app, I focused on recent
+          situations: when they had forgotten something, when a routine broke down, or when they
+          worried because a family member hadn't responded.
+        </p>
+        <p>
+          I wanted to understand what people were already doing before designing around a
+          specific solution.
+        </p>
+      </div>
+
+      <div class="project-section">
+        <h2>What I Found</h2>
+        <p>Two things came up repeatedly.</p>
+        <p>
+          <strong>1. Parents weren't always forgetting. They were often unsure.</strong> Most
+          participants already had medication tied to a routine like breakfast or morning
+          coffee.
+        </p>
+        <p>The more common problem was:</p>
+        <p class="pull-quote">&ldquo;I think I took it&hellip; but I'm not completely sure.&rdquo;</p>
+        <p>
+          That uncertainty usually happened when the normal routine changed — traveling, waking
+          up late, having guests over, or skipping breakfast.
+        </p>
+        <p>
+          This shifted my thinking away from simply sending more reminders. The product also
+          needed to help someone quickly confirm their own routine without relying on another
+          person.
+        </p>
+        <p>
+          <strong>2. Caregivers struggled most with not knowing.</strong> For caregivers, the
+          stressful part wasn't necessarily a missed dose. It was silence.
+        </p>
+        <p>
+          If their parent didn't respond, they couldn't tell whether they were busy, sleeping,
+          or whether something was actually wrong.
+        </p>
+        <p>Their choices were usually either:</p>
+        <ul class="prose-list">
+          <li>do nothing and keep worrying, or</li>
+          <li>call</li>
+        </ul>
+        <p>
+          A phone call could feel excessive for something as small as checking whether
+          medication had been taken.
+        </p>
+        <p>
+          That made me interested in the space between those two actions: a lightweight way to
+          check in without making the interaction feel urgent.
+        </p>
+      </div>
+
+      <div class="project-section">
+        <h2>Reframing the Problem</h2>
+        <p>After the interviews, I stopped thinking about Nomi primarily as a reminder app.</p>
+        <p>The two needs were closer to:</p>
+        <p>
+          <strong>For the parent:</strong> &ldquo;If I'm unsure whether I already took
+          something, help me figure that out quickly without involving anyone else.&rdquo;
+        </p>
+        <p>
+          <strong>For the caregiver:</strong> &ldquo;If I haven't heard anything, give me enough
+          reassurance that I don't immediately feel like I need to call.&rdquo;
+        </p>
+        <p>Both came back to uncertainty rather than reminders.</p>
+      </div>
+
+      <div class="project-section">
+        <h2>Design Response</h2>
+        <p>
+          <strong>Let parents confirm medication on their own time.</strong> Parents can mark
+          medication as taken directly from the daily list, even before a scheduled reminder
+          appears.
+        </p>
+        <p>
+          A few participants mentioned how annoying it was to receive a reminder for something
+          they had already done. It made the system feel disconnected from their actual
+          routine.
+        </p>
+        <p>
+          So I wanted the interaction to start with the person's behavior, not the notification
+          schedule.
+        </p>
+        <p>
+          <strong>Create a lighter way to check in.</strong> For caregivers, I added a gentle
+          check-in that sits between doing nothing and making a phone call.
+        </p>
+        <p>
+          It isn't framed as an alert or escalation. It is simply a small nudge that says,
+          essentially, I'm thinking about you — can you let me know you're okay?
+        </p>
+        <p>
+          This became one of the main interactions I wanted to test. If caregivers ignored it
+          and went straight to calling anyway, then the idea wouldn't really solve the problem I
+          had identified.
+        </p>
+        <p>
+          I intentionally kept the caregiver side simple. The research didn't point toward a
+          need for more charts, history, or detailed monitoring. In many cases, caregivers
+          wanted less information — they just needed to know when something actually required
+          attention.
+        </p>
+      </div>
+
+      <div class="project-section">
+        <h2>Interaction &amp; Visual Design</h2>
+        <p>Language became an important part of the design.</p>
+        <p>
+          I avoided clinical terms like adherence or non-adherent and used language closer to
+          how participants actually spoke: medication routine, taken, and not confirmed.
+        </p>
+        <p>I also made a distinction between:</p>
+        <ul class="prose-list">
+          <li>the system doesn't know whether something happened</li>
+          <li>the system knows it didn't happen</li>
+        </ul>
+        <p>Those shouldn't look or sound the same, especially to a caregiver.</p>
+        <p>
+          Visually, I wanted Nomi to feel calm rather than medical. I used soft gradients,
+          generous spacing, simple typography, and restrained status indicators.
+        </p>
+        <p>
+          I looked more toward Apple Health and physical pill organizers than caregiver
+          monitoring dashboards.
+        </p>
+        <p>
+          Accessibility also affected the interface from the beginning. I used larger touch
+          targets, scalable text, and paired icons with labels instead of relying on icons
+          alone.
+        </p>
+      </div>
+
+      <div class="project-section">
+        <h2>Reflection</h2>
+        <p>
+          The biggest shift in this project came from realizing that my original framing was
+          slightly wrong.
+        </p>
+        <p>
+          I started by thinking about medication reminders. But the interviews pointed more
+          toward two smaller moments: a parent wondering, Did I already take this? and an adult
+          child wondering, Is everything okay?
+        </p>
+        <p>That led to a much simpler product.</p>
+        <p>
+          Instead of adding more tracking, dashboards, or notifications, I focused on helping
+          each person resolve uncertainty with as little friction as possible.
+        </p>
+      </div>
+      </section>
+    </div>
+
+    <section class="related-projects">
+      <p class="section-label">Related Projects</p>
+      <div class="related-grid">
+        <a href="synaptic.html" class="related-card">
+          <div>
+            <span class="related-card-label">Previous Project</span>
+            <span class="related-card-title">Synaptic</span>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="flow.html" class="related-card">
+          <div>
+            <span class="related-card-label">Next Project</span>
+            <span class="related-card-title">Flow</span>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 Yueyi Wang</span>
+      <div class="footer-links">
+        <a href="mailto:lulu.yueyi.wang@gmail.com">Email</a>
+        <a href="https://github.com/luluwangyy" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
