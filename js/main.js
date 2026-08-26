@@ -223,3 +223,30 @@ document.querySelectorAll(".video-facade").forEach((facade) => {
     { once: true }
   );
 });
+
+// Nomi prototype: fullscreen toggle. This is a CSS-only "fullscreen"
+// (fixed-position overlay, not the browser's native Fullscreen API) —
+// iOS Safari doesn't support requestFullscreen on arbitrary elements at
+// all (only on <video>), so a native-API version would silently do
+// nothing for a lot of visitors. A CSS toggle works identically on every
+// browser and needs no permission grant.
+document.querySelectorAll(".nomi-embed").forEach((embed) => {
+  const button = embed.querySelector(".nomi-fullscreen-btn");
+  if (!button) return;
+
+  const setActive = (active) => {
+    embed.classList.toggle("is-fullscreen", active);
+    button.setAttribute("aria-label", active ? "Exit fullscreen" : "Enter fullscreen");
+    document.documentElement.classList.toggle("nomi-fullscreen-lock", active);
+  };
+
+  button.addEventListener("click", () => {
+    setActive(!embed.classList.contains("is-fullscreen"));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && embed.classList.contains("is-fullscreen")) {
+      setActive(false);
+    }
+  });
+});

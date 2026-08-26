@@ -1124,6 +1124,7 @@ a:focus-visible, button:focus-visible {
    vh-relative phone sizing settles without an inner scrollbar; the mobile
    breakpoint gets more room since its two phones stack vertically. */
 .nomi-embed {
+  position: relative;
   margin: 1.5rem 0 1rem;
   border-radius: var(--radius);
   overflow: hidden;
@@ -1141,6 +1142,72 @@ a:focus-visible, button:focus-visible {
   .nomi-embed iframe {
     height: 1460px;
   }
+}
+
+.nomi-fullscreen-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.55);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  cursor: pointer;
+  transition: background 150ms ease, transform 150ms ease;
+}
+
+.nomi-fullscreen-btn:hover {
+  background: rgba(20, 20, 20, 0.78);
+  transform: scale(1.05);
+}
+
+.nomi-fullscreen-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.nomi-fullscreen-btn .icon-collapse {
+  display: none;
+}
+
+/* Fullscreen: a CSS-only overlay rather than the native Fullscreen API —
+   iOS Safari doesn't support requestFullscreen on non-<video> elements,
+   so this is the version that actually works on every device. Fixed to
+   the viewport, above everything else on the page. */
+.nomi-embed.is-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+}
+
+.nomi-embed.is-fullscreen iframe {
+  height: 100vh;
+}
+
+html.nomi-fullscreen-lock,
+html.nomi-fullscreen-lock body {
+  overflow: hidden;
+}
+
+.nomi-embed.is-fullscreen .icon-expand {
+  display: none;
+}
+
+.nomi-embed.is-fullscreen .icon-collapse {
+  display: block;
 }
 
 .related-projects {
