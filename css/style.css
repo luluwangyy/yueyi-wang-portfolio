@@ -1191,10 +1191,19 @@ a:focus-visible, button:focus-visible {
   background: #000;
   display: flex;
   align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
+/* The phones inside the embed are a fixed pixel size set by the embedded
+   app's own CSS — making the iframe's box bigger doesn't make them
+   bigger, since nothing in there is sized relative to the iframe. A
+   visual transform scale is what actually makes the mockups look larger. */
 .nomi-embed.is-fullscreen iframe {
+  width: 100vw;
   height: 100vh;
+  transform: scale(1.35);
+  transform-origin: center center;
 }
 
 html.nomi-fullscreen-lock,
