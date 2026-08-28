@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SketchTrace — Yueyi Wang</title>
+  <meta name="description" content="SketchTrace: an interactive learning workspace that connects creative code, live behavior, and clickable system maps.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="nav-morph">
+        <button type="button" class="nav-morph__trigger" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-nav">
+          <svg class="nav-morph__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <nav class="segmented-control" aria-label="Primary" id="primary-nav">
+          <span class="segmented-control__pill" aria-hidden="true"></span>
+          <a href="../index.html#projects" class="segmented-control__item">Home</a>
+          <a href="../about.html" class="segmented-control__item">About</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- SKETCHTRACE_HERO_VIDEO: 8–15s loop — load sketch -> preview runs ->
+         system map appears -> click node -> source highlights.
+         Swap in assets/videos/sketchtrace/hero.mp4 (+ .webm) and a poster at
+         assets/images/sketchtrace/hero.jpg. Until then this hides itself
+         gracefully (see js/main.js) and the neutral card background shows. -->
+    <div class="project-detail-visual">
+      <div class="project-visual">
+        <video class="scroll-autoplay" muted loop playsinline poster="../assets/images/sketchtrace/hero.jpg">
+          <source src="../assets/videos/sketchtrace/hero.webm" type="video/webm">
+          <source src="../assets/videos/sketchtrace/hero.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <section class="project-detail-hero">
+      <a href="../index.html#projects" class="back-link">&larr; Back to work</a>
+      <h1>SketchTrace</h1>
+      <p class="project-subtitle">Making complex creative code easier to understand.</p>
+    </section>
+
+    <div class="project-detail-split">
+      <aside class="project-meta-col">
+        <div>
+          <span class="meta-label">Type</span>
+          <span class="meta-value">Product Design · Design Engineering · AI</span>
+        </div>
+        <div>
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Product Designer &amp; Full-Stack Engineer</span>
+        </div>
+        <div>
+          <span class="meta-label">Duration</span>
+          <span class="meta-value">2024–2025</span>
+        </div>
+        <div>
+          <span class="meta-label">Platform</span>
+          <span class="meta-value">Responsive Web Application</span>
+        </div>
+        <div>
+          <span class="meta-label">Scope</span>
+          <span class="meta-value">Product Strategy · UX/UI · React · Express · AI Integration · Testing &amp; Deployment</span>
+        </div>
+      </aside>
+
+      <section class="project-detail-body">
+      <p>
+        SketchTrace transforms creative JavaScript into an interactive learning workspace,
+        combining source code, a live preview, and a clickable system map that links directly
+        back to relevant lines of code.
+      </p>
+
+      <div class="link-button-row">
+        <a href="https://luluwangyy.github.io/final-dti-flowchart/" class="link-button" target="_blank" rel="noopener" aria-label="View the SketchTrace live demo (opens in a new tab)">
+          <span>View Live Demo</span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="https://github.com/luluwangyy/final-dti-flowchart/tree/codex/live-demo-release" class="link-button" target="_blank" rel="noopener" aria-label="View the SketchTrace source on GitHub (opens in a new tab)">
+          <span>View GitHub</span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="project-section">
+        <h2>The Problem</h2>
+        <p>
+          Creative coding projects can look simple when they run while hiding surprisingly
+          complex systems underneath. Animation loops, interaction states, geometry, recursive
+          functions, and rendering logic may be distributed across hundreds of lines of code.
+        </p>
+        <p>
+          Most learning tools separate code from behavior. Users read the implementation in one
+          place, see the visual result somewhere else, and have to mentally reconstruct how
+          everything connects. I built SketchTrace to connect three forms of understanding in
+          one workspace:
+        </p>
+        <p class="big-line">What the code says → What it produces → How its systems relate</p>
+
+        <!-- SKETCHTRACE_BEFORE_AFTER -->
+        <div class="media-columns">
+          <div class="media-column">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/before.jpg" alt="SketchTrace — original prototype">
+            </div>
+            <p class="media-caption">Original prototype</p>
+          </div>
+          <div class="media-column">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/after.jpg" alt="SketchTrace — redesigned experience">
+            </div>
+            <p class="media-caption">Redesigned experience</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-section">
+        <h2>Rethinking the Experience</h2>
+        <p>The original prototype could generate diagrams, but several issues made it difficult to use:</p>
+        <ul class="prose-list">
+          <li>Complex diagrams quickly became overwhelming</li>
+          <li>Node-to-code navigation was unreliable</li>
+          <li>AI-generated Mermaid diagrams could fail</li>
+          <li>Preview loading lacked clear feedback</li>
+          <li>Too many instructions competed for attention</li>
+          <li>The project was not ready for public use</li>
+        </ul>
+        <p class="pull-quote">
+          How might I help someone move naturally between code, behavior, and structure without
+          making the interface itself more complicated?
+        </p>
+      </div>
+
+      <div class="project-section">
+        <h2>One Learning Loop</h2>
+        <div class="step-sequence">
+          <div class="step-sequence__item">
+            <span class="step-sequence__num">01</span>
+            <span class="step-sequence__label">Code</span>
+          </div>
+          <svg class="step-sequence__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="step-sequence__item">
+            <span class="step-sequence__num">02</span>
+            <span class="step-sequence__label">Preview</span>
+          </div>
+          <svg class="step-sequence__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="step-sequence__item">
+            <span class="step-sequence__num">03</span>
+            <span class="step-sequence__label">System Map</span>
+          </div>
+        </div>
+        <p>
+          I reorganized SketchTrace around three visible steps. The code editor stays on the
+          left while the live preview and system map sit on the right, allowing users to compare
+          implementation, output, and structure without changing screens.
+        </p>
+        <p>
+          The hierarchy follows the learning process: inspect the input, verify its behavior,
+          understand its structure.
+        </p>
+
+        <!-- SKETCHTRACE_WORKSPACE: full-width screenshot — code editor left,
+             live preview upper right, interactive system map lower right. -->
+        <div class="project-visual">
+          <img class="media" src="../assets/images/sketchtrace/workspace.jpg" alt="SketchTrace workspace — code editor, live preview, and interactive system map side by side">
+        </div>
+      </div>
+
+      <div class="project-section">
+        <h2>Testing With Real Creative Code</h2>
+        <p>
+          Simple UI examples did not demonstrate why structural visualization mattered, so I
+          created four more demanding creative-coding studies. These examples include animation
+          loops, recursion, geometry, pointer interaction, responsive behavior, and parallel
+          systems — they became both learning content and stress tests for the product.
+        </p>
+
+        <!-- SKETCHTRACE_EXAMPLES -->
+        <div class="sample-grid">
+          <div class="sample-item">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/example-particles.jpg" alt="Three.js Particle Terrain example in SketchTrace">
+            </div>
+            <p>Three.js Particle Terrain</p>
+          </div>
+          <div class="sample-item">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/example-type.jpg" alt="Kinetic Typographic Grid example in SketchTrace">
+            </div>
+            <p>Kinetic Typographic Grid</p>
+          </div>
+          <div class="sample-item">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/example-wind.jpg" alt="Recursive Wind Garden example in SketchTrace">
+            </div>
+            <p>Recursive Wind Garden</p>
+          </div>
+          <div class="sample-item">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/example-boids.jpg" alt="Boid Constellation Simulation example in SketchTrace">
+            </div>
+            <p>Boid Constellation Simulation</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-section">
+        <span class="section-number">01</span>
+        <h2>Showing Complexity Without Recreating the Code</h2>
+        <p>
+          My first diagrams tried to represent almost every meaningful function and
+          relationship. They were technically complete — but difficult to understand. I reduced
+          each example to roughly 11–13 essential nodes, prioritizing major systems and
+          dependencies rather than implementation detail.
+        </p>
+
+        <div class="contrast-pair">
+          <div>
+            <span class="contrast-label">Before</span>
+            <p>&ldquo;Show everything.&rdquo;</p>
+          </div>
+          <div>
+            <span class="contrast-label">After</span>
+            <p>&ldquo;Show enough to build a mental model.&rdquo;</p>
+          </div>
+        </div>
+
+        <!-- SKETCHTRACE_DIAGRAM_BEFORE_AFTER -->
+        <div class="media-columns">
+          <div class="media-column">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/diagram-before.jpg" alt="SketchTrace — an early, dense system-map diagram">
+            </div>
+            <p class="media-caption">Early diagram</p>
+          </div>
+          <div class="media-column">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/diagram-after.jpg" alt="SketchTrace — the simplified final system-map diagram">
+            </div>
+            <p class="media-caption">Simplified final diagram</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-section">
+        <span class="section-number">02</span>
+        <h2>Connecting Structure Back to Source</h2>
+        <p>
+          A system map is only useful if users can understand where each concept actually exists
+          in the program. I attached exact source ranges to rendered Mermaid nodes. Selecting a
+          node now automatically:
+        </p>
+        <ul class="prose-list">
+          <li>opens the JavaScript tab</li>
+          <li>highlights the relevant source range</li>
+          <li>scrolls it into view</li>
+          <li>focuses the editor immediately</li>
+        </ul>
+        <p>
+          This became the core bridge between visual explanation and actual implementation.
+        </p>
+
+        <!-- SKETCHTRACE_NODE_INTERACTION: the most important media element in
+             this case study — click a node in the system map, the
+             corresponding function highlights immediately in the editor. -->
+        <div class="project-visual">
+          <video class="scroll-autoplay" muted loop playsinline poster="../assets/images/sketchtrace/node-interaction.jpg">
+            <source src="../assets/videos/sketchtrace/node-interaction.webm" type="video/webm">
+            <source src="../assets/videos/sketchtrace/node-interaction.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="project-section">
+        <span class="section-number">03</span>
+        <h2>Making AI Reliable Enough for a Learning Tool</h2>
+        <p>
+          AI-generated Mermaid syntax was not always valid. When generation failed, the
+          visualization could disappear or expose syntax errors directly in the interface. I
+          added multiple layers of protection:
+        </p>
+        <ul class="prose-list">
+          <li>Mermaid validation before rendering</li>
+          <li>output sanitization</li>
+          <li>cleanup of temporary error elements</li>
+          <li>structural fallback diagrams when AI output fails</li>
+          <li>manually verified diagrams for built-in examples</li>
+        </ul>
+        <p>
+          The four included studies therefore load instantly without requiring AI. AI is
+          reserved for the task where it adds the most value: interpreting code supplied or
+          modified by the user.
+        </p>
+
+        <!-- SKETCHTRACE_AI_ARCHITECTURE -->
+        <div class="flow-diagram">
+          <div class="flow-diagram__item">User Code</div>
+          <span class="flow-diagram__arrow">↓</span>
+          <div class="flow-diagram__item">AI Interpretation</div>
+          <span class="flow-diagram__arrow">↓</span>
+          <div class="flow-diagram__item">Validation</div>
+          <span class="flow-diagram__arrow">↓</span>
+          <div class="flow-diagram__item">Mermaid Rendering</div>
+          <span class="flow-diagram__arrow">↓</span>
+          <div class="flow-diagram__item">Interactive Source Map</div>
+        </div>
+      </div>
+
+      <div class="project-section">
+        <h2>The Final Experience</h2>
+        <p>Users can now:</p>
+        <ul class="prose-list">
+          <li>Load a creative-coding example or paste their own code</li>
+          <li>Run it immediately in a live preview</li>
+          <li>Generate a concise structural map</li>
+          <li>Click nodes to navigate directly to source code</li>
+          <li>Pan, zoom, and resize the workspace while exploring</li>
+        </ul>
+        <p>
+          Resizable panels allow users to emphasize whichever representation — code, behavior,
+          or structure — is most useful at that moment.
+        </p>
+
+        <!-- SKETCHTRACE_PRODUCT_WALKTHROUGH: 20–30s walkthrough, muted with
+             visible controls so a visitor can scrub through it. -->
+        <div class="project-visual">
+          <video class="scroll-autoplay" muted loop controls playsinline poster="../assets/images/sketchtrace/walkthrough.jpg">
+            <source src="../assets/videos/sketchtrace/walkthrough.webm" type="video/webm">
+            <source src="../assets/videos/sketchtrace/walkthrough.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="project-section">
+        <h2>Designing for Focus</h2>
+        <p>
+          Because SketchTrace is designed for extended periods of inspection, I wanted the
+          interface to stay visually quiet. I used restrained neutral colors, a low-saturation
+          green background, Maven Pro typography, and subtle glass-like panels so the interface
+          supports the code and artwork rather than competing with them.
+        </p>
+        <p>Resizable cards give users control over which layer of the system they want to inspect.</p>
+
+        <!-- SKETCHTRACE_UI_DETAILS -->
+        <div class="sample-grid">
+          <div class="sample-item">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/detail-cards.jpg" alt="SketchTrace UI detail — resizable panel cards">
+            </div>
+            <p>Resizable panel cards</p>
+          </div>
+          <div class="sample-item">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/detail-node.jpg" alt="SketchTrace UI detail — a selected system-map node">
+            </div>
+            <p>Selected node state</p>
+          </div>
+          <div class="sample-item">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/detail-highlight.jpg" alt="SketchTrace UI detail — highlighted source range">
+            </div>
+            <p>Source highlighting</p>
+          </div>
+          <div class="sample-item">
+            <div class="project-visual">
+              <img class="media" src="../assets/images/sketchtrace/detail-hover.jpg" alt="SketchTrace UI detail — hover state on a system-map node">
+            </div>
+            <p>Hover state</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-section">
+        <h2>Building It End-to-End</h2>
+        <div class="two-col-list">
+          <div>
+            <h3>Product</h3>
+            <ul class="prose-list">
+              <li>Product audit</li>
+              <li>Information architecture</li>
+              <li>Interaction design</li>
+              <li>Visual system</li>
+              <li>Creative-code example design</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Engineering</h3>
+            <ul class="prose-list">
+              <li>React frontend</li>
+              <li>Express API</li>
+              <li>OpenAI integration</li>
+              <li>Mermaid rendering</li>
+              <li>CodeMirror source navigation</li>
+              <li>Authentication and API-key handling</li>
+              <li>Testing and deployment</li>
+            </ul>
+          </div>
+        </div>
+        <p>
+          Working across both design and engineering allowed me to prototype decisions directly
+          in the functioning product instead of separating design intent from technical
+          constraints.
+        </p>
+      </div>
+
+      <div class="project-section">
+        <h2>Outcome</h2>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <span class="stat-number">4</span>
+            <span class="stat-label">Complete creative-coding studies</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">11–13</span>
+            <span class="stat-label">Focused system nodes per example</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">Instant</span>
+            <span class="stat-label">Pre-verified maps for included examples</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">Exact</span>
+            <span class="stat-label">Source-range navigation</span>
+          </div>
+        </div>
+        <ul class="prose-list">
+          <li>Verified Mermaid rendering across all included examples</li>
+          <li>Responsive, resizable workspace</li>
+          <li>Public GitHub Pages deployment</li>
+          <li>No exposed API credentials</li>
+        </ul>
+        <p class="big-line">Code → Behavior → Structure</p>
+        <p>
+          Instead of simply generating diagrams, SketchTrace uses visualization as a navigation
+          and learning layer for unfamiliar code.
+        </p>
+      </div>
+
+      <div class="project-section">
+        <h2>What I'd Test Next</h2>
+        <p>
+          The next phase would focus on real learners rather than adding more features. I would
+          test whether SketchTrace helps creative-coding learners:
+        </p>
+        <ul class="prose-list">
+          <li>locate important functions faster</li>
+          <li>explain unfamiliar sketches more accurately</li>
+          <li>understand relationships between systems</li>
+          <li>navigate between visual behavior and implementation with less effort</li>
+        </ul>
+        <p class="pull-quote">
+          The most important future metric is not how many diagrams users generate. It is
+          whether they understand unfamiliar code better after using one.
+        </p>
+      </div>
+
+      <div class="project-section">
+        <h2>Explore SketchTrace</h2>
+        <div class="link-button-row">
+          <a href="https://luluwangyy.github.io/final-dti-flowchart/" class="link-button" target="_blank" rel="noopener" aria-label="View the SketchTrace live demo (opens in a new tab)">
+            <span>View Live Demo</span>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="https://github.com/luluwangyy/final-dti-flowchart/tree/codex/live-demo-release" class="link-button" target="_blank" rel="noopener" aria-label="View the SketchTrace source on GitHub (opens in a new tab)">
+            <span>View GitHub</span>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      </section>
+    </div>
+
+    <section class="related-projects">
+      <p class="section-label">Related Projects</p>
+      <div class="related-grid">
+        <a href="generative-disco.html" class="related-card">
+          <div>
+            <span class="related-card-label">Previous Project</span>
+            <span class="related-card-title">Generative Disco</span>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="nomi.html" class="related-card">
+          <div>
+            <span class="related-card-label">Next Project</span>
+            <span class="related-card-title">Nomi</span>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 Yueyi Wang</span>
+      <div class="footer-links">
+        <a href="mailto:lulu.yueyi.wang@gmail.com">Email</a>
+        <a href="https://github.com/luluwangyy" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
