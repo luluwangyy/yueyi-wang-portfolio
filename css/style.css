@@ -1128,6 +1128,7 @@ a:focus-visible, button:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  margin-top: 1.75rem;
 }
 
 .link-button-row .link-button {

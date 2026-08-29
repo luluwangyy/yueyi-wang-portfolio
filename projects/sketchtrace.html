@@ -35,7 +35,7 @@
   <main>
     <div class="project-detail-visual">
       <div class="project-visual">
-        <img src="../assets/images/sketchtrace/hero.jpg" alt="SketchTrace — code editor, live preview, and system map side by side" loading="lazy">
+        <img src="../assets/images/sketchtrace/cover.jpg" alt="SketchTrace — code editor, live preview, and system map side by side" loading="lazy">
       </div>
     </div>
 
@@ -99,6 +99,17 @@
         </a>
       </div>
 
+      <div class="project-visual">
+        <video class="media" controls playsinline poster="../assets/images/sketchtrace/hero.jpg">
+          <source src="../assets/videos/sketchtrace/hero.webm" type="video/webm">
+          <source src="../assets/videos/sketchtrace/hero.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="media-caption">
+        The system map turns unfamiliar code into something users can navigate: selecting a
+        concept reveals the exact source code responsible for it.
+      </p>
+
       <div class="project-section">
         <h2>The Problem</h2>
         <p>
@@ -120,23 +131,6 @@
         <p>SketchTrace helps users move between three representations of the same program:</p>
         <p class="big-line">Code → Behavior → Structure</p>
         <p>Instead of replacing the learning process, AI becomes a way into it.</p>
-      </div>
-
-      <div class="project-section">
-        <h2>Rethinking the Experience</h2>
-        <p>The original prototype could generate diagrams, but several issues made it difficult to use:</p>
-        <ul class="prose-list">
-          <li>Complex diagrams quickly became overwhelming</li>
-          <li>Node-to-code navigation was unreliable</li>
-          <li>AI-generated Mermaid diagrams could fail</li>
-          <li>Preview loading lacked clear feedback</li>
-          <li>Too many instructions competed for attention</li>
-          <li>The project was not ready for public use</li>
-        </ul>
-        <p class="pull-quote">
-          How might AI help people understand the code it generates, rather than simply generate
-          more of it?
-        </p>
       </div>
 
       <div class="project-section">
@@ -174,17 +168,6 @@
         <p>
           Rather than asking users to accept AI-generated code as a black box, SketchTrace gives
           them multiple ways to interrogate it.
-        </p>
-
-        <div class="project-visual">
-          <video class="media" controls playsinline poster="../assets/images/sketchtrace/hero.jpg">
-            <source src="../assets/videos/sketchtrace/hero.webm" type="video/webm">
-            <source src="../assets/videos/sketchtrace/hero.mp4" type="video/mp4">
-          </video>
-        </div>
-        <p class="media-caption">
-          The system map turns unfamiliar code into something users can navigate: selecting a
-          concept reveals the exact source code responsible for it.
         </p>
       </div>
 
@@ -295,17 +278,6 @@
       </div>
 
       <div class="project-section">
-        <h2>Designing for Focus</h2>
-        <p>
-          Because SketchTrace is designed for extended periods of inspection, I wanted the
-          interface to stay visually quiet. I used restrained neutral colors, a low-saturation
-          green background, Maven Pro typography, and subtle glass-like panels so the interface
-          supports the code and artwork rather than competing with them.
-        </p>
-        <p>Resizable cards give users control over which layer of the system they want to inspect.</p>
-      </div>
-
-      <div class="project-section">
         <h2>Building It End-to-End</h2>
         <div class="two-col-list">
           <div>
@@ -340,6 +312,9 @@
 
       <div class="project-section">
         <h2>Explore SketchTrace</h2>
+        <div class="project-visual visual-auto">
+          <img class="media" src="../assets/images/sketchtrace/hero.jpg" alt="SketchTrace — code editor, live preview, and system map side by side" loading="lazy">
+        </div>
         <div class="link-button-row">
           <a href="https://luluwangyy.github.io/final-dti-flowchart/" class="link-button" target="_blank" rel="noopener" aria-label="View the SketchTrace live demo (opens in a new tab)">
             <span>View Live Demo</span>
