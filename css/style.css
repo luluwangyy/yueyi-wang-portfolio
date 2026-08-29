@@ -963,15 +963,18 @@ a:focus-visible, button:focus-visible {
   background: rgba(0, 0, 0, 0.85);
 }
 
-/* For images whose own aspect ratio should be kept as-is (no cropping) —
-   the box sizes to the image instead of the image being cover-fit into a
-   fixed box. */
-.project-section .project-visual.visual-auto {
+/* For images/videos whose own aspect ratio should be kept as-is (no
+   cropping) — the box sizes to the media instead of it being cover-fit
+   into a fixed box. Not scoped to .project-section so it also works on
+   media placed directly in .project-detail-body. */
+.project-visual.visual-auto {
   position: static;
   aspect-ratio: auto;
+  margin-top: 1.5rem;
 }
 
-.project-visual.visual-auto img {
+.project-visual.visual-auto img,
+.project-visual.visual-auto video {
   position: static;
   width: 100%;
   height: auto;
