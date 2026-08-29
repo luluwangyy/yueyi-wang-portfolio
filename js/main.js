@@ -188,12 +188,21 @@ document.querySelectorAll(".project-card").forEach((card) => {
 // as the reader moves down the page).
 const scrollAutoplayVideos = document.querySelectorAll("video.scroll-autoplay");
 if (scrollAutoplayVideos.length) {
+  // If a video hasn't buffered enough data yet when it scrolls into view,
+  // the browser can silently reject that first play() and nothing retries
+  // it — the video just sits there paused. Track which videos are
+  // "supposed" to be playing and retry once they actually have data.
+  const wantsToPlay = new WeakSet();
+  const tryPlay = (video) => { video.play().catch(() => {}); };
+
   const scrollPlayObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.play().catch(() => {});
+          wantsToPlay.add(entry.target);
+          tryPlay(entry.target);
         } else {
+          wantsToPlay.delete(entry.target);
           entry.target.pause();
         }
       });
@@ -201,7 +210,14 @@ if (scrollAutoplayVideos.length) {
     { threshold: 0.5 }
   );
 
-  scrollAutoplayVideos.forEach((video) => scrollPlayObserver.observe(video));
+  scrollAutoplayVideos.forEach((video) => {
+    scrollPlayObserver.observe(video);
+    ["loadeddata", "canplay"].forEach((eventName) => {
+      video.addEventListener(eventName, () => {
+        if (wantsToPlay.has(video) && video.paused) tryPlay(video);
+      });
+    });
+  });
 }
 
 // YouTube/Vimeo embeds: load the real iframe only once the facade is

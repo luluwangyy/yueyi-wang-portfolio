@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SketchTrace — Yueyi Wang</title>
-  <meta name="description" content="SketchTrace: an interactive learning workspace that connects creative code, live behavior, and clickable system maps.">
+  <meta name="description" content="SketchTrace: an interactive learning workspace that helps people understand the code AI can generate in seconds.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,24 +33,16 @@
   </header>
 
   <main>
-    <!-- SKETCHTRACE_HERO_VIDEO: 8–15s loop — load sketch -> preview runs ->
-         system map appears -> click node -> source highlights.
-         Swap in assets/videos/sketchtrace/hero.mp4 (+ .webm) and a poster at
-         assets/images/sketchtrace/hero.jpg. Until then this hides itself
-         gracefully (see js/main.js) and the neutral card background shows. -->
     <div class="project-detail-visual">
       <div class="project-visual">
-        <video class="scroll-autoplay" muted loop playsinline poster="../assets/images/sketchtrace/hero.jpg">
-          <source src="../assets/videos/sketchtrace/hero.webm" type="video/webm">
-          <source src="../assets/videos/sketchtrace/hero.mp4" type="video/mp4">
-        </video>
+        <img src="../assets/images/sketchtrace/hero.jpg" alt="SketchTrace — code editor, live preview, and system map side by side" loading="lazy">
       </div>
     </div>
 
     <section class="project-detail-hero">
       <a href="../index.html#projects" class="back-link">&larr; Back to work</a>
       <h1>SketchTrace</h1>
-      <p class="project-subtitle">Making complex creative code easier to understand.</p>
+      <p class="project-subtitle">Helping people understand the code AI can generate in seconds.</p>
     </section>
 
     <div class="project-detail-split">
@@ -83,9 +75,13 @@
 
       <section class="project-detail-body">
       <p>
-        SketchTrace transforms creative JavaScript into an interactive learning workspace,
-        combining source code, a live preview, and a clickable system map that links directly
-        back to relevant lines of code.
+        AI can now turn an idea into working code almost instantly. But generating code and
+        understanding it are two different things.
+      </p>
+      <p>
+        SketchTrace is an interactive learning workspace that connects source code, live
+        behavior, and clickable system maps — helping creative coders inspect how unfamiliar
+        programs actually work.
       </p>
 
       <div class="link-button-row">
@@ -106,33 +102,24 @@
       <div class="project-section">
         <h2>The Problem</h2>
         <p>
-          Creative coding projects can look simple when they run while hiding surprisingly
-          complex systems underneath. Animation loops, interaction states, geometry, recursive
-          functions, and rendering logic may be distributed across hundreds of lines of code.
+          AI has dramatically lowered the barrier to writing code. A user can describe an
+          interaction, press enter, and receive hundreds of lines of working JavaScript within
+          seconds. But that convenience creates another problem:
         </p>
+        <p class="big-line">Being able to generate code does not mean being able to understand it.</p>
         <p>
-          Most learning tools separate code from behavior. Users read the implementation in one
-          place, see the visual result somewhere else, and have to mentally reconstruct how
-          everything connects. I built SketchTrace to connect three forms of understanding in
-          one workspace:
+          For creative coders especially, unfamiliar programs may contain animation loops,
+          interaction states, geometry, recursive functions, and rendering logic distributed
+          across hundreds of lines. The visible result might be immediately understandable. The
+          system behind it often is not.
         </p>
-        <p class="big-line">What the code says → What it produces → How its systems relate</p>
-
-        <!-- SKETCHTRACE_BEFORE_AFTER -->
-        <div class="media-columns">
-          <div class="media-column">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/before.jpg" alt="SketchTrace — original prototype">
-            </div>
-            <p class="media-caption">Original prototype</p>
-          </div>
-          <div class="media-column">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/after.jpg" alt="SketchTrace — redesigned experience">
-            </div>
-            <p class="media-caption">Redesigned experience</p>
-          </div>
-        </div>
+        <p>Most AI coding tools optimize for:</p>
+        <p class="big-line">Prompt → Generate → Run</p>
+        <p>I wanted to explore a different loop:</p>
+        <p class="big-line">Generate → Inspect → Understand → Modify</p>
+        <p>SketchTrace helps users move between three representations of the same program:</p>
+        <p class="big-line">Code → Behavior → Structure</p>
+        <p>Instead of replacing the learning process, AI becomes a way into it.</p>
       </div>
 
       <div class="project-section">
@@ -147,13 +134,13 @@
           <li>The project was not ready for public use</li>
         </ul>
         <p class="pull-quote">
-          How might I help someone move naturally between code, behavior, and structure without
-          making the interface itself more complicated?
+          How might AI help people understand the code it generates, rather than simply generate
+          more of it?
         </p>
       </div>
 
       <div class="project-section">
-        <h2>One Learning Loop</h2>
+        <h2>From Generation to Understanding</h2>
         <div class="step-sequence">
           <div class="step-sequence__item">
             <span class="step-sequence__num">01</span>
@@ -175,20 +162,30 @@
           </div>
         </div>
         <p>
-          I reorganized SketchTrace around three visible steps. The code editor stays on the
-          left while the live preview and system map sit on the right, allowing users to compare
-          implementation, output, and structure without changing screens.
+          SketchTrace reorganizes the experience around understanding rather than generation.
+          Users can inspect the source code, immediately see what it produces, and then use a
+          structural map to understand how the major systems relate.
         </p>
         <p>
-          The hierarchy follows the learning process: inspect the input, verify its behavior,
-          understand its structure.
+          The three views stay visible together so users can continually move between
+          implementation, behavior, and structure.
+        </p>
+        <p class="big-line">Read it → See it → Trace it</p>
+        <p>
+          Rather than asking users to accept AI-generated code as a black box, SketchTrace gives
+          them multiple ways to interrogate it.
         </p>
 
-        <!-- SKETCHTRACE_WORKSPACE: full-width screenshot — code editor left,
-             live preview upper right, interactive system map lower right. -->
         <div class="project-visual">
-          <img class="media" src="../assets/images/sketchtrace/workspace.jpg" alt="SketchTrace workspace — code editor, live preview, and interactive system map side by side">
+          <video class="media" controls playsinline poster="../assets/images/sketchtrace/hero.jpg">
+            <source src="../assets/videos/sketchtrace/hero.webm" type="video/webm">
+            <source src="../assets/videos/sketchtrace/hero.mp4" type="video/mp4">
+          </video>
         </div>
+        <p class="media-caption">
+          The system map turns unfamiliar code into something users can navigate: selecting a
+          concept reveals the exact source code responsible for it.
+        </p>
       </div>
 
       <div class="project-section">
@@ -199,34 +196,12 @@
           loops, recursion, geometry, pointer interaction, responsive behavior, and parallel
           systems — they became both learning content and stress tests for the product.
         </p>
-
-        <!-- SKETCHTRACE_EXAMPLES -->
-        <div class="sample-grid">
-          <div class="sample-item">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/example-particles.jpg" alt="Three.js Particle Terrain example in SketchTrace">
-            </div>
-            <p>Three.js Particle Terrain</p>
-          </div>
-          <div class="sample-item">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/example-type.jpg" alt="Kinetic Typographic Grid example in SketchTrace">
-            </div>
-            <p>Kinetic Typographic Grid</p>
-          </div>
-          <div class="sample-item">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/example-wind.jpg" alt="Recursive Wind Garden example in SketchTrace">
-            </div>
-            <p>Recursive Wind Garden</p>
-          </div>
-          <div class="sample-item">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/example-boids.jpg" alt="Boid Constellation Simulation example in SketchTrace">
-            </div>
-            <p>Boid Constellation Simulation</p>
-          </div>
-        </div>
+        <ul class="prose-list">
+          <li>Three.js Particle Terrain</li>
+          <li>Kinetic Typographic Grid</li>
+          <li>Recursive Wind Garden</li>
+          <li>Boid Constellation Simulation</li>
+        </ul>
       </div>
 
       <div class="project-section">
@@ -249,75 +224,42 @@
             <p>&ldquo;Show enough to build a mental model.&rdquo;</p>
           </div>
         </div>
-
-        <!-- SKETCHTRACE_DIAGRAM_BEFORE_AFTER -->
-        <div class="media-columns">
-          <div class="media-column">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/diagram-before.jpg" alt="SketchTrace — an early, dense system-map diagram">
-            </div>
-            <p class="media-caption">Early diagram</p>
-          </div>
-          <div class="media-column">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/diagram-after.jpg" alt="SketchTrace — the simplified final system-map diagram">
-            </div>
-            <p class="media-caption">Simplified final diagram</p>
-          </div>
-        </div>
       </div>
 
       <div class="project-section">
         <span class="section-number">02</span>
-        <h2>Connecting Structure Back to Source</h2>
+        <h2>Connecting Explanation Back to the Real Code</h2>
         <p>
-          A system map is only useful if users can understand where each concept actually exists
-          in the program. I attached exact source ranges to rendered Mermaid nodes. Selecting a
-          node now automatically:
+          AI can explain code in natural language, but explanations can become another
+          abstraction users have to trust. I wanted every explanation in SketchTrace to remain
+          connected to the actual program.
         </p>
+        <p>Each system-map node therefore contains an exact source range. Selecting a node automatically:</p>
         <ul class="prose-list">
-          <li>opens the JavaScript tab</li>
-          <li>highlights the relevant source range</li>
+          <li>opens the relevant JavaScript</li>
+          <li>highlights the corresponding source</li>
           <li>scrolls it into view</li>
-          <li>focuses the editor immediately</li>
+          <li>focuses the editor</li>
         </ul>
         <p>
-          This became the core bridge between visual explanation and actual implementation.
+          The user never has to choose between an AI explanation and the code itself. The
+          explanation becomes a doorway back into the source.
         </p>
-
-        <!-- SKETCHTRACE_NODE_INTERACTION: the most important media element in
-             this case study — click a node in the system map, the
-             corresponding function highlights immediately in the editor. -->
-        <div class="project-visual">
-          <video class="scroll-autoplay" muted loop playsinline poster="../assets/images/sketchtrace/node-interaction.jpg">
-            <source src="../assets/videos/sketchtrace/node-interaction.webm" type="video/webm">
-            <source src="../assets/videos/sketchtrace/node-interaction.mp4" type="video/mp4">
-          </video>
-        </div>
       </div>
 
       <div class="project-section">
         <span class="section-number">03</span>
-        <h2>Making AI Reliable Enough for a Learning Tool</h2>
+        <h2>Using AI as a Teacher, Not an Autopilot</h2>
         <p>
-          AI-generated Mermaid syntax was not always valid. When generation failed, the
-          visualization could disappear or expose syntax errors directly in the interface. I
-          added multiple layers of protection:
+          Many AI coding products use the model primarily to produce more code. In SketchTrace, I
+          intentionally gave AI a different responsibility: interpretation.
         </p>
-        <ul class="prose-list">
-          <li>Mermaid validation before rendering</li>
-          <li>output sanitization</li>
-          <li>cleanup of temporary error elements</li>
-          <li>structural fallback diagrams when AI output fails</li>
-          <li>manually verified diagrams for built-in examples</li>
-        </ul>
         <p>
-          The four included studies therefore load instantly without requiring AI. AI is
-          reserved for the task where it adds the most value: interpreting code supplied or
-          modified by the user.
+          When users provide unfamiliar or modified code, AI identifies its important systems and
+          relationships. That interpretation is then validated and transformed into an
+          interactive structural map.
         </p>
 
-        <!-- SKETCHTRACE_AI_ARCHITECTURE -->
         <div class="flow-diagram">
           <div class="flow-diagram__item">User Code</div>
           <span class="flow-diagram__arrow">↓</span>
@@ -325,10 +267,15 @@
           <span class="flow-diagram__arrow">↓</span>
           <div class="flow-diagram__item">Validation</div>
           <span class="flow-diagram__arrow">↓</span>
-          <div class="flow-diagram__item">Mermaid Rendering</div>
+          <div class="flow-diagram__item">Interactive System Map</div>
           <span class="flow-diagram__arrow">↓</span>
-          <div class="flow-diagram__item">Interactive Source Map</div>
+          <div class="flow-diagram__item">Source Code</div>
         </div>
+
+        <p>
+          The goal is not to hide implementation behind AI. It is to use AI to create an entry
+          point into implementation.
+        </p>
       </div>
 
       <div class="project-section">
@@ -345,15 +292,6 @@
           Resizable panels allow users to emphasize whichever representation — code, behavior,
           or structure — is most useful at that moment.
         </p>
-
-        <!-- SKETCHTRACE_PRODUCT_WALKTHROUGH: 20–30s walkthrough, muted with
-             visible controls so a visitor can scrub through it. -->
-        <div class="project-visual">
-          <video class="scroll-autoplay" muted loop controls playsinline poster="../assets/images/sketchtrace/walkthrough.jpg">
-            <source src="../assets/videos/sketchtrace/walkthrough.webm" type="video/webm">
-            <source src="../assets/videos/sketchtrace/walkthrough.mp4" type="video/mp4">
-          </video>
-        </div>
       </div>
 
       <div class="project-section">
@@ -365,34 +303,6 @@
           supports the code and artwork rather than competing with them.
         </p>
         <p>Resizable cards give users control over which layer of the system they want to inspect.</p>
-
-        <!-- SKETCHTRACE_UI_DETAILS -->
-        <div class="sample-grid">
-          <div class="sample-item">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/detail-cards.jpg" alt="SketchTrace UI detail — resizable panel cards">
-            </div>
-            <p>Resizable panel cards</p>
-          </div>
-          <div class="sample-item">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/detail-node.jpg" alt="SketchTrace UI detail — a selected system-map node">
-            </div>
-            <p>Selected node state</p>
-          </div>
-          <div class="sample-item">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/detail-highlight.jpg" alt="SketchTrace UI detail — highlighted source range">
-            </div>
-            <p>Source highlighting</p>
-          </div>
-          <div class="sample-item">
-            <div class="project-visual">
-              <img class="media" src="../assets/images/sketchtrace/detail-hover.jpg" alt="SketchTrace UI detail — hover state on a system-map node">
-            </div>
-            <p>Hover state</p>
-          </div>
-        </div>
       </div>
 
       <div class="project-section">
@@ -454,28 +364,36 @@
           <li>Public GitHub Pages deployment</li>
           <li>No exposed API credentials</li>
         </ul>
-        <p class="big-line">Code → Behavior → Structure</p>
+        <p class="big-line">From one-click generation to active understanding.</p>
         <p>
-          Instead of simply generating diagrams, SketchTrace uses visualization as a navigation
-          and learning layer for unfamiliar code.
+          SketchTrace explores a different role for AI in programming tools. Instead of asking,
+          &ldquo;How quickly can AI produce the code for me?&rdquo; the product asks, &ldquo;How
+          can AI help me understand what I now have?&rdquo;
         </p>
+        <p>
+          The result is a workspace where visualization does not replace source code — it helps
+          users return to it.
+        </p>
+        <p class="big-line">Code → Behavior → Structure → Understanding</p>
       </div>
 
       <div class="project-section">
         <h2>What I'd Test Next</h2>
         <p>
-          The next phase would focus on real learners rather than adding more features. I would
-          test whether SketchTrace helps creative-coding learners:
+          The next phase would test whether this interaction actually changes how people learn
+          from AI-generated code. I would study whether users can:
         </p>
         <ul class="prose-list">
+          <li>explain unfamiliar AI-generated programs more accurately</li>
           <li>locate important functions faster</li>
-          <li>explain unfamiliar sketches more accurately</li>
-          <li>understand relationships between systems</li>
-          <li>navigate between visual behavior and implementation with less effort</li>
+          <li>predict how changing one system will affect another</li>
+          <li>modify generated code with greater confidence</li>
+          <li>rely less on repeatedly prompting AI to make changes for them</li>
         </ul>
         <p class="pull-quote">
-          The most important future metric is not how many diagrams users generate. It is
-          whether they understand unfamiliar code better after using one.
+          The most important metric would not be how much code SketchTrace helps someone
+          generate. It would be how much of that code they can understand and eventually change
+          themselves.
         </p>
       </div>
 
