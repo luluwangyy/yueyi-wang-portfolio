@@ -1,3 +1,132 @@
+// A restrained synthesized sound language for hover interactions. Sound stays
+// opt-in: the homepage "enter with sound" action enables it, and the muted
+// entry keeps it off. The preference follows navigation within the portfolio.
+const portfolioUISounds = (() => {
+  const preferenceKey = "portfolio-ui-sound";
+  const frequencies = [330, 392, 466, 554];
+  let context = null;
+  let master = null;
+  let enabled = false;
+  let lastPlayedAt = 0;
+
+  try {
+    enabled = sessionStorage.getItem(preferenceKey) === "on";
+  } catch {
+    // Some file:// previews do not expose session storage.
+  }
+
+  function remember(value) {
+    try {
+      sessionStorage.setItem(preferenceKey, value ? "on" : "off");
+    } catch {
+      // Sound still works for the current page when storage is unavailable.
+    }
+  }
+
+  function ensureContext() {
+    if (context) return context;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return null;
+
+    context = new AudioContextClass();
+    master = context.createGain();
+    master.gain.value = 0.34;
+    master.connect(context.destination);
+    return context;
+  }
+
+  async function enable() {
+    enabled = true;
+    remember(true);
+    const audio = ensureContext();
+    if (!audio) return false;
+    if (audio.state !== "running") await audio.resume().catch(() => {});
+    return audio.state === "running";
+  }
+
+  function disable() {
+    enabled = false;
+    remember(false);
+    if (context?.state === "running") context.suspend().catch(() => {});
+  }
+
+  function synthPing({ frequency, endFrequency, duration, overtone = 2.01 }) {
+    if (!context || !master || context.state !== "running") return;
+
+    const now = context.currentTime;
+    const primary = context.createOscillator();
+    const shimmer = context.createOscillator();
+    const primaryGain = context.createGain();
+    const shimmerGain = context.createGain();
+    const filter = context.createBiquadFilter();
+
+    primary.type = "sine";
+    primary.frequency.setValueAtTime(frequency, now);
+    primary.frequency.exponentialRampToValueAtTime(endFrequency, now + duration);
+    shimmer.type = "triangle";
+    shimmer.frequency.setValueAtTime(frequency * overtone, now);
+    shimmer.frequency.exponentialRampToValueAtTime(endFrequency * overtone, now + duration);
+
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(1850, now);
+    filter.frequency.exponentialRampToValueAtTime(1100, now + duration);
+
+    primaryGain.gain.setValueAtTime(0.0001, now);
+    primaryGain.gain.exponentialRampToValueAtTime(0.05, now + 0.012);
+    primaryGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+    shimmerGain.gain.setValueAtTime(0.0001, now);
+    shimmerGain.gain.exponentialRampToValueAtTime(0.014, now + 0.018);
+    shimmerGain.gain.exponentialRampToValueAtTime(0.0001, now + duration * 0.82);
+
+    primary.connect(primaryGain);
+    shimmer.connect(shimmerGain);
+    primaryGain.connect(filter);
+    shimmerGain.connect(filter);
+    filter.connect(master);
+    primary.start(now);
+    shimmer.start(now);
+    primary.stop(now + duration + 0.02);
+    shimmer.stop(now + duration + 0.02);
+  }
+
+  function play(kind, index = 0) {
+    if (!enabled) return;
+    const audio = ensureContext();
+    if (!audio) return;
+
+    const start = () => {
+      const now = performance.now();
+      if (now - lastPlayedAt < 70) return;
+      lastPlayedAt = now;
+
+      if (kind === "interactive") {
+        synthPing({ frequency: 415, endFrequency: 659, duration: 0.17, overtone: 2.015 });
+        return;
+      }
+
+      const frequency = frequencies[index % frequencies.length];
+      synthPing({ frequency, endFrequency: frequency * 1.12, duration: 0.095 });
+    };
+
+    if (audio.state === "running") {
+      start();
+    } else {
+      audio.resume().then(() => {
+        if (audio.state === "running") start();
+      }).catch(() => {});
+    }
+  }
+
+  document.addEventListener("pointerdown", (event) => {
+    if (!enabled || event.target.closest?.("[data-entry-muted]")) return;
+    enable();
+  }, { capture: true });
+
+  return { enable, disable, play };
+})();
+
+window.portfolioUISounds = portfolioUISounds;
+
 // Reveal project cards as they enter the viewport
 const revealTargets = document.querySelectorAll(".project-card");
 
@@ -18,7 +147,7 @@ if (revealTargets.length) {
 }
 
 // Collapsed nav (project detail pages): click/tap the circular trigger to
-// toggle the Home/About switcher open. Clicking outside, or the trigger
+// toggle the Home/Work/Make/About switcher open. Clicking outside, or the trigger
 // again, closes it.
 document.querySelectorAll(".nav-morph").forEach((morph) => {
   const trigger = morph.querySelector(".nav-morph__trigger");
@@ -38,7 +167,7 @@ document.querySelectorAll(".nav-morph").forEach((morph) => {
   });
 });
 
-// Segmented control (Home/About nav): a white pill slides beneath whichever
+// Segmented control (primary navigation): a white pill slides beneath whichever
 // item is hovered, and rests under the active item (or stays hidden if
 // neither is active, as on project detail pages).
 document.querySelectorAll(".segmented-control").forEach((nav) => {
@@ -55,8 +184,11 @@ document.querySelectorAll(".segmented-control").forEach((nav) => {
   const activeItem = nav.querySelector(".segmented-control__item.is-active");
   if (activeItem) moveTo(activeItem);
 
-  items.forEach((item) => {
-    item.addEventListener("mouseenter", () => moveTo(item));
+  items.forEach((item, index) => {
+    item.addEventListener("mouseenter", () => {
+      moveTo(item);
+      portfolioUISounds.play("nav", index);
+    });
   });
 
   nav.addEventListener("mouseleave", () => {
@@ -66,6 +198,10 @@ document.querySelectorAll(".segmented-control").forEach((nav) => {
       pill.style.opacity = "0";
     }
   });
+});
+
+document.querySelector(".home-interactive")?.addEventListener("pointerenter", () => {
+  portfolioUISounds.play("interactive");
 });
 
 // Selected Work filter pills: show only cards whose data-tags include the

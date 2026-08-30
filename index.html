@@ -3,17 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yueyi Lulu Wang — Engineer and Artist</title>
-  <meta name="description" content="Portfolio of Yueyi Lulu Wang, an engineer and designer working across code, design, and interactive media.">
+  <title>Yueyi Lulu Wang — Design Engineer &amp; Creative Technologist</title>
+  <meta name="description" content="Portfolio of Yueyi Lulu Wang, a design engineer who prototypes &amp; builds interactive experiences across digital and physical interfaces.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;family=Averia+Serif+Libre:ital,wght@0,300;1,300&amp;family=VT323&amp;display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="home-page entry-pending">
+
+  <div class="entry-portal" data-entry-portal role="dialog" aria-modal="true" aria-label="Enter Yueyi Lulu Wang’s portfolio">
+    <div class="entry-portal__field" aria-hidden="true"></div>
+
+    <div class="entry-portal__content">
+      <button class="entry-portal__sound" type="button" data-entry-sound>
+        <span class="entry-portal__scroll-mark" aria-hidden="true"><i></i></span>
+        <span>Scroll to enter with sound</span>
+      </button>
+
+      <button class="entry-portal__muted" type="button" data-entry-muted>Enter muted</button>
+    </div>
+  </div>
 
   <div class="home-top">
     <div id="liquid-ether-root" class="liquid-ether-root" aria-hidden="true"></div>
@@ -22,281 +35,63 @@
       <div class="header-inner">
         <nav class="segmented-control" aria-label="Primary">
           <span class="segmented-control__pill" aria-hidden="true"></span>
-          <a href="#projects" class="segmented-control__item is-active">Home</a>
+          <a href="index.html" class="segmented-control__item is-active" aria-current="page">Home</a>
+          <a href="work.html" class="segmented-control__item">Work</a>
+          <a href="make.html" class="segmented-control__item">Make</a>
           <a href="about.html" class="segmented-control__item">About</a>
         </nav>
       </div>
     </header>
 
-    <section id="top" class="hero">
-      <div class="hero-inner">
-        <h1 class="hero-title">
-          <span class="mono-accent">Design</span>
-          <span class="symbol-cycle" aria-hidden="true">
-            <span class="sym sym-amp">&amp;</span>
-            <span class="sym sym-plus">+</span>
-            <span class="sym sym-x">X</span>
-            <span class="sym sym-tilde">~</span>
-          </span>
-          <span class="mono-accent">Engineer</span>
-        </h1>
-        <p class="hero-sub">
-          Hi, I'm Yueyi Lulu Wang. I design and prototype interactive experiences across generative AI, embodied AI, and digital-physical environments.
-        </p>
-        <button
-          type="button"
-          class="specular-button specular-button--lg hero-cta"
-          data-scroll-target="#projects"
-          style="--sb-radius:999px; --sb-tint:#ffffff; --sb-tint-opacity:0; --sb-blur:0px; --sb-text-color:#232a35;"
-          data-sb-line-color="#2f4a68"
-          data-sb-base-color="#a9a196"
-          data-sb-intensity="1"
-          data-sb-shine-size="10"
-          data-sb-shine-fade="40"
-          data-sb-thickness="1"
-          data-sb-speed="0.35"
-          data-sb-proximity="250"
-        >
-          <span class="specular-button__fx" aria-hidden="true"></span>
-          <span class="specular-button__label">
-            See Selected Work
-            <svg class="hero-cta-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M8 3v9M4 8.5 8 12.5 12 8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </span>
-        </button>
-      </div>
-    </section>
+    <main>
+      <section id="top" class="hero hero--statement">
+        <div class="hero-inner hero-inner--statement">
+          <h1
+            class="home-statement"
+            data-home-intro
+            aria-label="I’m a design engineer who prototypes and builds interactive experiences across digital and physical interfaces."
+          >
+            I’m a <span class="home-role">design engineer</span> who
+            <a class="hero-verbs" href="work.html" aria-label="View design engineering work">
+              <span>prototypes</span> &amp; <span>builds</span>
+            </a>
+            <span class="home-interactive">interactive experiences</span> across digital and physical interfaces.
+            <button
+              class="home-intro-sound"
+              type="button"
+              data-home-intro-sound
+              aria-label="Replay intro with sound"
+              title="Replay with sound"
+            >
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M3.5 8h3l3.5-3v10l-3.5-3h-3V8Z" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/>
+                <path d="M13 7.25c.8.7 1.2 1.62 1.2 2.75s-.4 2.05-1.2 2.75M15.2 5.3c1.35 1.2 2.02 2.76 2.02 4.7s-.67 3.5-2.02 4.7" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </h1>
+
+          <div class="hero-actions">
+            <a
+              class="specular-button specular-button--lg hero-cta"
+              href="work.html"
+              style="--sb-radius:999px; --sb-tint:#ffffff; --sb-tint-opacity:0; --sb-blur:0px; --sb-text-color:#232a35;"
+            >
+              <span class="specular-button__label">
+                View My Work
+                <svg class="hero-cta-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+
+          </div>
+
+        </div>
+      </section>
+    </main>
   </div>
 
-  <main>
-    <section id="projects" class="projects">
-      <div class="section-heading">
-        <h2>Selected Work</h2>
-      </div>
-
-      <div class="filter-bar" role="tablist" aria-label="Filter by category">
-        <button type="button" class="filter-pill is-active" data-filter="all">All</button>
-        <button type="button" class="filter-pill" data-filter="ui">Product Design</button>
-        <button type="button" class="filter-pill" data-filter="physical">Physical Computing</button>
-        <button type="button" class="filter-pill" data-filter="generative-ai">Generative AI</button>
-      </div>
-
-      <div class="project-grid">
-        <a href="projects/sketchtrace.html" class="project-card" data-tags="ui generative-ai">
-          <div class="project-visual">
-            <img src="assets/images/sketchtrace/cover.jpg" alt="SketchTrace" loading="lazy">
-          </div>
-          <div class="project-info">
-            <h3>SketchTrace</h3>
-            <div class="card-meta">
-              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Design Tool Lab, Barnard College, Columbia University</span></span>
-              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Product Designer &amp; Full-Stack Engineer</span></span>
-              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2024–2025</span></span>
-            </div>
-            <p>An interactive learning workspace that helps people understand the code AI can generate in seconds.</p>
-            <ul class="tag-list">
-              <li>React</li>
-              <li>AI</li>
-              <li>Creative Coding</li>
-              <li>UX/UI</li>
-              <li>Full-Stack</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="projects/nomi.html" class="project-card" data-tags="ui">
-          <div class="project-visual">
-            <img src="assets/images/nomi/cover.jpg" alt="Nomi" loading="lazy">
-          </div>
-          <div class="project-info">
-            <h3>Nomi</h3>
-            <div class="card-meta">
-              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Independent Project</span></span>
-              <span><span class="card-meta-label">Role</span><span class="card-meta-value">End-to-End Product Design</span></span>
-              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025</span></span>
-            </div>
-            <p>A medication-routine companion designed around a tension, not a task — support versus surveillance between aging parents and adult children.</p>
-            <ul class="tag-list">
-              <li>Figma</li>
-              <li>React/TypeScript</li>
-              <li>UX Research</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="projects/urbansky.html" class="project-card" data-tags="ui">
-          <div class="project-visual">
-            <img src="assets/images/urbansky/cover.jpg" alt="UrbanSky" loading="lazy">
-          </div>
-          <div class="project-info">
-            <h3>UrbanSky</h3>
-            <div class="card-meta">
-              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Columbia Computer Vision Lab</span></span>
-              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Full-Stack Web Engineer</span></span>
-              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025</span></span>
-            </div>
-            <p>A full-stack web application with interactive 360° panoramic interfaces for exploring over 1,000 HDR lighting environments captured across New York City.</p>
-            <ul class="tag-list">
-              <li>Full-Stack Web Development</li>
-              <li>Python</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="projects/ai-storytelling.html" class="project-card" data-tags="generative-ai">
-          <div class="project-visual">
-            <img src="assets/images/ai-storytelling/front.jpg" alt="Generative AI & Storytelling" loading="lazy">
-          </div>
-          <div class="project-info">
-            <h3>Generative AI &amp; Storytelling</h3>
-            <div class="card-meta">
-              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Columbia Computational Design Lab</span></span>
-              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Researcher · Creator · Facilitator</span></span>
-              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2024–2025</span></span>
-            </div>
-            <p>An evolving practice spanning generative-video research, prototyping, filmmaking, teaching, and creative direction.</p>
-            <ul class="tag-list">
-              <li>Generative Video</li>
-              <li>Creative Direction</li>
-              <li>Teaching</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="projects/flow.html" class="project-card" data-tags="ui generative-ai">
-          <div class="project-visual">
-            <img src="assets/images/flow/cover.jpg" alt="Flow" loading="lazy">
-          </div>
-          <div class="project-info">
-            <h3>Flow</h3>
-            <div class="card-meta">
-              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Columbia University</span></span>
-              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Designer &amp; Developer</span></span>
-              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2026</span></span>
-            </div>
-            <p>An interactive web piece that traces thousands of particles through each painting's brushwork and light.</p>
-            <ul class="tag-list">
-              <li>JavaScript</li>
-              <li>HTML/CSS</li>
-              <li>p5.js</li>
-              <li>Processing</li>
-              <li>Met Museum API</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="projects/creative-destruction.html" class="project-card" data-tags="physical">
-          <div class="project-visual">
-            <img src="assets/images/creative-destruction/cover.png" alt="Touch, Sound, Motion">
-          </div>
-          <div class="project-info">
-            <h3>Touch, Sound, Motion</h3>
-            <div class="card-meta">
-              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Barnard Movement Lab</span></span>
-              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Artist-Technologist</span></span>
-              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025–2026</span></span>
-            </div>
-            <p>A body of interactive installations translating human gesture—claps, touch—into synchronized responses across robotic movement and stage lighting.</p>
-            <ul class="tag-list">
-              <li>ESP32</li>
-              <li>QLab</li>
-              <li>Eos</li>
-              <li>OSC</li>
-              <li>Python</li>
-              <li>Raspberry Pi</li>
-              <li>Experience Design</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="projects/tether.html" class="project-card" data-tags="physical">
-          <div class="project-visual">
-            <img src="assets/images/tether/cover.jpg" alt="Tether" loading="lazy">
-          </div>
-          <div class="project-info">
-            <h3>Tether</h3>
-            <div class="card-meta">
-              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Independent Project</span></span>
-              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Creative Technologist &amp; Interaction Designer</span></span>
-              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025</span></span>
-            </div>
-            <p>A wearable, 8-degree-of-freedom robotic mechanism that explores the symbiotic, tactile relationship between humans and embodied machines.</p>
-            <ul class="tag-list">
-              <li>Raspberry Pi</li>
-              <li>Servo Motors</li>
-              <li>Wood Fabrication</li>
-              <li>Custom Software</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="projects/the-roro.html" class="project-card" data-tags="physical">
-          <div class="project-visual">
-            <img src="assets/images/the-roro/cover.jpg" alt="The Roro" loading="lazy">
-          </div>
-          <div class="project-info">
-            <h3>Quadruped</h3>
-            <div class="card-meta">
-              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Columbia Robotics Studio</span></span>
-              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Full-Stack Software &amp; Hardware Engineer</span></span>
-              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025</span></span>
-            </div>
-            <p>A custom-fabricated, programmed quadruped robot designed for robotics studio class.</p>
-            <ul class="tag-list">
-              <li>Raspberry Pi</li>
-              <li>Python</li>
-              <li>3D Printing</li>
-              <li>Fusion 360</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="projects/audiovisual.html" class="project-card" data-tags="physical">
-          <div class="project-visual">
-            <img src="assets/images/audiovisual/cover.png" alt="Audiovisual" loading="lazy">
-          </div>
-          <div class="project-info">
-            <h3>Audiovisual Piano+ Performance</h3>
-            <div class="card-meta">
-              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Ades Performance Space</span></span>
-              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Creative Technologist / TouchDesigner Artist</span></span>
-              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025</span></span>
-            </div>
-            <p>A live audiovisual performance exploring meditation's tranquil energy through sound and image, performed at Ades Performance Space, Trinity Episcopal Church, and Indiana State University.</p>
-            <ul class="tag-list">
-              <li>Adobe Premiere Pro</li>
-              <li>TouchDesigner</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="projects/synaptic.html" class="project-card" data-tags="physical">
-          <div class="project-visual">
-            <img src="assets/images/synaptic/cover.jpg" alt="Synaptic" loading="lazy">
-          </div>
-          <div class="project-info">
-            <h3>Synaptic</h3>
-            <div class="card-meta">
-              <span><span class="card-meta-label">Affiliation</span><span class="card-meta-value">Independent Project</span></span>
-              <span><span class="card-meta-label">Role</span><span class="card-meta-value">Creative Technologist</span></span>
-              <span><span class="card-meta-label">Year</span><span class="card-meta-value">2025</span></span>
-            </div>
-            <p>A multilayered light box installation that visualizes the energy transmission of synapses.</p>
-            <ul class="tag-list">
-              <li>Arduino</li>
-              <li>LED Matrix</li>
-              <li>AI Image Generation</li>
-              <li>Acrylic Fabrication</li>
-            </ul>
-          </div>
-        </a>
-
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
+  <footer class="site-footer home-footer">
     <div class="footer-inner">
       <span>© 2026 Yueyi Lulu Wang</span>
       <div class="footer-links">
@@ -306,8 +101,8 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
-  <script type="module" src="js/home-effects.js"></script>
+  <script src="js/main.js?v=ui-sound-2"></script>
+  <script type="module" src="js/home-effects.js?v=entry-sphere-10"></script>
   <script src="js/mouse-trail.js"></script>
 </body>
 </html>
