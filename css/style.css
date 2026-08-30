@@ -7,9 +7,11 @@
   --color-text: #232a35;
   --color-text-muted: #5b6472;
   --color-border: rgba(35, 42, 53, 0.14);
+  --color-emphasis: #3d5a45; /* low-saturation dark green, for highlighted lines */
 
   --font-display: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-body: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-serif-highlight: "Averia Serif Libre", Georgia, "Times New Roman", serif;
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --gutter: clamp(1.25rem, 3.5vw, 3rem);
@@ -824,13 +826,19 @@ a:focus-visible, button:focus-visible {
 }
 
 .project-detail-hero h1 {
+  font-family: var(--font-serif-highlight);
+  font-style: italic;
+  font-weight: 300;
   font-size: clamp(2rem, 5vw, 3.4rem);
+  letter-spacing: -0.01em;
   max-width: 18ch;
 }
 
 .project-subtitle {
   margin-top: 0.75rem;
-  font-size: 1.1rem;
+  font-family: var(--font-serif-highlight);
+  font-style: italic;
+  font-size: 1.25rem;
   color: var(--color-text-muted);
   max-width: 50ch;
 }
@@ -968,8 +976,12 @@ a:focus-visible, button:focus-visible {
    into a fixed box. Not scoped to .project-section so it also works on
    media placed directly in .project-detail-body. */
 .project-visual.visual-auto {
-  position: static;
-  aspect-ratio: auto;
+  /* !important: .project-section .project-visual (a two-class selector,
+     same specificity as this one) sets aspect-ratio: 16/9 and comes later
+     in the file, so without this, any visual-auto media placed inside a
+     .project-section silently loses its natural aspect ratio. */
+  position: static !important;
+  aspect-ratio: auto !important;
   margin-top: 1.5rem;
 }
 
@@ -979,6 +991,21 @@ a:focus-visible, button:focus-visible {
   width: 100%;
   height: auto;
   object-fit: contain;
+}
+
+/* For a naturally tall image (a dense diagram, a portrait screenshot)
+   where forcing the whole thing to fit the column would shrink it past
+   legibility — cap the box height and let the reader scroll inside it to
+   see the rest at a readable scale, instead of scaling everything down. */
+.project-visual.visual-scroll {
+  max-height: 420px;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.project-visual.visual-scroll img {
+  border-radius: 0;
 }
 
 /* Homepage cards: the video shows its poster (first frame) by default
@@ -1098,14 +1125,16 @@ a:focus-visible, button:focus-visible {
   margin-top: 1.25rem;
 }
 
-.pull-quote {
-  margin: 0.5rem 0 1.25rem;
+.project-detail-body .pull-quote {
+  margin: 0.75rem 0 1.5rem;
   padding-left: 1.25rem;
-  border-left: 2px solid var(--color-border);
-  font-family: var(--font-display);
-  font-size: 1.2rem;
+  border-left: 2px solid var(--color-emphasis);
+  font-family: var(--font-serif-highlight);
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
   font-style: italic;
-  color: var(--color-text);
+  font-weight: 300;
+  line-height: 1.35;
+  color: var(--color-emphasis);
 }
 
 .prose-list {
@@ -1140,14 +1169,15 @@ a:focus-visible, button:focus-visible {
 
 /* A single short line set in display type — for a conclusion or thesis
    statement that deserves more visual weight than a regular paragraph. */
-.big-line {
-  margin: 1.25rem 0;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.3rem, 3vw, 1.9rem);
+.project-detail-body .big-line {
+  margin: 1.5rem 0;
+  font-family: var(--font-serif-highlight);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.9rem, 5vw, 2.75rem);
   letter-spacing: -0.01em;
   line-height: 1.25;
-  color: var(--color-text);
+  color: var(--color-emphasis);
 }
 
 /* Small muted numeral prefix for a numbered design-challenge heading,

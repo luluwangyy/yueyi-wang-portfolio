@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kinetic LILI grid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <style>
+html, body { width: 100%; height: 100%; }
+:root { --tilt-x: 0deg; --tilt-y: 0deg; }
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #18191b;
+  background: #d8d7d2;
+  font-family: "Maven Pro", sans-serif;
+  perspective: 900px;
+}
+main { width: min(880px, 92vw); }
+header { display: flex; justify-content: space-between; margin-bottom: 18px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.kinetic-grid {
+  display: grid;
+  grid-template-columns: repeat(20, minmax(10px, 1fr));
+  gap: clamp(3px, .7vw, 10px);
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transition: transform 180ms ease-out;
+  cursor: pointer;
+}
+.cell {
+  display: block;
+  aspect-ratio: 1;
+  border: 2px solid #f7f5ef;
+  border-radius: 50%;
+  background: #17181a;
+  transform-style: preserve-3d;
+}
+  </style>
+</head>
+<body>
+<main>
+  <header><span>Archived study 02</span><strong>Click to reverse</strong></header>
+  <div class="kinetic-grid" role="img" aria-label="Animated grid spelling LILI">
+    <i class="cell" aria-hidden="true" data-index="0"></i>
+    <i class="cell" aria-hidden="true" data-index="1"></i>
+    <i class="cell" aria-hidden="true" data-index="2"></i>
+    <i class="cell" aria-hidden="true" data-index="3"></i>
+    <i class="cell" aria-hidden="true" data-index="4"></i>
+    <i class="cell" aria-hidden="true" data-index="5"></i>
+    <i class="cell" aria-hidden="true" data-index="6"></i>
+    <i class="cell" aria-hidden="true" data-index="7"></i>
+    <i class="cell" aria-hidden="true" data-index="8"></i>
+    <i class="cell" aria-hidden="true" data-index="9"></i>
+    <i class="cell" aria-hidden="true" data-index="10"></i>
+    <i class="cell" aria-hidden="true" data-index="11"></i>
+    <i class="cell" aria-hidden="true" data-index="12"></i>
+    <i class="cell" aria-hidden="true" data-index="13"></i>
+    <i class="cell" aria-hidden="true" data-index="14"></i>
+    <i class="cell" aria-hidden="true" data-index="15"></i>
+    <i class="cell" aria-hidden="true" data-index="16"></i>
+    <i class="cell" aria-hidden="true" data-index="17"></i>
+    <i class="cell" aria-hidden="true" data-index="18"></i>
+    <i class="cell" aria-hidden="true" data-index="19"></i>
+    <i class="cell" aria-hidden="true" data-index="20"></i>
+    <i class="cell" aria-hidden="true" data-index="21"></i>
+    <i class="cell" aria-hidden="true" data-index="22"></i>
+    <i class="cell" aria-hidden="true" data-index="23"></i>
+    <i class="cell" aria-hidden="true" data-index="24"></i>
+    <i class="cell" aria-hidden="true" data-index="25"></i>
+    <i class="cell" aria-hidden="true" data-index="26"></i>
+    <i class="cell" aria-hidden="true" data-index="27"></i>
+    <i class="cell" aria-hidden="true" data-index="28"></i>
+    <i class="cell" aria-hidden="true" data-index="29"></i>
+    <i class="cell" aria-hidden="true" data-index="30"></i>
+    <i class="cell" aria-hidden="true" data-index="31"></i>
+    <i class="cell" aria-hidden="true" data-index="32"></i>
+    <i class="cell" aria-hidden="true" data-index="33"></i>
+    <i class="cell" aria-hidden="true" data-index="34"></i>
+    <i class="cell" aria-hidden="true" data-index="35"></i>
+    <i class="cell" aria-hidden="true" data-index="36"></i>
+    <i class="cell" aria-hidden="true" data-index="37"></i>
+    <i class="cell" aria-hidden="true" data-index="38"></i>
+    <i class="cell" aria-hidden="true" data-index="39"></i>
+    <i class="cell" aria-hidden="true" data-index="40"></i>
+    <i class="cell" aria-hidden="true" data-index="41"></i>
+    <i class="cell" aria-hidden="true" data-index="42"></i>
+    <i class="cell" aria-hidden="true" data-index="43"></i>
+    <i class="cell" aria-hidden="true" data-index="44"></i>
+    <i class="cell" aria-hidden="true" data-index="45"></i>
+    <i class="cell" aria-hidden="true" data-index="46"></i>
+    <i class="cell" aria-hidden="true" data-index="47"></i>
+    <i class="cell" aria-hidden="true" data-index="48"></i>
+    <i class="cell" aria-hidden="true" data-index="49"></i>
+    <i class="cell" aria-hidden="true" data-index="50"></i>
+    <i class="cell" aria-hidden="true" data-index="51"></i>
+    <i class="cell" aria-hidden="true" data-index="52"></i>
+    <i class="cell" aria-hidden="true" data-index="53"></i>
+    <i class="cell" aria-hidden="true" data-index="54"></i>
+    <i class="cell" aria-hidden="true" data-index="55"></i>
+    <i class="cell" aria-hidden="true" data-index="56"></i>
+    <i class="cell" aria-hidden="true" data-index="57"></i>
+    <i class="cell" aria-hidden="true" data-index="58"></i>
+    <i class="cell" aria-hidden="true" data-index="59"></i>
+    <i class="cell" aria-hidden="true" data-index="60"></i>
+    <i class="cell" aria-hidden="true" data-index="61"></i>
+    <i class="cell" aria-hidden="true" data-index="62"></i>
+    <i class="cell" aria-hidden="true" data-index="63"></i>
+    <i class="cell" aria-hidden="true" data-index="64"></i>
+    <i class="cell" aria-hidden="true" data-index="65"></i>
+    <i class="cell" aria-hidden="true" data-index="66"></i>
+    <i class="cell" aria-hidden="true" data-index="67"></i>
+    <i class="cell" aria-hidden="true" data-index="68"></i>
+    <i class="cell" aria-hidden="true" data-index="69"></i>
+    <i class="cell" aria-hidden="true" data-index="70"></i>
+    <i class="cell" aria-hidden="true" data-index="71"></i>
+    <i class="cell" aria-hidden="true" data-index="72"></i>
+    <i class="cell" aria-hidden="true" data-index="73"></i>
+    <i class="cell" aria-hidden="true" data-index="74"></i>
+    <i class="cell" aria-hidden="true" data-index="75"></i>
+    <i class="cell" aria-hidden="true" data-index="76"></i>
+    <i class="cell" aria-hidden="true" data-index="77"></i>
+    <i class="cell" aria-hidden="true" data-index="78"></i>
+    <i class="cell" aria-hidden="true" data-index="79"></i>
+    <i class="cell" aria-hidden="true" data-index="80"></i>
+    <i class="cell" aria-hidden="true" data-index="81"></i>
+    <i class="cell" aria-hidden="true" data-index="82"></i>
+    <i class="cell" aria-hidden="true" data-index="83"></i>
+    <i class="cell" aria-hidden="true" data-index="84"></i>
+    <i class="cell" aria-hidden="true" data-index="85"></i>
+    <i class="cell" aria-hidden="true" data-index="86"></i>
+    <i class="cell" aria-hidden="true" data-index="87"></i>
+    <i class="cell" aria-hidden="true" data-index="88"></i>
+    <i class="cell" aria-hidden="true" data-index="89"></i>
+    <i class="cell" aria-hidden="true" data-index="90"></i>
+    <i class="cell" aria-hidden="true" data-index="91"></i>
+    <i class="cell" aria-hidden="true" data-index="92"></i>
+    <i class="cell" aria-hidden="true" data-index="93"></i>
+    <i class="cell" aria-hidden="true" data-index="94"></i>
+    <i class="cell" aria-hidden="true" data-index="95"></i>
+    <i class="cell" aria-hidden="true" data-index="96"></i>
+    <i class="cell" aria-hidden="true" data-index="97"></i>
+    <i class="cell" aria-hidden="true" data-index="98"></i>
+    <i class="cell" aria-hidden="true" data-index="99"></i>
+    <i class="cell" aria-hidden="true" data-index="100"></i>
+    <i class="cell" aria-hidden="true" data-index="101"></i>
+    <i class="cell" aria-hidden="true" data-index="102"></i>
+    <i class="cell" aria-hidden="true" data-index="103"></i>
+    <i class="cell" aria-hidden="true" data-index="104"></i>
+    <i class="cell" aria-hidden="true" data-index="105"></i>
+    <i class="cell" aria-hidden="true" data-index="106"></i>
+    <i class="cell" aria-hidden="true" data-index="107"></i>
+    <i class="cell" aria-hidden="true" data-index="108"></i>
+    <i class="cell" aria-hidden="true" data-index="109"></i>
+    <i class="cell" aria-hidden="true" data-index="110"></i>
+    <i class="cell" aria-hidden="true" data-index="111"></i>
+    <i class="cell" aria-hidden="true" data-index="112"></i>
+    <i class="cell" aria-hidden="true" data-index="113"></i>
+    <i class="cell" aria-hidden="true" data-index="114"></i>
+    <i class="cell" aria-hidden="true" data-index="115"></i>
+    <i class="cell" aria-hidden="true" data-index="116"></i>
+    <i class="cell" aria-hidden="true" data-index="117"></i>
+    <i class="cell" aria-hidden="true" data-index="118"></i>
+    <i class="cell" aria-hidden="true" data-index="119"></i>
+  </div>
+</main>
+  <script>
+const columns = 20;
+const rows = 6;
+const cells = Array.from(document.querySelectorAll('.cell'));
+const letterL = [20, 40, 60, 80, 81, 82];
+const letterI = [20, 40, 60, 80];
+let direction = 1;
+
+function offset(indices, amount) {
+  return indices.map((index) => index + amount);
+}
+
+function buildWordIndices() {
+  return offset(letterL, 3)
+    .concat(offset(letterI, 8))
+    .concat(offset(letterL, 11))
+    .concat(offset(letterI, 16));
+}
+
+function splitTargets(wordIndices) {
+  const wordSet = new Set(wordIndices);
+  return {
+    letters: wordIndices.map((index) => cells[index]).filter(Boolean),
+    background: cells.filter((cell, index) => !wordSet.has(index))
+  };
+}
+
+function setGridCoordinates() {
+  cells.forEach((cell, index) => {
+    cell.dataset.column = index % columns;
+    cell.dataset.row = Math.floor(index / columns);
+  });
+}
+
+function buildTimeline(targets) {
+  const timeline = anime.timeline({
+    easing: 'easeInOutExpo',
+    direction: 'alternate',
+    loop: true
+  });
+
+  timeline.add({
+    targets: targets.letters,
+    backgroundColor: '#f7f5ef',
+    borderColor: '#121316',
+    scale: [1, 0.62],
+    rotateX: 180,
+    duration: 720,
+    delay: anime.stagger(42, { grid: [columns, rows], from: 'center' })
+  });
+
+  timeline.add({
+    targets: targets.background,
+    rotateX: () => direction * 180,
+    scale: [1, 0.82],
+    opacity: [1, 0.32],
+    duration: 720,
+    delay: anime.stagger(18, { grid: [columns, rows], from: 'center' })
+  }, 0);
+
+  timeline.add({
+    targets: targets.letters,
+    backgroundColor: '#ff6b3d',
+    borderColor: '#ff6b3d',
+    scale: 1,
+    duration: 1100
+  });
+
+  return timeline;
+}
+
+function handlePointerMove(event) {
+  const horizontal = event.clientX / window.innerWidth - 0.5;
+  const vertical = event.clientY / window.innerHeight - 0.5;
+  document.documentElement.style.setProperty('--tilt-x', vertical * -10 + 'deg');
+  document.documentElement.style.setProperty('--tilt-y', horizontal * 12 + 'deg');
+}
+
+function reverseSequence() {
+  direction *= -1;
+  timeline.reverse();
+  timeline.play();
+}
+
+setGridCoordinates();
+const targets = splitTargets(buildWordIndices());
+const timeline = buildTimeline(targets);
+window.addEventListener('pointermove', handlePointerMove);
+document.querySelector('.kinetic-grid').addEventListener('click', reverseSequence);
+  </script>
+</body>
+</html>

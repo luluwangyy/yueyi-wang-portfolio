@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Particle terrain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.0/TweenMax.min.js"></script>
+  <style>
+html, body { width: 100%; height: 100%; }
+body {
+  margin: 0;
+  overflow: hidden;
+  color: white;
+  background: #08090b;
+  font-family: "Maven Pro", sans-serif;
+}
+canvas { position: fixed; inset: 0; width: 100%; height: 100%; }
+aside { position: fixed; left: 32px; bottom: 28px; display: grid; gap: 4px; }
+aside span { color: rgba(255,255,255,.5); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+aside strong { font-size: 18px; font-weight: 580; }
+  </style>
+</head>
+<body>
+<canvas id="terrain" aria-label="Animated particle terrain"></canvas>
+<aside>
+  <span>Archived study 01</span>
+  <strong>Particle terrain</strong>
+</aside>
+  <script>
+console.clear();
+
+let viewportWidth = window.innerWidth;
+let viewportHeight = window.innerHeight;
+const canvas = document.querySelector('#terrain');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(viewportWidth, viewportHeight);
+renderer.setClearColor(0x08090b);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0x08090b, 90, 180);
+
+const camera = new THREE.PerspectiveCamera(45, viewportWidth / viewportHeight, 0.1, 1000);
+camera.position.set(0, 32, 108);
+
+const container = new THREE.Object3D();
+scene.add(container);
+
+const grid = { width: 120, depth: 120, spacing: 1.35 };
+const center = new THREE.Vector3(0, 0, 0);
+const maxDistance = new THREE.Vector3(grid.width * 0.5, 0, grid.depth * 0.5).distanceTo(center);
+const motion = { crater: 0.25, depth: 1.1, speed: 0.004 };
+let dots;
+let shadowPlane;
+
+function makeDotTexture() {
+  const sprite = document.createElement('canvas');
+  sprite.width = 32;
+  sprite.height = 32;
+  const context = sprite.getContext('2d');
+  const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16);
+  gradient.addColorStop(0, 'rgba(255,255,255,1)');
+  gradient.addColorStop(0.35, 'rgba(255,255,255,.9)');
+  gradient.addColorStop(1, 'rgba(255,255,255,0)');
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, 32, 32);
+  const texture = new THREE.Texture(sprite);
+  texture.needsUpdate = true;
+  return texture;
+}
+
+function buildPointGeometry() {
+  const geometry = new THREE.Geometry();
+  for (let x = -grid.width * 0.5; x < grid.width * 0.5; x += 1) {
+    for (let z = -grid.depth * 0.5; z < grid.depth * 0.5; z += 1) {
+      const point = new THREE.Vector3(x * grid.spacing, 0, z * grid.spacing);
+      point.distanceFromCenter = point.distanceTo(center);
+      point.ratio = (maxDistance - point.distanceFromCenter) / maxDistance;
+      geometry.vertices.push(point);
+    }
+  }
+  return geometry;
+}
+
+function buildShadowPlane() {
+  const geometry = new THREE.PlaneGeometry(grid.width * grid.spacing, grid.depth * grid.spacing, 50, 50);
+  geometry.rotateX(-Math.PI * 0.5);
+  geometry.vertices.forEach((point) => {
+    point.distanceFromCenter = point.distanceTo(center);
+    point.ratio = (maxDistance - point.distanceFromCenter) / maxDistance;
+  });
+  const material = new THREE.MeshBasicMaterial({ color: 0x08090b, side: THREE.DoubleSide });
+  shadowPlane = new THREE.Mesh(geometry, material);
+  shadowPlane.position.y = -4;
+  container.add(shadowPlane);
+}
+
+function createTerrain() {
+  const pointMaterial = new THREE.PointsMaterial({
+    color: 0xffffff,
+    map: makeDotTexture(),
+    transparent: true,
+    alphaTest: 0.08,
+    size: 1.8,
+    sizeAttenuation: false
+  });
+  dots = new THREE.Points(buildPointGeometry(), pointMaterial);
+  container.add(dots);
+  buildShadowPlane();
+}
+
+function deformGeometry(geometry, time, multiplier) {
+  geometry.vertices.forEach((point) => {
+    const ratio = Math.max(point.ratio, 0);
+    const crater = Math.pow(ratio, 4) * motion.depth * -90;
+    const ripple = Math.sin(-(point.distanceFromCenter * 0.34) + time * motion.speed) * 2.2;
+    point.y = Math.max(crater + ripple + motion.crater, -72) * multiplier;
+  });
+  geometry.verticesNeedUpdate = true;
+}
+
+function render(time) {
+  requestAnimationFrame(render);
+  deformGeometry(dots.geometry, time, 1);
+  deformGeometry(shadowPlane.geometry, time, 0.98);
+  container.rotation.y += 0.0008;
+  camera.lookAt(new THREE.Vector3(0, -18, 0));
+  renderer.render(scene, camera);
+}
+
+function onResize() {
+  viewportWidth = window.innerWidth;
+  viewportHeight = window.innerHeight;
+  camera.aspect = viewportWidth / viewportHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(viewportWidth, viewportHeight);
+}
+
+TweenMax.to(motion, 5, {
+  crater: 2,
+  depth: 1.7,
+  yoyo: true,
+  repeat: -1,
+  repeatDelay: 0.4,
+  ease: Power1.easeInOut
+});
+
+TweenMax.to(camera.position, 7, {
+  z: 62,
+  y: 76,
+  yoyo: true,
+  repeat: -1,
+  ease: Power1.easeInOut
+});
+
+window.addEventListener('resize', onResize);
+createTerrain();
+requestAnimationFrame(render);
+  </script>
+</body>
+</html>

@@ -4,13 +4,18 @@
 // entirely under prefers-reduced-motion.
 //
 // Deliberately NOT a spring/eased follower — the line's head sits exactly
-// at the current cursor position with no lag. Each short segment fades out
-// on its own after a beat, based on its own age, the way ink dries.
+// at the current cursor position with no lag. The whole visible trail is
+// drawn as a single continuous stroke (not many tiny segments — that
+// produced a "beaded" look, since every 2-point segment gets its own
+// round cap at both ends) with a curved, quadratic-smoothed path and a
+// fade gradient from tail to head, so width and texture stay consistent
+// along its length.
 
 if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   const TIFFANY_BLUE = "77, 200, 224"; // #4DC8E0 — lighter, more blue-leaning
-  const TRAIL_LIFETIME_MS = 350;
+  const TRAIL_LIFETIME_MS = 650;
   const LINE_WIDTH = 2.5;
+  const SMOOTHING = 0.4; // how much pull toward the previous smoothed point
 
   const canvas = document.createElement("canvas");
   canvas.id = "mouse-trail-canvas";
@@ -39,13 +44,21 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   let points = [];
   let lastX = null;
   let lastY = null;
+  let smoothX = null;
+  let smoothY = null;
 
-  window.addEventListener("mousemove", (event) => {
-    const x = event.clientX;
-    const y = event.clientY;
-    const now = performance.now();
+  function addPoint(rawX, rawY, now) {
+    if (smoothX === null) {
+      smoothX = rawX;
+      smoothY = rawY;
+    } else {
+      smoothX += (rawX - smoothX) * (1 - SMOOTHING);
+      smoothY += (rawY - smoothY) * (1 - SMOOTHING);
+    }
+    const x = smoothX;
+    const y = smoothY;
     // Fill in a fast flick's gap with interpolated points, spaced closely,
-    // so the "ink" reads as one continuous stroke rather than a dashed one.
+    // so the ink reads as one continuous stroke rather than a dashed one.
     if (lastX !== null) {
       const dist = Math.hypot(x - lastX, y - lastY);
       const steps = Math.min(Math.floor(dist / 4), 20);
@@ -57,6 +70,21 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     points.push({ x, y, t: now });
     lastX = x;
     lastY = y;
+  }
+
+  window.addEventListener("mousemove", (event) => {
+    const now = performance.now();
+    // getCoalescedEvents exposes every real OS-level mouse sample between
+    // animation frames (a mouse can report at 125-1000Hz), not just the
+    // single throttled point the browser would otherwise deliver — using
+    // the real samples makes the traced path itself smoother and more
+    // accurate, with no synthetic guessing and no added latency.
+    const samples = typeof event.getCoalescedEvents === "function" ? event.getCoalescedEvents() : null;
+    if (samples && samples.length) {
+      samples.forEach((sample) => addPoint(sample.clientX, sample.clientY, now));
+    } else {
+      addPoint(event.clientX, event.clientY, now);
+    }
   });
 
   function draw() {
@@ -64,23 +92,31 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     points = points.filter((p) => now - p.t < TRAIL_LIFETIME_MS);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.lineWidth = LINE_WIDTH;
 
-    // Each segment fades on its own, by its own age — a true "drying ink"
-    // look, rather than one gradient smeared across the whole visible
-    // length regardless of how the mouse actually moved.
-    for (let i = 0; i < points.length - 1; i++) {
-      const p = points[i];
-      const next = points[i + 1];
-      const age = now - p.t;
-      const alpha = Math.max(0, 1 - age / TRAIL_LIFETIME_MS) * 0.9;
-      if (alpha <= 0.01) continue;
-      ctx.strokeStyle = `rgba(${TIFFANY_BLUE}, ${alpha})`;
+    if (points.length > 1) {
+      const first = points[0];
+      const last = points[points.length - 1];
+      const gradient = ctx.createLinearGradient(first.x, first.y, last.x, last.y);
+      gradient.addColorStop(0, `rgba(${TIFFANY_BLUE}, 0)`);
+      gradient.addColorStop(0.6, `rgba(${TIFFANY_BLUE}, 0.55)`);
+      gradient.addColorStop(1, `rgba(${TIFFANY_BLUE}, 0.9)`);
+
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = LINE_WIDTH;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+
+      // One continuous path, smoothed through the midpoints of consecutive
+      // points, drawn with a single stroke() call — that's what keeps the
+      // width and texture consistent along the whole visible length.
       ctx.beginPath();
-      ctx.moveTo(p.x, p.y);
-      ctx.lineTo(next.x, next.y);
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length - 1; i++) {
+        const midX = (points[i].x + points[i + 1].x) / 2;
+        const midY = (points[i].y + points[i + 1].y) / 2;
+        ctx.quadraticCurveTo(points[i].x, points[i].y, midX, midY);
+      }
+      ctx.lineTo(last.x, last.y);
       ctx.stroke();
     }
 

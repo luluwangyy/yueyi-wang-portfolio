@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Averia+Serif+Libre:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/style.css">
@@ -113,9 +113,9 @@
       <div class="project-section">
         <h2>The Problem</h2>
         <p>
-          AI has dramatically lowered the barrier to writing code. A user can describe an
-          interaction, press enter, and receive hundreds of lines of working JavaScript within
-          seconds. But that convenience creates another problem:
+          In creative coding education, AI has dramatically lowered the barrier to writing code.
+          A learner can describe an interaction, press enter, and receive hundreds of lines of
+          working JavaScript within seconds. But that convenience creates another problem:
         </p>
         <p class="big-line">Being able to generate code does not mean being able to understand it.</p>
         <p>
@@ -125,11 +125,11 @@
           system behind it often is not.
         </p>
         <p>Most AI coding tools optimize for:</p>
-        <p class="big-line">Prompt → Generate → Run</p>
+        <p>Prompt → Generate → Run</p>
         <p>I wanted to explore a different loop:</p>
-        <p class="big-line">Generate → Inspect → Understand → Modify</p>
+        <p>Generate → Inspect → Understand → Modify</p>
         <p>SketchTrace helps users move between three representations of the same program:</p>
-        <p class="big-line">Code → Behavior → Structure</p>
+        <p>Code → Behavior → Structure</p>
         <p>Instead of replacing the learning process, AI becomes a way into it.</p>
       </div>
 
@@ -179,12 +179,32 @@
           loops, recursion, geometry, pointer interaction, responsive behavior, and parallel
           systems — they became both learning content and stress tests for the product.
         </p>
-        <ul class="prose-list">
-          <li>Three.js Particle Terrain</li>
-          <li>Kinetic Typographic Grid</li>
-          <li>Recursive Wind Garden</li>
-          <li>Boid Constellation Simulation</li>
-        </ul>
+        <div class="sample-grid">
+          <div class="sample-item">
+            <div class="project-visual">
+              <iframe src="../assets/animations/sketchtrace/particle-terrain.html" title="Three.js Particle Terrain" loading="lazy"></iframe>
+            </div>
+            <p>Three.js Particle Terrain</p>
+          </div>
+          <div class="sample-item">
+            <div class="project-visual">
+              <iframe src="../assets/animations/sketchtrace/kinetic-lili-grid.html" title="Kinetic Typographic Grid" loading="lazy"></iframe>
+            </div>
+            <p>Kinetic Typographic Grid</p>
+          </div>
+          <div class="sample-item">
+            <div class="project-visual">
+              <iframe src="../assets/animations/sketchtrace/recursive-wind-garden.html" title="Recursive Wind Garden" loading="lazy"></iframe>
+            </div>
+            <p>Recursive Wind Garden</p>
+          </div>
+          <div class="sample-item">
+            <div class="project-visual">
+              <iframe src="../assets/animations/sketchtrace/boid-constellation.html" title="Boid Constellation Simulation" loading="lazy"></iframe>
+            </div>
+            <p>Boid Constellation Simulation</p>
+          </div>
+        </div>
       </div>
 
       <div class="project-section">
@@ -201,10 +221,16 @@
           <div>
             <span class="contrast-label">Before</span>
             <p>&ldquo;Show everything.&rdquo;</p>
+            <div class="project-visual visual-auto visual-scroll">
+              <img class="media" src="../assets/images/sketchtrace/overlycomplicated.jpg" alt="SketchTrace — an early, overly complicated system-map diagram">
+            </div>
           </div>
           <div>
             <span class="contrast-label">After</span>
             <p>&ldquo;Show enough to build a mental model.&rdquo;</p>
+            <div class="project-visual visual-auto visual-scroll">
+              <img class="media" src="../assets/images/sketchtrace/simple.jpg" alt="SketchTrace — the simplified final system-map diagram">
+            </div>
           </div>
         </div>
       </div>
