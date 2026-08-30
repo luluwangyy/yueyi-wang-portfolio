@@ -1725,6 +1725,17 @@ html.nomi-fullscreen-lock body {
   --case-wash: #f1f2e8;
 }
 
+.urbansky-case {
+  --case-ink: #28343d;
+  --case-accent: #286b91;
+  --case-highlight-2: #ba663e;
+  --case-wash: #edf4f7;
+}
+
+.urbansky-case .urbansky-demo-video {
+  width: 100%;
+}
+
 .flow-case .case-statement--hero { margin-bottom: 1.4rem; }
 
 .flow-case .impact-metrics strong {
