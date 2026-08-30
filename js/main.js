@@ -240,6 +240,21 @@ document.querySelectorAll(".video-facade").forEach((facade) => {
   );
 });
 
+// Accessible before/after image comparisons. The range input supports
+// pointer dragging as well as arrow-key control.
+document.querySelectorAll("[data-before-after]").forEach((comparison) => {
+  const range = comparison.querySelector('input[type="range"]');
+  if (!range) return;
+
+  const updateComparison = () => {
+    comparison.style.setProperty("--before-after-position", `${range.value}%`);
+    range.setAttribute("aria-valuetext", `${range.value}% original design visible`);
+  };
+
+  range.addEventListener("input", updateComparison);
+  updateComparison();
+});
+
 // Nomi prototype: fullscreen toggle. This is a CSS-only "fullscreen"
 // (fixed-position overlay, not the browser's native Fullscreen API) —
 // iOS Safari doesn't support requestFullscreen on arbitrary elements at
@@ -265,4 +280,114 @@ document.querySelectorAll(".nomi-embed").forEach((embed) => {
       setActive(false);
     }
   });
+});
+
+// SketchTrace case study: keep the persistent rail and compact mobile
+// navigator synchronized with the section nearest the reading line.
+const caseNavLinks = Array.from(document.querySelectorAll(".case-nav__link"));
+const caseMobileNav = document.querySelector(".case-mobile-nav");
+const caseMobileTrigger = caseMobileNav?.querySelector(".case-mobile-nav__trigger");
+const caseMobileIndex = caseMobileNav?.querySelector(".case-mobile-nav__index");
+const caseMobileLinks = Array.from(caseMobileNav?.querySelectorAll(".case-mobile-nav__menu a") || []);
+
+if (caseNavLinks.length) {
+  const caseSections = caseNavLinks
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+  let scrollTicking = false;
+
+  const setActiveCaseSection = (id) => {
+    caseNavLinks.forEach((link) => {
+      const isActive = link.getAttribute("href") === `#${id}`;
+      link.classList.toggle("is-active", isActive);
+      if (isActive) {
+        link.setAttribute("aria-current", "true");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+    caseMobileLinks.forEach((link) => {
+      const isActive = link.getAttribute("href") === `#${id}`;
+      link.classList.toggle("is-active", isActive);
+      if (isActive) {
+        link.setAttribute("aria-current", "true");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+    const sectionIndex = caseSections.findIndex((section) => section.id === id);
+    if (caseMobileIndex && sectionIndex >= 0) {
+      caseMobileIndex.textContent = String(sectionIndex + 1).padStart(2, "0");
+    }
+  };
+
+  const syncCaseNavigation = () => {
+    const readingLine = window.innerHeight * 0.3;
+    let current = caseSections[0];
+    caseSections.forEach((section) => {
+      if (section.getBoundingClientRect().top <= readingLine) current = section;
+    });
+    if (current) setActiveCaseSection(current.id);
+    scrollTicking = false;
+  };
+
+  window.addEventListener("scroll", () => {
+    if (!scrollTicking) {
+      requestAnimationFrame(syncCaseNavigation);
+      scrollTicking = true;
+    }
+  }, { passive: true });
+
+  const setMobileCaseNavOpen = (open) => {
+    if (!caseMobileNav || !caseMobileTrigger) return;
+    caseMobileNav.classList.toggle("is-open", open);
+    caseMobileTrigger.setAttribute("aria-expanded", String(open));
+    caseMobileTrigger.setAttribute("aria-label", open ? "Close section navigation" : "Open section navigation");
+  };
+
+  caseMobileTrigger?.addEventListener("click", () => {
+    setMobileCaseNavOpen(!caseMobileNav.classList.contains("is-open"));
+  });
+
+  caseMobileLinks.forEach((link) => {
+    link.addEventListener("click", () => setMobileCaseNavOpen(false));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (caseMobileNav && !caseMobileNav.contains(event.target)) setMobileCaseNavOpen(false);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setMobileCaseNavOpen(false);
+  });
+
+  syncCaseNavigation();
+}
+
+// Purposeful entrance motion explains ordered relationships. Content remains
+// fully visible when IntersectionObserver or animation is unavailable.
+const caseRevealTargets = document.querySelectorAll(".case-reveal");
+if (caseRevealTargets.length && "IntersectionObserver" in window) {
+  const caseRevealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-inview");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.28 });
+
+  caseRevealTargets.forEach((target) => caseRevealObserver.observe(target));
+} else {
+  caseRevealTargets.forEach((target) => target.classList.add("is-inview"));
+}
+
+// Before/after range control for the dense-to-curated flowchart decision.
+document.querySelectorAll(".case-compare").forEach((comparison) => {
+  const control = comparison.querySelector('input[type="range"]');
+  if (!control) return;
+  const updateComparison = () => {
+    comparison.style.setProperty("--compare", `${control.value}%`);
+  };
+  control.addEventListener("input", updateComparison);
+  updateComparison();
 });

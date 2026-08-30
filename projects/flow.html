@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flow — Yueyi Wang</title>
-  <meta name="description" content="Flow: a study in Impressionist motion, tracing particle flow fields through painterly brushwork in real time.">
+  <meta name="description" content="Flow is an interactive generative-art system that turns paintings into live particle fields using JavaScript, p5.js, Canvas, and the Met Museum API.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="case-study flow-case">
 
   <header class="site-header">
     <div class="header-inner">
@@ -33,154 +33,309 @@
   </header>
 
   <main>
-    <div class="project-detail-visual">
-      <div class="project-visual">
-        <img src="../assets/images/flow/front.jpg" alt="Flow">
-      </div>
+    <div class="case-mobile-nav">
+      <button class="case-mobile-nav__trigger" type="button" aria-label="Open section navigation" aria-expanded="false" aria-controls="case-mobile-menu">
+        <span class="case-mobile-nav__index" aria-hidden="true">01</span>
+      </button>
+      <nav class="case-mobile-nav__menu" id="case-mobile-menu" aria-label="Case study sections">
+        <a class="is-active" href="#overview" aria-current="true"><span>01</span> Overview</a>
+        <a href="#context"><span>02</span> Project Context</a>
+        <a href="#artifact"><span>03</span> Final Artifact</a>
+        <a href="#moments"><span>04</span> Key Design Moments</a>
+        <a href="#impact"><span>05</span> Outcome</a>
+        <a href="#reflection"><span>06</span> Reflection</a>
+      </nav>
     </div>
 
-    <section class="project-detail-hero">
-      <a href="../index.html#projects" class="back-link">&larr; Back to work</a>
-      <h1>Flow</h1>
-      <p class="project-subtitle">A study in Impressionist motion.</p>
-    </section>
+    <div class="case-layout">
+      <aside class="case-rail" aria-label="Flow case study navigation">
+        <div class="case-rail__sticky">
+          <a href="../index.html#projects" class="case-back-link">← Back to work</a>
 
-    <div class="project-detail-split">
-      <aside class="project-meta-col">
-        <div>
-          <span class="meta-label">Type</span>
-          <span class="meta-value">Generative Art &amp; Interactive Visualization</span>
-        </div>
-        <div>
-          <span class="meta-label">Role</span>
-          <span class="meta-value">Designer &amp; Developer</span>
-        </div>
-        <div>
-          <span class="meta-label">Affiliation</span>
-          <span class="meta-value">Columbia University</span>
-        </div>
-        <div>
-          <span class="meta-label">Year</span>
-          <span class="meta-value">2026</span>
-        </div>
-        <div>
-          <span class="meta-label">Tools</span>
-          <span class="meta-value">JavaScript · HTML/CSS · p5.js · Processing · Met Museum API</span>
+          <p class="case-rail__eyebrow">In this case study</p>
+          <nav class="case-nav" aria-label="On this page">
+            <a class="case-nav__link is-active" href="#overview" aria-current="true">Overview</a>
+            <a class="case-nav__link" href="#context">Project Context</a>
+            <a class="case-nav__link" href="#artifact">Final Artifact</a>
+            <a class="case-nav__link" href="#moments">Key Design Moments</a>
+            <a class="case-nav__link" href="#impact">Outcome</a>
+            <a class="case-nav__link" href="#reflection">Reflection</a>
+          </nav>
+
+          <div class="case-rail__actions" aria-label="Project links">
+            <a href="https://luluwangyy.github.io/Flow_art_new/" target="_blank" rel="noopener">Try Live Piece ↗</a>
+          </div>
+
+          <dl class="case-rail__meta">
+            <div>
+              <dt>Role</dt>
+              <dd>Designer + creative technologist</dd>
+            </div>
+            <div>
+              <dt>Skills</dt>
+              <dd>Generative art · interaction design · creative coding</dd>
+            </div>
+            <div>
+              <dt>Tools</dt>
+              <dd>JavaScript · p5.js · Canvas · Processing</dd>
+            </div>
+            <div>
+              <dt>Data</dt>
+              <dd>Met Museum Collection API</dd>
+            </div>
+            <div>
+              <dt>Time</dt>
+              <dd>2024–2026</dd>
+            </div>
+          </dl>
         </div>
       </aside>
 
-      <section class="project-detail-body">
-      <p>
-        An interactive web piece that traces thousands of particles through each painting's
-        brushwork and light. Visitors can move between paintings in the gallery, each one
-        generating its own particle flow in real time.
-      </p>
+      <article class="case-story">
+        <section class="case-section case-overview" id="overview" aria-labelledby="overview-label">
+          <figure class="case-front-image">
+            <img src="../assets/images/flow/cover.jpg" alt="Flow generative-art gallery displayed on a tablet">
+          </figure>
+          <h1>Flow</h1>
+          <p class="case-kicker" id="overview-label">Overview</p>
+          <p class="case-statement case-statement--hero">Flow is an interactive generative-art system that turns paintings into <span class="case-accent">live particle fields</span>, translating brushwork, color, and light into motion.</p>
+          <div class="case-prose">
+            <p>Built with JavaScript, p5.js, Canvas, and the Met Museum API, the browser-based experience lets visitors move between artworks and watch each painting generate its own particle behavior in real time.</p>
+          </div>
 
-      <div class="project-section">
-        <h2>Demo</h2>
-        <p>Watch it in motion:</p>
-        <div class="project-visual">
-          <video class="media" controls playsinline poster="../assets/images/flow/cover.jpg">
-            <source src="../assets/videos/flow/demo.mp4" type="video/mp4">
-          </video>
-        </div>
-        <a href="https://luluwangyy.github.io/Flow_art_new/" class="link-button" target="_blank" rel="noopener">
-          <span>Try the Live Piece</span>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
+          <div class="case-role" aria-labelledby="role-title">
+            <p class="case-kicker" id="role-title">My Role</p>
+            <p class="case-role__summary">I designed and built Flow end-to-end:</p>
+            <dl>
+              <div>
+                <dt>Concept</dt>
+                <dd>Visual research · computational interpretation · interaction direction</dd>
+              </div>
+              <div>
+                <dt>Prototyping</dt>
+                <dd>Processing · particle experiments · flow-field studies</dd>
+              </div>
+              <div>
+                <dt>Design</dt>
+                <dd>Figma · gallery interaction · visual hierarchy</dd>
+              </div>
+              <div>
+                <dt>Engineering</dt>
+                <dd>JavaScript · p5.js · Canvas 2D · Met Museum API</dd>
+              </div>
+              <div>
+                <dt>Delivery</dt>
+                <dd>Browser rebuild · performance tuning · live deployment</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
 
-      <div class="project-section">
-        <h2>Inspiration</h2>
-        <p>
-          Impressionist and Post-Impressionist painters built motion into their canvases by
-          hand — short, directional strokes standing in for wind and light. The project began
-          as an assignment in my Creative Coding class, and grew into a way to sit at the
-          overlap of my two majors: reading a painting the way a computer vision system would,
-          for an aesthetic exploration.
-        </p>
-      </div>
+        <section class="case-section" id="context" aria-labelledby="context-label">
+          <p class="case-kicker" id="context-label">Project Context</p>
+          <p class="case-statement">Impressionist paintings already contain movement—even when nothing on the canvas is actually moving.</p>
 
-      <div class="project-section">
-        <h2>Method</h2>
-        <p>
-          Flow started in Processing, prototyped for a Creative Coding class assignment. The
-          core idea was to turn a static image into a flow field — sampling brightness, color,
-          or edge direction at each point in the painting and using that as a direction vector
-          for motion. Early testing focused on how particle count, step size, and field
-          resolution changed the result, tuning the system until the movement read as painterly
-          rather than chaotic or just noisy.
-        </p>
+          <div class="case-prose case-prose--moment">
+            <p>Short directional strokes can suggest wind, water, changing light, or the movement of a body. I became interested in whether I could read those visual qualities computationally, then use them to generate a new kind of movement.</p>
+            <p>Flow began as a Creative Coding class experiment in Processing. The first version asked a fairly simple question:</p>
+          </div>
 
-        <div class="project-visual visual-auto">
-          <img class="media" src="../assets/images/flow/note1.png" alt="Flow — process note 1">
-        </div>
-        <p class="media-caption">Note 1</p>
+          <p class="case-statement case-statement--spaced">What happens if the visual information inside a painting becomes the <span class="case-accent">rules of motion</span>?</p>
 
-        <div class="project-visual visual-auto">
-          <img class="media" src="../assets/images/flow/note2.png" alt="Flow — process note 2">
-        </div>
-        <p class="media-caption">Note 2</p>
+          <div class="case-prose">
+            <p>Instead of placing an animation on top of a painting, I wanted the painting itself to determine how the animation behaved.</p>
+            <p>That led me to experiment with visual properties and translate them into vectors that could guide thousands of particles across the canvas.</p>
+          </div>
 
-        <p>
-          The piece was later rebuilt in p5.js to move it from a desktop sketch into something
-          browser-based and shareable.
-        </p>
+          <div class="case-signal-list case-signal-list--visual" aria-label="Visual signals explored">
+            <span>Brightness</span>
+            <span>Color</span>
+            <span>Edge direction</span>
+            <span>Local image information</span>
+          </div>
 
-        <div class="media-columns">
-          <div class="media-column">
-            <div class="project-visual">
-              <button type="button" class="video-facade" style="background-image:url('https://i.vimeocdn.com/video/1822728069-e0401cd70fb5a860cde86cff8b8ca3e41559df940a64f7076e6d99b16cbfebe1-d_960')" data-embed-src="https://player.vimeo.com/video/927712787?h=ab4faf568c&amp;autoplay=1" data-embed-title="Flow demo 2024 (1)" data-embed-allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" data-embed-referrer="strict-origin-when-cross-origin" aria-label="Play video: Flow demo 2024 (1)">
-                <span class="video-facade-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-              </button>
+          <div class="future-map case-reveal" aria-label="How a painting becomes particle motion">
+            <span>Painting</span>
+            <i aria-hidden="true">→</i>
+            <span>Sample Visual Information</span>
+            <i aria-hidden="true">→</i>
+            <span>Direction Field</span>
+            <i aria-hidden="true">→</i>
+            <span>Particle Motion</span>
+          </div>
+        </section>
+
+        <section class="case-section" id="artifact" aria-labelledby="artifact-label">
+          <p class="case-kicker" id="artifact-label">Final Artifact</p>
+          <div class="case-prose">
+            <p>The final version became an interactive browser-based gallery.</p>
+            <p>Visitors can switch between several paintings, and each artwork produces its own particle field in real time.</p>
+          </div>
+
+          <figure class="case-product-video">
+            <video controls playsinline preload="metadata" poster="../assets/images/flow/front.jpg">
+              <source src="../assets/videos/flow/demo.mp4" type="video/mp4">
+            </video>
+            <figcaption>Flow’s interactive browser gallery</figcaption>
+          </figure>
+
+          <div class="artifact-views" aria-label="Three parts of the Flow system">
+            <article class="artifact-view">
+              <span class="artifact-view__number">01</span>
+              <h2>Painting as Data</h2>
+              <p>The system samples the source artwork. Brightness, color, and direction influence the field used to move particles.</p>
+            </article>
+            <article class="artifact-view">
+              <span class="artifact-view__number">02</span>
+              <h2>Flow-Field Particle System</h2>
+              <p>Thousands of particles continuously respond to their position within the painting rather than follow one fixed animation.</p>
+            </article>
+            <article class="artifact-view">
+              <span class="artifact-view__number">03</span>
+              <h2>Interactive Gallery</h2>
+              <p>Visitors move between artworks, with each selection rebuilding the particle system around a different painting.</p>
+            </article>
+          </div>
+
+          <p class="case-bridge-copy">Artwork data is pulled through the Met Museum’s open Collection API, allowing the piece to work as a growing gallery rather than a single isolated visualization.</p>
+
+          <p class="case-statement case-statement--spaced">The painting stays still. The system makes the <span class="case-accent">movement already suggested inside it</span> visible.</p>
+        </section>
+
+        <section class="case-section case-moments" id="moments" aria-labelledby="moments-label">
+          <p class="case-kicker" id="moments-label">Key Design Moments</p>
+
+          <article class="design-moment">
+            <header class="design-moment__header">
+              <span>01</span>
+              <h2>Turning visual information into motion</h2>
+            </header>
+
+            <div class="case-prose case-prose--moment">
+              <p>The first challenge was deciding what information from a painting should actually control the particles.</p>
+              <p>Simply sampling pixels gave me data, but it didn’t automatically produce motion that felt connected to the artwork.</p>
+              <p>I experimented with different ways of translating brightness, color, and directional information into a vector field.</p>
             </div>
-            <p class="media-caption">Demo 2024 (1)</p>
-          </div>
-          <div class="media-column">
-            <div class="project-visual">
-              <button type="button" class="video-facade" style="background-image:url('https://i.vimeocdn.com/video/1822754362-c22e2c0488676774258f8cc0c4c0580a28ee909358dc21bd65ba544f4f5e35d0-d_960')" data-embed-src="https://player.vimeo.com/video/927730127?h=a6de7e444c&amp;autoplay=1" data-embed-title="Flow demo 2024 (2)" data-embed-allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" data-embed-referrer="strict-origin-when-cross-origin" aria-label="Play video: Flow demo 2024 (2)">
-                <span class="video-facade-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-              </button>
+
+            <div class="case-media-grid" aria-label="Early Flow computational studies">
+              <figure>
+                <img src="../assets/images/flow/note1.png" alt="Flow exploration notes showing particle starting points and pixel sampling" loading="lazy">
+                <figcaption>Early particle and pixel-reading experiments</figcaption>
+              </figure>
+              <figure>
+                <img src="../assets/images/flow/note2.png" alt="Flow process map connecting pixel data, Perlin noise, and interface ideas" loading="lazy">
+                <figcaption>Mapping image data into a flow-field system</figcaption>
+              </figure>
             </div>
-            <p class="media-caption">Demo 2024 (2)</p>
-          </div>
-        </div>
 
-        <p>
-          Originally, the source painting was fixed — one image, one flow field, no
-          interactivity. For this version, I redesigned the interaction in Figma and rebuilt
-          the piece so visitors can switch between several paintings in a gallery, each
-          generating its own particle flow live.
-        </p>
-      </div>
+            <div class="case-prose case-prose--moment">
+              <p>Some mappings produced movement that felt almost random. Others became too uniform and lost the complexity of the painting.</p>
+              <p>The goal wasn’t to reproduce the brushstrokes literally.</p>
+            </div>
 
-      <div class="project-section">
-        <h2>Technical</h2>
-        <div class="project-meta-col">
-          <div>
-            <span class="meta-label">Frontend</span>
-            <span class="meta-value">Vanilla JS · HTML5/CSS3 · p5.js for setup/loop, raw Canvas 2D for rendering</span>
-          </div>
-          <div>
-            <span class="meta-label">Core Technique</span>
-            <span class="meta-value">Flow-field particle system</span>
-          </div>
-          <div>
-            <span class="meta-label">Data</span>
-            <span class="meta-value">Live artwork via the Met Museum's open Collection API</span>
-          </div>
-        </div>
-      </div>
+            <p class="case-statement case-statement--spaced">It was to find a computational rule that could preserve the painting’s <span class="case-accent">sense of direction and energy</span>.</p>
 
-      <a href="https://luluwangyy.github.io/Flow_art_new/" class="link-button" target="_blank" rel="noopener">
-        <span>Try the Live Piece</span>
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-      </section>
+            <p class="case-bridge-copy">This became the foundation of the piece: the image isn’t decoration behind the particles—it determines how the system moves.</p>
+          </article>
+
+          <article class="design-moment">
+            <header class="design-moment__header">
+              <span>02</span>
+              <h2>Finding the point between painterly and chaotic</h2>
+            </header>
+
+            <div class="case-prose case-prose--moment">
+              <p>Once the flow field worked, another problem appeared.</p>
+              <p>More particles and more movement didn’t necessarily make the result better.</p>
+              <p>Small parameter changes could completely alter the feeling of the result. Too much movement became visual noise; too little made the system feel disconnected from the painting.</p>
+            </div>
+
+            <div class="case-signal-list" aria-label="Parameters tuned during iteration">
+              <span>Particle count</span>
+              <span>Step size</span>
+              <span>Field resolution</span>
+              <span>Movement behavior</span>
+            </div>
+
+            <div class="case-video-pair" aria-label="Comparison of early and refined Flow experiments">
+              <figure>
+                <div class="project-visual">
+                  <button type="button" class="video-facade" style="background-image:url('https://i.vimeocdn.com/video/1822728069-e0401cd70fb5a860cde86cff8b8ca3e41559df940a64f7076e6d99b16cbfebe1-d_960')" data-embed-src="https://player.vimeo.com/video/927712787?h=ab4faf568c&amp;autoplay=1" data-embed-title="Early Flow motion study" data-embed-allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" data-embed-referrer="strict-origin-when-cross-origin" aria-label="Play early Flow motion study">
+                    <span class="video-facade-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+                  </button>
+                </div>
+                <figcaption>Early motion study</figcaption>
+              </figure>
+              <span class="case-iteration-arrow" aria-hidden="true">→</span>
+              <figure>
+                <div class="project-visual">
+                  <button type="button" class="video-facade" style="background-image:url('https://i.vimeocdn.com/video/1822754362-c22e2c0488676774258f8cc0c4c0580a28ee909358dc21bd65ba544f4f5e35d0-d_960')" data-embed-src="https://player.vimeo.com/video/927730127?h=a6de7e444c&amp;autoplay=1" data-embed-title="Refined Flow motion study" data-embed-allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" data-embed-referrer="strict-origin-when-cross-origin" aria-label="Play refined Flow motion study">
+                    <span class="video-facade-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+                  </button>
+                </div>
+                <figcaption>Refined flow behavior</figcaption>
+              </figure>
+            </div>
+
+            <p class="case-statement case-statement--spaced">The challenge wasn’t making the system more complex. It was finding the point where the motion still felt <span class="case-accent">painterly</span>.</p>
+
+            <div class="case-prose">
+              <p>Instead of treating parameter tuning as only a technical optimization, I used it as part of the visual design process.</p>
+              <p>The final behavior had to be computationally generated, but still feel like it belonged to the artwork underneath it.</p>
+              <p>Connecting the gallery to the Met Museum API extended that idea further: artwork becomes an input to the system rather than content hard-coded into the piece.</p>
+            </div>
+          </article>
+        </section>
+
+        <section class="case-section" id="impact" aria-labelledby="impact-label">
+          <p class="case-kicker" id="impact-label">Outcome</p>
+          <div class="case-prose">
+            <p>Flow grew from a Processing classroom experiment into a browser-based interactive generative-art system.</p>
+            <p>The final piece combines computational image analysis, live artwork data, and real-time particle rendering in one reusable system.</p>
+          </div>
+
+          <div class="impact-metrics">
+            <div>
+              <strong>3+</strong>
+              <span>visual signals explored · brightness, color, direction</span>
+            </div>
+            <div>
+              <strong>Thousands</strong>
+              <span>of particles rendered in motion</span>
+            </div>
+            <div>
+              <strong>100+</strong>
+              <span>paintings generating distinct behaviors</span>
+            </div>
+            <div>
+              <strong>Live</strong>
+              <span>artwork data through the Met Museum API</span>
+            </div>
+          </div>
+
+          <div class="impact-ending">
+            <p>What began as a single generative sketch became a reusable system where <span class="case-accent">each painting produces its own motion</span>.</p>
+            <div class="impact-actions">
+              <a href="https://luluwangyy.github.io/Flow_art_new/" target="_blank" rel="noopener">Try Live Piece ↗</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-section" id="reflection" aria-labelledby="reflection-label">
+          <p class="case-kicker" id="reflection-label">Reflection</p>
+          <div class="case-prose">
+            <p>Flow sits directly between two ways I like to work: making images and building systems.</p>
+            <p>I started with a painting question rather than a technical one. The code came later, as a way of investigating something I could already see in the artwork: direction, rhythm, repetition, and movement.</p>
+          </div>
+
+          <p class="case-final-statement">The most interesting part wasn’t using code to replace the painting. It was using code to <span class="case-accent">notice something inside it differently</span>.</p>
+
+          <div class="case-prose">
+            <p>It also changed how I think about generative systems.</p>
+            <p>The same algorithm does not need to produce the same aesthetic result every time. When the source material becomes part of the system, the behavior can stay consistent while the experience changes with every new input.</p>
+          </div>
+        </section>
+      </article>
     </div>
 
     <section class="related-projects">
@@ -191,7 +346,7 @@
             <span class="related-card-label">Previous Project</span>
             <span class="related-card-title">Nomi</span>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
@@ -200,7 +355,7 @@
             <span class="related-card-label">Next Project</span>
             <span class="related-card-title">UrbanSky</span>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>

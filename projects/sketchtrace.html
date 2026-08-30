@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SketchTrace — Yueyi Wang</title>
-  <meta name="description" content="SketchTrace: an interactive learning workspace that helps people understand the code AI can generate in seconds.">
+  <meta name="description" content="SketchTrace turns AI-generated creative code into an interactive map, helping beginners understand its structure, behavior, and visual output.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="case-study sketchtrace-case">
 
   <header class="site-header">
     <div class="header-inner">
@@ -33,330 +33,319 @@
   </header>
 
   <main>
-    <div class="project-detail-visual">
-      <div class="project-visual">
-        <img src="../assets/images/sketchtrace/cover.jpg" alt="SketchTrace — code editor, live preview, and system map side by side" loading="lazy">
-      </div>
+    <div class="case-mobile-nav">
+      <button class="case-mobile-nav__trigger" type="button" aria-label="Open section navigation" aria-expanded="false" aria-controls="case-mobile-menu">
+        <span class="case-mobile-nav__index" aria-hidden="true">01</span>
+      </button>
+      <nav class="case-mobile-nav__menu" id="case-mobile-menu" aria-label="Case study sections">
+        <a class="is-active" href="#overview" aria-current="true"><span>01</span> Overview</a>
+        <a href="#context"><span>02</span> Project Context</a>
+        <a href="#artifact"><span>03</span> Final Artifact</a>
+        <a href="#moments"><span>04</span> Key Design Moments</a>
+        <a href="#impact"><span>05</span> Impact</a>
+        <a href="#reflection"><span>06</span> Reflection</a>
+      </nav>
     </div>
 
-    <section class="project-detail-hero">
-      <a href="../index.html#projects" class="back-link">&larr; Back to work</a>
-      <h1>SketchTrace</h1>
-      <p class="project-subtitle">Helping people understand the code AI can generate in seconds.</p>
-    </section>
+    <div class="case-layout">
+      <aside class="case-rail" aria-label="SketchTrace case study navigation">
+        <div class="case-rail__sticky">
+          <a href="../index.html#projects" class="case-back-link">← Back to work</a>
 
-    <div class="project-detail-split">
-      <aside class="project-meta-col">
-        <div>
-          <span class="meta-label">Type</span>
-          <span class="meta-value">Product Design · Design Engineering · AI</span>
-        </div>
-        <div>
-          <span class="meta-label">Role</span>
-          <span class="meta-value">Product Designer &amp; Full-Stack Engineer</span>
-        </div>
-        <div>
-          <span class="meta-label">Affiliation</span>
-          <span class="meta-value">Design Tool Lab, Barnard College, Columbia University</span>
-        </div>
-        <div>
-          <span class="meta-label">Duration</span>
-          <span class="meta-value">2024–2025</span>
-        </div>
-        <div>
-          <span class="meta-label">Platform</span>
-          <span class="meta-value">Responsive Web Application</span>
-        </div>
-        <div>
-          <span class="meta-label">Scope</span>
-          <span class="meta-value">Product Strategy · UX/UI · React · Express · AI Integration · Testing &amp; Deployment</span>
+          <p class="case-rail__eyebrow">In this case study</p>
+          <nav class="case-nav" aria-label="On this page">
+            <a class="case-nav__link is-active" href="#overview" aria-current="true">Overview</a>
+            <a class="case-nav__link" href="#context">Project Context</a>
+            <a class="case-nav__link" href="#artifact">Final Artifact</a>
+            <a class="case-nav__link" href="#moments">Key Design Moments</a>
+            <a class="case-nav__link" href="#impact">Impact</a>
+            <a class="case-nav__link" href="#reflection">Reflection</a>
+          </nav>
+
+          <div class="case-rail__actions" aria-label="Project links">
+            <a href="https://luluwangyy.github.io/final-dti-flowchart/" target="_blank" rel="noopener">Try Live Demo ↗</a>
+            <a href="https://github.com/luluwangyy/final-dti-flowchart/tree/codex/live-demo-release" target="_blank" rel="noopener">View GitHub ↗</a>
+          </div>
+
+          <dl class="case-rail__meta">
+            <div>
+              <dt>Role</dt>
+              <dd>Product designer + full-stack engineer</dd>
+            </div>
+            <div>
+              <dt>Skills</dt>
+              <dd>Research · UI/UX · React · LLM integration</dd>
+            </div>
+            <div>
+              <dt>Lab</dt>
+              <dd>Columbia Design Tool Lab</dd>
+            </div>
+            <div>
+              <dt>Time</dt>
+              <dd>2024–2025</dd>
+            </div>
+            <div>
+              <dt>Platform</dt>
+              <dd>Responsive web</dd>
+            </div>
+          </dl>
         </div>
       </aside>
 
-      <section class="project-detail-body">
-      <p>
-        AI can now turn an idea into working code almost instantly. But generating code and
-        understanding it are two different things.
-      </p>
-      <p>
-        SketchTrace is an interactive learning workspace that connects source code, live
-        behavior, and clickable system maps — helping creative coders inspect how unfamiliar
-        programs actually work.
-      </p>
+      <article class="case-story">
+        <section class="case-section case-overview" id="overview" aria-labelledby="overview-label">
+          <figure class="case-front-image">
+            <img src="../assets/images/sketchtrace/cover.jpg" alt="SketchTrace interface with code, a live creative-coding preview, and an interactive structural map">
+          </figure>
+          <h1>SketchTrace</h1>
+          <p class="case-kicker" id="overview-label">Overview</p>
+          <p class="case-statement case-statement--hero">
+            SketchTrace turns creative code into an <span class="case-accent">interactive map using LLM</span>, helping beginners see how the code is structured, what each part does, and how it shapes the final visual.
+          </p>
 
-      <div class="link-button-row">
-        <a href="https://luluwangyy.github.io/final-dti-flowchart/" class="link-button" target="_blank" rel="noopener" aria-label="View the SketchTrace live demo (opens in a new tab)">
-          <span>View Live Demo</span>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <a href="https://github.com/luluwangyy/final-dti-flowchart/tree/codex/live-demo-release" class="link-button" target="_blank" rel="noopener" aria-label="View the SketchTrace source on GitHub (opens in a new tab)">
-          <span>View GitHub</span>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
-
-      <div class="project-visual visual-auto">
-        <video class="media" controls playsinline poster="../assets/images/sketchtrace/hero.jpg">
-          <source src="../assets/videos/sketchtrace/hero.webm" type="video/webm">
-          <source src="../assets/videos/sketchtrace/hero.mp4" type="video/mp4">
-        </video>
-      </div>
-      <p class="media-caption">
-        The system map turns unfamiliar code into something users can navigate: selecting a
-        concept reveals the exact source code responsible for it.
-      </p>
-
-      <div class="project-section">
-        <h2>The Problem</h2>
-        <p>
-          In creative coding education, AI has dramatically lowered the barrier to writing code.
-          A learner can describe an interaction, press enter, and receive hundreds of lines of
-          working JavaScript within seconds. But that convenience creates another problem:
-        </p>
-        <p class="big-line">Being able to generate code does not mean being able to understand it.</p>
-        <p>
-          For creative coders especially, unfamiliar programs may contain animation loops,
-          interaction states, geometry, recursive functions, and rendering logic distributed
-          across hundreds of lines. The visible result might be immediately understandable. The
-          system behind it often is not.
-        </p>
-        <p>Most AI coding tools optimize for:</p>
-        <p>Prompt → Generate → Run</p>
-        <p>I wanted to explore a different loop:</p>
-        <p>Generate → Inspect → Understand → Modify</p>
-        <p>SketchTrace helps users move between three representations of the same program:</p>
-        <p>Code → Behavior → Structure</p>
-        <p>Instead of replacing the learning process, AI becomes a way into it.</p>
-      </div>
-
-      <div class="project-section">
-        <h2>From Generation to Understanding</h2>
-        <div class="step-sequence">
-          <div class="step-sequence__item">
-            <span class="step-sequence__num">01</span>
-            <span class="step-sequence__label">Code</span>
+          <div class="case-role" aria-labelledby="role-title">
+            <p class="case-kicker" id="role-title">My Role</p>
+            <p class="case-role__summary">I <strong>designed and built it 0→1</strong>, from research and interaction design to the full-stack React implementation, LLM pipeline, testing, and deployment.</p>
+            <dl>
+              <div>
+                <dt>Research</dt>
+                <dd>Literature review · precedent research · interaction concepts</dd>
+              </div>
+              <div>
+                <dt>Design</dt>
+                <dd>Figma · interaction design · UI/UX · prototyping</dd>
+              </div>
+              <div>
+                <dt>Engineering</dt>
+                <dd>React · CodeMirror · LLM integration · responsive implementation</dd>
+              </div>
+              <div>
+                <dt>Delivery</dt>
+                <dd>Testing · deployment · GitHub · CI/CD</dd>
+              </div>
+            </dl>
           </div>
-          <svg class="step-sequence__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <div class="step-sequence__item">
-            <span class="step-sequence__num">02</span>
-            <span class="step-sequence__label">Preview</span>
-          </div>
-          <svg class="step-sequence__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <div class="step-sequence__item">
-            <span class="step-sequence__num">03</span>
-            <span class="step-sequence__label">System Map</span>
-          </div>
-        </div>
-        <p>
-          SketchTrace reorganizes the experience around understanding rather than generation.
-          Users can inspect the source code, immediately see what it produces, and then use a
-          structural map to understand how the major systems relate.
-        </p>
-        <p>
-          The three views stay visible together so users can continually move between
-          implementation, behavior, and structure.
-        </p>
-        <p class="big-line">Read it → See it → Trace it</p>
-        <p>
-          Rather than asking users to accept AI-generated code as a black box, SketchTrace gives
-          them multiple ways to interrogate it.
-        </p>
-      </div>
+        </section>
 
-      <div class="project-section">
-        <h2>Testing With Real Creative Code</h2>
-        <p>
-          Simple UI examples did not demonstrate why structural visualization mattered, so I
-          created four more demanding creative-coding studies. These examples include animation
-          loops, recursion, geometry, pointer interaction, responsive behavior, and parallel
-          systems — they became both learning content and stress tests for the product.
-        </p>
-        <div class="sample-grid">
-          <div class="sample-item">
-            <div class="project-visual">
-              <iframe src="../assets/animations/sketchtrace/particle-terrain.html" title="Three.js Particle Terrain" loading="lazy"></iframe>
+        <section class="case-section" id="context" aria-labelledby="context-label">
+          <p class="case-kicker" id="context-label">Project Context</p>
+          <p class="case-statement">
+            Creative coding is becoming easier to <span class="case-accent">generate</span>, but not necessarily easier to <span class="case-highlight-2">understand</span>.
+          </p>
+
+          <div class="case-short-copy">
+            <p>For beginners learning tools like <strong>Three.js and WebGL</strong>, even a relatively small project can contain unfamiliar functions, parameters, and relationships.</p>
+            <p>AI-assisted coding can produce a working project in seconds. It can also leave learners with code that works before they understand why.</p>
+          </div>
+
+          <p class="case-bridge-copy case-lab-prompt">At Columbia’s Design Tool Lab, I asked: <strong>How might we use AI not just to generate creative code, but to help beginners understand its structure?</strong></p>
+          <p class="case-bridge-copy">Literature review and precedent research pointed to flowcharts as a way to make program structure visible without hiding the underlying code.</p>
+
+          <div class="representation-map case-reveal" aria-label="Three connected representations of a creative coding project">
+            <div class="representation-map__item">
+              <span>01</span>
+              <strong>Source Code</strong>
+              <small>What it is</small>
             </div>
-            <p>Three.js Particle Terrain</p>
-          </div>
-          <div class="sample-item">
-            <div class="project-visual">
-              <iframe src="../assets/animations/sketchtrace/kinetic-lili-grid.html" title="Kinetic Typographic Grid" loading="lazy"></iframe>
+            <span class="representation-map__connector" aria-hidden="true">→</span>
+            <div class="representation-map__item representation-map__item--accent">
+              <span>02</span>
+              <strong>Structural Flowchart</strong>
+              <small>How it works</small>
             </div>
-            <p>Kinetic Typographic Grid</p>
-          </div>
-          <div class="sample-item">
-            <div class="project-visual">
-              <iframe src="../assets/animations/sketchtrace/recursive-wind-garden.html" title="Recursive Wind Garden" loading="lazy"></iframe>
-            </div>
-            <p>Recursive Wind Garden</p>
-          </div>
-          <div class="sample-item">
-            <div class="project-visual">
-              <iframe src="../assets/animations/sketchtrace/boid-constellation.html" title="Boid Constellation Simulation" loading="lazy"></iframe>
-            </div>
-            <p>Boid Constellation Simulation</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="project-section">
-        <span class="section-number">01</span>
-        <h2>Showing Complexity Without Recreating the Code</h2>
-        <p>
-          My first diagrams tried to represent almost every meaningful function and
-          relationship. They were technically complete — but difficult to understand. I reduced
-          each example to roughly 11–13 essential nodes, prioritizing major systems and
-          dependencies rather than implementation detail.
-        </p>
-
-        <div class="contrast-pair">
-          <div>
-            <span class="contrast-label">Before</span>
-            <p>&ldquo;Show everything.&rdquo;</p>
-            <div class="project-visual visual-auto visual-scroll">
-              <img class="media" src="../assets/images/sketchtrace/overlycomplicated.jpg" alt="SketchTrace — an early, overly complicated system-map diagram">
+            <span class="representation-map__connector" aria-hidden="true">→</span>
+            <div class="representation-map__item">
+              <span>03</span>
+              <strong>Live Visual Output</strong>
+              <small>What it makes</small>
             </div>
           </div>
-          <div>
-            <span class="contrast-label">After</span>
-            <p>&ldquo;Show enough to build a mental model.&rdquo;</p>
-            <div class="project-visual visual-auto visual-scroll">
-              <img class="media" src="../assets/images/sketchtrace/simple.jpg" alt="SketchTrace — the simplified final system-map diagram">
+        </section>
+
+        <section class="case-section" id="artifact" aria-labelledby="artifact-label">
+          <p class="case-kicker" id="artifact-label">Final Artifact</p>
+
+          <figure class="case-product-video">
+            <video controls playsinline preload="metadata" poster="../assets/images/sketchtrace/hero.jpg">
+              <source src="../assets/videos/sketchtrace/hero.webm" type="video/webm">
+              <source src="../assets/videos/sketchtrace/hero.mp4" type="video/mp4">
+            </video>
+            <figcaption>Full product walkthrough · 00:42</figcaption>
+          </figure>
+
+          <div class="artifact-views" aria-label="Three synchronized product views">
+            <article class="artifact-view">
+              <span class="artifact-view__number">01</span>
+              <h2>Code</h2>
+              <p>A CodeMirror editor keeps the source available and highlights relevant ranges as learners navigate.</p>
+            </article>
+            <article class="artifact-view">
+              <span class="artifact-view__number">02</span>
+              <h2>Live Preview</h2>
+              <p>The rendered output ties abstract program logic to the visual behavior it produces.</p>
+            </article>
+            <article class="artifact-view">
+              <span class="artifact-view__number">03</span>
+              <h2>Interactive Flowchart</h2>
+              <p>An LLM maps essential systems into nodes that link directly back to the code.</p>
+            </article>
+          </div>
+
+          <div class="case-sequence case-reveal" aria-label="Product learning sequence">
+            <span>See the structure</span>
+            <span>inspect the code</span>
+            <span>observe what it produces.</span>
+          </div>
+
+        </section>
+
+        <section class="case-section case-moments" id="moments" aria-labelledby="moments-label">
+          <p class="case-kicker" id="moments-label">Key Design Moments</p>
+
+          <article class="design-moment design-moment--gallery">
+            <header class="design-moment__header">
+              <span>01</span>
+              <h2>Choosing examples that actually stress-tested the system</h2>
+            </header>
+            <div class="decision-path" aria-label="Problem, evidence, decision, and result">
+              <p><span>Problem</span> Simple UI examples did not show why structural visualization mattered.</p>
+              <p><span>Decision</span> Build four visually and structurally different creative-coding studies.</p>
+              <p><span>Result</span> The examples became both learning content and product stress tests.</p>
+            </div>
+
+            <div class="study-gallery">
+              <figure class="study-preview">
+                <iframe src="../assets/animations/sketchtrace/particle-terrain.html" title="Three.js Particle Terrain" loading="lazy"></iframe>
+                <figcaption><span>01</span> Particle Terrain</figcaption>
+              </figure>
+              <figure class="study-preview">
+                <iframe src="../assets/animations/sketchtrace/kinetic-lili-grid.html" title="Kinetic Typographic Grid" loading="lazy"></iframe>
+                <figcaption><span>02</span> Kinetic Type Grid</figcaption>
+              </figure>
+              <figure class="study-preview">
+                <iframe src="../assets/animations/sketchtrace/recursive-wind-garden.html" title="Recursive Wind Garden" loading="lazy"></iframe>
+                <figcaption><span>03</span> Recursive Wind Garden</figcaption>
+              </figure>
+              <figure class="study-preview">
+                <iframe src="../assets/animations/sketchtrace/boid-constellation.html" title="Boid Constellation Simulation" loading="lazy"></iframe>
+                <figcaption><span>04</span> Boid Constellation</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="design-moment design-moment--comparison">
+            <header class="design-moment__header">
+              <span>02</span>
+              <h2>Shrinking complexity without hiding the code</h2>
+            </header>
+
+            <div class="case-short-copy">
+              <p>My first flowcharts represented nearly every meaningful function and relationship. They were comprehensive—and overwhelming for a beginner.</p>
+              <p>I iterated on the prompt strategy and information hierarchy until each view focused on roughly <span class="case-accent">11–13 essential nodes</span>.</p>
+            </div>
+
+            <div class="case-compare" style="--compare: 50%;">
+              <div class="case-compare__stage">
+                <img class="case-compare__before" src="../assets/images/sketchtrace/overlycomplicated.jpg" alt="Early flowchart with many dense nodes and relationships">
+                <img class="case-compare__after" src="../assets/images/sketchtrace/simple.jpg" alt="Simplified final flowchart with approximately 11 to 13 essential nodes">
+                <span class="case-compare__divider" aria-hidden="true"></span>
+                <span class="case-compare__label case-compare__label--before">Comprehensive</span>
+                <span class="case-compare__label case-compare__label--after">Curated</span>
+              </div>
+              <label class="case-compare__control">
+                <span>Drag to compare</span>
+                <input type="range" min="0" max="100" value="50" aria-label="Compare the comprehensive and curated flowcharts">
+              </label>
+            </div>
+
+            <p class="case-bridge-copy">The flowchart stopped trying to reproduce the entire program. It became an entry point: enough structure to orient a learner, with the source always available for depth.</p>
+
+            <div class="question-shift case-reveal">
+              <p><span>The question shifted from</span> “How do I visualize all of this code?”</p>
+              <span class="question-shift__arrow" aria-hidden="true">→</span>
+              <p><span>to</span> “What does a beginner need to see first?”</p>
+            </div>
+          </article>
+
+          <article class="design-moment design-moment--interface">
+            <header class="design-moment__header">
+              <span>03</span>
+              <h2>Making three representations feel like one interface</h2>
+            </header>
+
+            <div class="interface-decision">
+              <figure>
+                <img src="../assets/images/sketchtrace/hero.jpg" alt="SketchTrace showing code and a structural flowchart beside a persistent live preview" loading="lazy">
+                <figcaption>Resizable panels preserve all three views while letting the learner decide what needs focus.</figcaption>
+              </figure>
+              <div class="interface-decision__copy">
+                <p><span>Constraint</span> Equal space crowded the screen; separate screens weakened the relationships.</p>
+                <p><span>Decision</span> Place code and flowchart side by side—the strongest direct relationship—and keep the live preview continuously visible.</p>
+                <p><span>Interaction</span> Selecting a node points to its exact code while resizing changes emphasis without breaking context.</p>
+              </div>
+            </div>
+
+            <p class="case-statement case-statement--closing">The goal wasn’t simply to fit three panels onto one screen. It was to make moving between them feel like one continuous act of understanding the program.</p>
+          </article>
+        </section>
+
+        <section class="case-section" id="impact" aria-labelledby="impact-label">
+          <p class="case-kicker" id="impact-label">Impact</p>
+          <div class="impact-metrics">
+            <div>
+              <strong>100+</strong>
+              <span>creative-coding studies</span>
+            </div>
+            <div>
+              <strong>11–13</strong>
+              <span>essential nodes per flowchart</span>
+            </div>
+            <div>
+              <strong>~2 sec</strong>
+              <span>creative-code rendering</span>
+            </div>
+            <div>
+              <strong>~2–3 sec</strong>
+              <span>structural representation</span>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="project-section">
-        <span class="section-number">02</span>
-        <h2>Connecting Explanation Back to the Real Code</h2>
-        <p>
-          AI can explain code in natural language, but explanations can become another
-          abstraction users have to trust. I wanted every explanation in SketchTrace to remain
-          connected to the actual program.
-        </p>
-        <p>Each system-map node therefore contains an exact source range. Selecting a node automatically:</p>
-        <ul class="prose-list">
-          <li>opens the relevant JavaScript</li>
-          <li>highlights the corresponding source</li>
-          <li>scrolls it into view</li>
-          <li>focuses the editor</li>
-        </ul>
-        <p>
-          The user never has to choose between an AI explanation and the code itself. The
-          explanation becomes a doorway back into the source.
-        </p>
-      </div>
-
-      <div class="project-section">
-        <span class="section-number">03</span>
-        <h2>Using AI as a Teacher, Not an Autopilot</h2>
-        <p>
-          Many AI coding products use the model primarily to produce more code. In SketchTrace, I
-          intentionally gave AI a different responsibility: interpretation.
-        </p>
-        <p>
-          When users provide unfamiliar or modified code, AI identifies its important systems and
-          relationships. That interpretation is then validated and transformed into an
-          interactive structural map.
-        </p>
-
-        <div class="flow-diagram">
-          <div class="flow-diagram__item">User Code</div>
-          <span class="flow-diagram__arrow">↓</span>
-          <div class="flow-diagram__item">AI Interpretation</div>
-          <span class="flow-diagram__arrow">↓</span>
-          <div class="flow-diagram__item">Validation</div>
-          <span class="flow-diagram__arrow">↓</span>
-          <div class="flow-diagram__item">Interactive System Map</div>
-          <span class="flow-diagram__arrow">↓</span>
-          <div class="flow-diagram__item">Source Code</div>
-        </div>
-
-        <p>
-          The goal is not to hide implementation behind AI. It is to use AI to create an entry
-          point into implementation.
-        </p>
-      </div>
-
-      <div class="project-section">
-        <h2>The Final Experience</h2>
-        <p>Users can now:</p>
-        <ul class="prose-list">
-          <li>Load a creative-coding example or paste their own code</li>
-          <li>Run it immediately in a live preview</li>
-          <li>Generate a concise structural map</li>
-          <li>Click nodes to navigate directly to source code</li>
-          <li>Pan, zoom, and resize the workspace while exploring</li>
-        </ul>
-        <p>
-          Resizable panels allow users to emphasize whichever representation — code, behavior,
-          or structure — is most useful at that moment.
-        </p>
-      </div>
-
-      <div class="project-section">
-        <h2>Building It End-to-End</h2>
-        <div class="two-col-list">
-          <div>
-            <h3>Product</h3>
-            <ul class="prose-list">
-              <li>Product audit</li>
-              <li>Information architecture</li>
-              <li>Interaction design</li>
-              <li>Visual system</li>
-              <li>Creative-code example design</li>
-            </ul>
+          <div class="case-short-copy">
+            <p>I built SketchTrace as a working, responsive web prototype rather than stopping at a design concept.</p>
+            <p>Iteration reduced dense generated flowcharts to a navigable set of essential nodes while preserving direct links to the underlying code.</p>
           </div>
-          <div>
-            <h3>Engineering</h3>
-            <ul class="prose-list">
-              <li>React frontend</li>
-              <li>Express API</li>
-              <li>OpenAI integration</li>
-              <li>Mermaid rendering</li>
-              <li>CodeMirror source navigation</li>
-              <li>Authentication and API-key handling</li>
-              <li>Testing and deployment</li>
-            </ul>
-          </div>
-        </div>
-        <p>
-          Working across both design and engineering allowed me to prototype decisions directly
-          in the functioning product instead of separating design intent from technical
-          constraints.
-        </p>
-      </div>
 
-      <div class="project-section">
-        <h2>Explore SketchTrace</h2>
-        <div class="project-visual visual-auto">
-          <img class="media" src="../assets/images/sketchtrace/hero.jpg" alt="SketchTrace — code editor, live preview, and system map side by side" loading="lazy">
-        </div>
-        <div class="link-button-row">
-          <a href="https://luluwangyy.github.io/final-dti-flowchart/" class="link-button" target="_blank" rel="noopener" aria-label="View the SketchTrace live demo (opens in a new tab)">
-            <span>View Live Demo</span>
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-          <a href="https://github.com/luluwangyy/final-dti-flowchart/tree/codex/live-demo-release" class="link-button" target="_blank" rel="noopener" aria-label="View the SketchTrace source on GitHub (opens in a new tab)">
-            <span>View GitHub</span>
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-      </section>
+          <div class="impact-ending">
+            <p>Rather than only producing the answer, AI can help expose the <span class="case-accent">structure behind that answer</span>.</p>
+            <div class="impact-actions">
+              <a href="https://luluwangyy.github.io/final-dti-flowchart/" target="_blank" rel="noopener">Try Live Demo ↗</a>
+              <a href="https://github.com/luluwangyy/final-dti-flowchart/tree/codex/live-demo-release" target="_blank" rel="noopener">View GitHub ↗</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-section" id="reflection" aria-labelledby="reflection-label">
+          <p class="case-kicker" id="reflection-label">Reflection</p>
+          <p class="case-statement case-statement--reflection">Helping beginners isn’t about showing everything. It’s about curating complexity and tying structure to something tangible.</p>
+
+          <div class="case-short-copy">
+            <p>For SketchTrace, that meant giving learners several ways to understand the same program: its structure, the code behind it, and the visual result it creates.</p>
+            <p>I can see this interaction model extending beyond creative coding—without turning it into a separate product.</p>
+          </div>
+
+          <div class="future-map case-reveal" aria-label="A possible future interaction model for academic reading">
+            <span>Long Reading</span>
+            <i aria-hidden="true">→</i>
+            <span>Structural Map</span>
+            <i aria-hidden="true">→</i>
+            <span>Click Node</span>
+            <i aria-hidden="true">→</i>
+            <span>Original Passage</span>
+          </div>
+
+          <p class="case-final-statement">What interests me most is not using AI to remove difficult material, but using it to give people better ways into it.</p>
+        </section>
+      </article>
     </div>
 
     <section class="related-projects">
@@ -367,7 +356,7 @@
             <span class="related-card-label">Previous Project</span>
             <span class="related-card-title">Generative Disco</span>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
@@ -376,7 +365,7 @@
             <span class="related-card-label">Next Project</span>
             <span class="related-card-title">Nomi</span>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>

@@ -6,11 +6,56 @@
     <meta name="theme-color" content="#f5f8fb" />
     <meta name="description" content="Nomi — a calm medication routine companion." />
     <title>Nomi</title>
-    <script type="module" crossorigin src="./assets/index-4b9a30bd.js"></script>
-    <link rel="stylesheet" href="./assets/index-50090c00.css">
+    <script type="module" crossorigin src="./assets/index-4b9a30bd.js?v=10"></script>
+    <link rel="stylesheet" href="./assets/index-50090c00.css?v=10">
+    <link rel="stylesheet" href="./accessibility-overrides.css?v=10">
   </head>
   <body>
     <div id="root"></div>
-    
+
+    <div class="demo-zoom-controls" role="group" aria-label="Demo zoom controls">
+      <button type="button" id="demo-zoom-out" aria-label="Zoom out">−</button>
+      <button type="button" id="demo-zoom-reset" aria-label="Reset zoom">
+        <span id="demo-zoom-value" aria-live="polite">100%</span>
+      </button>
+      <button type="button" id="demo-zoom-in" aria-label="Zoom in">+</button>
+    </div>
+
+    <script>
+      (() => {
+        const levels = [0.8, 1, 1.2, 1.4];
+        let levelIndex = 1;
+        const root = document.documentElement;
+        const zoomOut = document.getElementById("demo-zoom-out");
+        const zoomIn = document.getElementById("demo-zoom-in");
+        const zoomReset = document.getElementById("demo-zoom-reset");
+        const zoomValue = document.getElementById("demo-zoom-value");
+
+        const applyZoom = () => {
+          const value = levels[levelIndex];
+          root.style.setProperty("--demo-zoom", value);
+          zoomValue.textContent = `${Math.round(value * 100)}%`;
+          zoomOut.disabled = levelIndex === 0;
+          zoomIn.disabled = levelIndex === levels.length - 1;
+        };
+
+        zoomOut.addEventListener("click", () => {
+          levelIndex = Math.max(0, levelIndex - 1);
+          applyZoom();
+        });
+
+        zoomIn.addEventListener("click", () => {
+          levelIndex = Math.min(levels.length - 1, levelIndex + 1);
+          applyZoom();
+        });
+
+        zoomReset.addEventListener("click", () => {
+          levelIndex = 1;
+          applyZoom();
+        });
+
+        applyZoom();
+      })();
+    </script>
   </body>
 </html>

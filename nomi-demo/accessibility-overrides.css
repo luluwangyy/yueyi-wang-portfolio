@@ -1,0 +1,317 @@
+/* Readability and text-size refinements layered over the compiled prototype. */
+:root {
+  --muted: #3f4a50;
+  --faint: #4c585e;
+  --glass-muted: rgba(23, 26, 28, 0.84);
+  --demo-zoom: 1;
+}
+
+#root {
+  zoom: var(--demo-zoom);
+}
+
+.demo-zoom-controls {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  border: 1px solid rgba(43, 67, 72, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 12px 30px rgba(37, 56, 61, 0.18);
+  backdrop-filter: blur(14px);
+}
+
+.demo-zoom-controls button {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #273b40;
+  font: 700 24px/1 Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease,
+    transform 160ms ease;
+}
+
+.demo-zoom-controls button:hover:not(:disabled),
+.demo-zoom-controls button:focus-visible {
+  background: #315d61;
+  color: #fff;
+  outline: none;
+}
+
+.demo-zoom-controls button:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.demo-zoom-controls button:disabled {
+  color: #9ba5a8;
+  cursor: default;
+}
+
+#demo-zoom-reset {
+  min-width: 58px;
+  padding-inline: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.phone-shell small {
+  color: #3f4a50 !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+}
+
+.prototype-brand span:not(.nomi-mark),
+.control-label,
+.prototype-note,
+.phone-label,
+.screen-heading > span,
+.settings-label,
+.page-intro,
+.quiet-note,
+.section-disclosure small,
+.routine-item-copy > span:last-child,
+.read-card span,
+.read-card small,
+.history-row small,
+.history-row span:last-child,
+.list-button small,
+.medication-setting small,
+.toggle-row small,
+.people-card div span,
+.relationship-label.muted,
+.contact-row small,
+.checkin-banner span {
+  color: #3f4a50 !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+}
+
+.frosted-card .soft-label,
+.frosted-card .time-label,
+.frosted-card .care-status-header small,
+.frosted-card .frosted-card__content > p {
+  color: rgba(255, 255, 255, 0.94) !important;
+}
+
+.frosted-card small,
+.frosted-card .care-status-header small {
+  color: rgba(255, 255, 255, 0.94) !important;
+}
+
+/* Caregiver captions stay readable without competing with primary content. */
+.nomi-dual .phone-column:nth-child(2) > .phone-label,
+.nomi-dual .phone-column:nth-child(2) .phone-shell small,
+.nomi-dual .phone-column:nth-child(2) .screen-heading > span,
+.nomi-dual .phone-column:nth-child(2) .page-intro,
+.nomi-dual .phone-column:nth-child(2) .quiet-note,
+.nomi-dual .phone-column:nth-child(2) .routine-item-copy > span:last-child,
+.nomi-dual .phone-column:nth-child(2) .read-card span,
+.nomi-dual .phone-column:nth-child(2) .history-row span:last-child,
+.nomi-dual .phone-column:nth-child(2) .relationship-label.muted,
+.nomi-dual .phone-column:nth-child(2) .checkin-banner span,
+.nomi-dual .phone-column:nth-child(2) .frosted-card .soft-label,
+.nomi-dual .phone-column:nth-child(2) .frosted-card .time-label,
+.nomi-dual .phone-column:nth-child(2) .frosted-card__content > p {
+  font-weight: 400 !important;
+}
+
+/* Keep the parent Help screen focused on its primary actions. */
+.nomi-dual .phone-column:first-child
+  .screen-content:has(.action-list.roomy)
+  .screen-heading > p,
+.nomi-dual .phone-column:first-child
+  .screen-content:has(.action-list.roomy)
+  .action-list.roomy .list-button small,
+.nomi-dual .phone-column:first-child
+  .screen-content:has(.action-list.roomy) > .quiet-note {
+  display: none !important;
+}
+
+/* Remove secondary caption copy from the parent Settings overview. */
+.nomi-dual .phone-column:first-child
+  .screen-content:has(.settings-label)
+  .screen-heading > p,
+.nomi-dual .phone-column:first-child
+  .screen-content:has(.settings-label)
+  .list-button small {
+  display: none !important;
+}
+
+/* Remove helper captions from the parent Accessibility screen. */
+.nomi-dual .phone-column:first-child
+  .screen-content:has(.text-scale-options)
+  .text-scale-setting small,
+.nomi-dual .phone-column:first-child
+  .screen-content:has(.text-scale-options)
+  .toggle-row small {
+  display: none !important;
+}
+
+.nomi-dual .phone-column:first-child
+  .screen-content:has(.text-scale-options)
+  .toggle-row:last-child {
+  display: none !important;
+}
+
+/* Make the Higher contrast preference visibly change the whole interface. */
+.phone-shell.high-contrast {
+  --ink: #071619;
+  --muted: #182b30;
+  --faint: #2c4146;
+  --line: #38545a;
+  background: #f7fbfb !important;
+}
+
+.phone-shell.high-contrast .hero-reminder,
+.phone-shell.high-contrast .hero-confirmed,
+.phone-shell.high-contrast .care-status,
+.phone-shell.high-contrast .light-checkin,
+.phone-shell.high-contrast .settings-card,
+.phone-shell.high-contrast .settings-group,
+.phone-shell.high-contrast .people-card,
+.phone-shell.high-contrast .history-card,
+.phone-shell.high-contrast .routine-section {
+  border: 2px solid #29464c !important;
+  box-shadow: none !important;
+}
+
+.phone-shell.high-contrast .settings-card,
+.phone-shell.high-contrast .settings-group,
+.phone-shell.high-contrast .people-card,
+.phone-shell.high-contrast .history-card,
+.phone-shell.high-contrast .routine-section {
+  background: #fff !important;
+}
+
+.phone-shell.high-contrast .list-button + .list-button,
+.phone-shell.high-contrast .toggle-row + .toggle-row,
+.phone-shell.high-contrast .history-row + .history-row {
+  border-top-color: #52696e !important;
+}
+
+.phone-shell.high-contrast small,
+.phone-shell.high-contrast .page-intro,
+.phone-shell.high-contrast .screen-heading > span,
+.phone-shell.high-contrast .settings-label,
+.phone-shell.high-contrast .relationship-label.muted,
+.phone-shell.high-contrast .checkin-banner span {
+  color: #182b30 !important;
+}
+
+.phone-shell.high-contrast .frosted-card small,
+.phone-shell.high-contrast .frosted-card .soft-label,
+.phone-shell.high-contrast .frosted-card .time-label,
+.phone-shell.high-contrast .frosted-card__content > p {
+  color: #fff !important;
+}
+
+.phone-shell.high-contrast .toggle-track {
+  box-sizing: border-box;
+  border: 2px solid #29464c !important;
+  background: #e1e8e9 !important;
+  box-shadow: none !important;
+}
+
+.phone-shell.high-contrast .toggle-row input:checked + .toggle-track {
+  border-color: #29464c !important;
+  background: #29464c !important;
+}
+
+.phone-shell.high-contrast .toggle-track > span {
+  border: 1px solid #29464c;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.phone-shell.high-contrast .bottom-nav {
+  border: 2px solid #29464c !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.phone-shell.high-contrast .bottom-nav button {
+  color: #29464c !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.phone-shell.high-contrast .bottom-nav button.active {
+  color: #fff !important;
+  background: #29464c !important;
+}
+
+.phone-shell.high-contrast button:focus-visible,
+.phone-shell.high-contrast input:focus-visible {
+  outline: 3px solid #0b5963 !important;
+  outline-offset: 3px;
+}
+
+.text-scale-options {
+  align-items: center;
+  gap: 8px;
+}
+
+.text-scale-options button {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  padding: 0;
+  line-height: 1;
+  transition: width 180ms ease, height 180ms ease, font-size 180ms ease,
+    background-color 180ms ease, border-color 180ms ease;
+}
+
+.text-scale-options button:nth-child(1) {
+  width: 34px;
+  height: 34px;
+  font-size: 12px !important;
+}
+
+.text-scale-options button:nth-child(2) {
+  width: 50px;
+  height: 50px;
+  font-size: 23px !important;
+}
+
+.text-scale-options button:nth-child(3) {
+  width: 76px;
+  height: 76px;
+  font-size: 44px !important;
+  font-weight: 700;
+}
+
+/* The prototype stores the largest choice as 1.65; render it at 2.1×. */
+.phone-shell[style*="--text-scale: 1.65"] {
+  --text-scale: 2.1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-scale-options button,
+  .demo-zoom-controls button { transition: none; }
+}
+
+@media (max-width: 560px) {
+  .demo-zoom-controls {
+    right: max(10px, env(safe-area-inset-right));
+    bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  .demo-zoom-controls button {
+    min-width: 40px;
+    height: 40px;
+  }
+}
