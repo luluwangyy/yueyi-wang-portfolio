@@ -2015,6 +2015,12 @@ html.nomi-fullscreen-lock body {
 .case-mobile-nav { display: none; }
 .case-story { min-width: 0; }
 
+@media (min-width: 901px) {
+  .sketchtrace-case .case-story {
+    padding-inline: clamp(1rem, 1.8vw, 1.75rem);
+  }
+}
+
 .case-section {
   padding: 3rem 0;
   scroll-margin-top: 5.5rem;
