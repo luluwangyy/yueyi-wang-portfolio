@@ -183,6 +183,30 @@ document.querySelectorAll(".project-card").forEach((card) => {
   });
 });
 
+// Cover videos are always-muted ambient media. Explicitly ask them to play
+// after loading and when a cached page becomes active again so playback never
+// depends on a click or on the scroll-triggered video observer below.
+document.querySelectorAll("video.case-cover-autoplay").forEach((video) => {
+  video.defaultMuted = true;
+  video.muted = true;
+  video.autoplay = true;
+  video.loop = true;
+  video.playsInline = true;
+
+  const startCoverVideo = () => {
+    if (video.paused) video.play().catch(() => {});
+  };
+
+  if (video.readyState >= 2) startCoverVideo();
+  ["loadeddata", "canplay"].forEach((eventName) => {
+    video.addEventListener(eventName, startCoverVideo);
+  });
+  window.addEventListener("pageshow", startCoverVideo);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) startCoverVideo();
+  });
+});
+
 // Detail-page videos marked .scroll-autoplay: play while scrolled into
 // view, pause as soon as they scroll out of view (only one plays at a time
 // as the reader moves down the page).
@@ -219,6 +243,70 @@ if (scrollAutoplayVideos.length) {
     });
   });
 }
+
+// Creative-practice videos begin muted for reliable autoplay. On devices
+// with a pointer, hovering temporarily reveals the soundtrack. The visible
+// button lets people explicitly keep sound on or off and works for touch and
+// keyboard users as well.
+document.querySelectorAll("[data-hover-sound]").forEach((media) => {
+  const video = media.querySelector("video");
+  const toggle = media.querySelector("[data-sound-toggle]");
+  const label = media.querySelector("[data-sound-label]");
+  if (!video || !toggle || !label) return;
+
+  let soundPreference = null;
+
+  const updateSoundControl = () => {
+    const soundIsOn = !video.muted;
+    toggle.setAttribute("aria-pressed", String(soundIsOn));
+    toggle.setAttribute("aria-label", soundIsOn ? "Mute video" : "Turn sound on");
+    label.textContent = soundIsOn ? "Mute" : "Sound on";
+  };
+
+  media.addEventListener("mouseenter", () => {
+    if (soundPreference === null) {
+      video.muted = false;
+      updateSoundControl();
+    }
+  });
+
+  media.addEventListener("mouseleave", () => {
+    if (soundPreference === null) {
+      video.muted = true;
+      updateSoundControl();
+    }
+  });
+
+  toggle.addEventListener("click", () => {
+    video.muted = !video.muted;
+    soundPreference = !video.muted;
+    if (!video.paused) video.play().catch(() => {});
+    updateSoundControl();
+  });
+
+  updateSoundControl();
+});
+
+// Keep the full research paper out of the reading flow until someone asks
+// for it. The PDF source is assigned on first open so the large file is not
+// downloaded in the background for readers who do not view it.
+document.querySelectorAll("[data-paper-disclosure]").forEach((disclosure) => {
+  const toggle = disclosure.querySelector("[data-paper-toggle]");
+  const viewer = disclosure.querySelector(".story-paper-viewer");
+  const frame = viewer?.querySelector("iframe[data-src]");
+  if (!toggle || !viewer || !frame) return;
+
+  toggle.addEventListener("click", () => {
+    const shouldOpen = viewer.hidden;
+    viewer.hidden = !shouldOpen;
+    toggle.setAttribute("aria-expanded", String(shouldOpen));
+    toggle.textContent = shouldOpen ? "Hide research paper" : "View research paper";
+
+    if (shouldOpen && !frame.hasAttribute("src")) {
+      frame.src = frame.dataset.src || "";
+    }
+  });
+});
 
 // YouTube/Vimeo embeds: load the real iframe only once the facade is
 // clicked, instead of every embed on the page loading upfront.
@@ -390,4 +478,62 @@ document.querySelectorAll(".case-compare").forEach((comparison) => {
   };
   control.addEventListener("input", updateComparison);
   updateComparison();
+});
+
+// Generative AI research notes: visible controls move one note at a time,
+// while the focusable track still supports touch, trackpad, and arrow keys.
+document.querySelectorAll("[data-research-slider]").forEach((slider) => {
+  const track = slider.querySelector("[data-research-track]");
+  const previous = slider.querySelector("[data-research-prev]");
+  const next = slider.querySelector("[data-research-next]");
+  if (!track || !previous || !next) return;
+
+  const getStep = () => {
+    const firstNote = track.querySelector("figure");
+    if (!firstNote) return track.clientWidth;
+    const styles = getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap || "0");
+    return firstNote.getBoundingClientRect().width + gap;
+  };
+
+  const updateControls = () => {
+    previous.disabled = track.scrollLeft <= 1;
+    next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+  };
+
+  previous.addEventListener("click", () => {
+    track.scrollBy({ left: -getStep(), behavior: "smooth" });
+  });
+
+  next.addEventListener("click", () => {
+    track.scrollBy({ left: getStep(), behavior: "smooth" });
+  });
+
+  track.addEventListener("scroll", updateControls, { passive: true });
+  window.addEventListener("resize", updateControls);
+  updateControls();
+});
+
+// Research-note enlarger: a single native dialog serves every note so the
+// images can be inspected at near-fullscreen scale without leaving the page.
+document.querySelectorAll("[data-research-slider]").forEach((slider) => {
+  const dialog = slider.querySelector("[data-research-dialog]");
+  const dialogImage = dialog?.querySelector("[data-research-dialog-image]");
+  const dialogCaption = dialog?.querySelector("[data-research-dialog-caption]");
+  const closeButton = dialog?.querySelector("[data-research-close]");
+  if (!dialog || !dialogImage || !dialogCaption || !closeButton) return;
+
+  slider.querySelectorAll("[data-research-expand]").forEach((button) => {
+    button.addEventListener("click", () => {
+      dialogImage.src = button.dataset.noteSrc || "";
+      dialogImage.alt = button.dataset.noteAlt || "";
+      dialogCaption.textContent = button.dataset.noteCaption || "";
+      dialog.showModal();
+    });
+  });
+
+  closeButton.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
 });
