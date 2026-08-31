@@ -774,6 +774,10 @@
       startDrawingVoice(point, activeTool, activeColor);
     });
 
+    canvas.addEventListener("contextmenu", (event) => event.preventDefault());
+    canvas.addEventListener("selectstart", (event) => event.preventDefault());
+    canvas.addEventListener("dragstart", (event) => event.preventDefault());
+
     canvas.addEventListener("pointermove", (event) => {
       if (!drawing || magicActive) return;
       const point = canvasPoint(event);

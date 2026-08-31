@@ -2311,6 +2311,20 @@ a:focus-visible, button:focus-visible {
   font-family: "Source Code Pro", monospace;
 }
 
+.sound-canvas--expanded,
+.sound-canvas--expanded button,
+.sound-canvas--expanded canvas {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sound-canvas--expanded .about-canvas__surface {
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+
 .about-canvas--stage .about-canvas__topbar,
 .about-canvas--play .about-canvas__topbar {
   justify-content: flex-end;
