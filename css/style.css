@@ -844,6 +844,9 @@ a:focus-visible, button:focus-visible {
 }
 
 .home-statement {
+  --home-interactive-color: #8ee4e8;
+  --home-role-color: #74d6d6;
+  --home-intro-animation-color: var(--home-interactive-color);
   max-width: 21ch;
   font-family: var(--font-serif-highlight);
   font-size: clamp(2.65rem, min(5.6vw, 7.8vh), 5.6rem);
@@ -914,28 +917,28 @@ a:focus-visible, button:focus-visible {
 
 .home-intro-char.is-char-fill,
 .home-intro-char.is-char-inverse {
-  color: var(--color-3);
+  color: var(--home-intro-animation-color);
   background: #111111;
 }
 
 .home-intro-char.is-char-accent {
-  color: var(--color-3);
+  color: var(--home-intro-animation-color);
   background: transparent;
 }
 
 .home-intro-char.is-char-accent-inverse {
   color: #111111;
-  background: var(--color-3);
+  background: var(--home-intro-animation-color);
 }
 
 .home-intro-char.is-char-accent-fill {
-  color: var(--color-3);
-  background: var(--color-3);
+  color: var(--home-intro-animation-color);
+  background: var(--home-intro-animation-color);
 }
 
 .home-intro-char.is-char-border {
   color: #111111;
-  box-shadow: inset 0 0 0 0.035em var(--color-3);
+  box-shadow: inset 0 0 0 0.035em var(--home-intro-animation-color);
 }
 
 .home-intro-char.is-settled {
@@ -945,8 +948,9 @@ a:focus-visible, button:focus-visible {
 }
 
 .home-role {
+  --home-intro-animation-color: var(--home-role-color);
   display: inline;
-  color: #236b4b;
+  color: var(--home-role-color);
   font-family: inherit;
   font-size: inherit;
   font-style: inherit;
@@ -955,15 +959,16 @@ a:focus-visible, button:focus-visible {
 }
 
 .home-role .home-intro-word {
-  --intro-highlight-color: #236b4b;
+  --intro-highlight-color: var(--home-role-color);
 }
 
 .home-interactive {
+  --home-intro-animation-color: var(--home-interactive-color);
   display: inline;
 }
 
 .home-interactive .home-intro-word {
-  --intro-highlight-color: var(--color-3);
+  --intro-highlight-color: var(--home-interactive-color);
   --intro-highlight-ink: #ffffff;
 }
 
@@ -982,9 +987,10 @@ a:focus-visible, button:focus-visible {
 }
 
 .hero-verbs {
+  --home-intro-animation-color: var(--home-role-color);
   position: relative;
   display: inline;
-  color: #236b4b;
+  color: var(--home-role-color);
   text-decoration: none;
   transition: color 0.25s var(--ease);
 }
