@@ -74,6 +74,7 @@ const introSoundButton = document.querySelector("[data-home-intro-sound]");
 const introSoundLabel = document.querySelector("[data-home-intro-sound-label]");
 const entryPortal = document.querySelector("[data-entry-portal]");
 const entrySoundButton = document.querySelector("[data-entry-sound]");
+const entrySoundLabel = document.querySelector("[data-entry-sound-label]");
 const entryMutedButton = document.querySelector("[data-entry-muted]");
 const homeFooter = document.querySelector(".home-footer");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -102,6 +103,7 @@ if (introStatement) {
   let pulseIndex = 0;
   let activeCharacterVoices = [];
   let activeHighlightVoices = [];
+  let entryAttempting = false;
 
   function wrapTextNode(textNode) {
     const fragment = document.createDocumentFragment();
@@ -491,14 +493,36 @@ if (introStatement) {
     playIntro({ withSound });
   }
 
-  async function enterPortfolio({ withSound }) {
-    if (!entryPortal || entryPortal.classList.contains("is-entering")) return;
+  function requestSoundTap() {
+    entryPortal?.classList.add("is-audio-needed");
+    if (entrySoundLabel) entrySoundLabel.textContent = "Tap to enter with sound";
+    entrySoundButton?.focus({ preventScroll: true });
+  }
 
+  async function enterPortfolio({ withSound, requireSound = false }) {
+    if (!entryPortal || entryPortal.classList.contains("is-entering") || entryAttempting) return;
+    entryAttempting = true;
+
+    let soundReady = false;
     if (withSound) {
       window.portfolioUISounds?.enable();
+      soundReady = await Promise.race([
+        enableAudio().catch(() => false),
+        new Promise((resolve) => window.setTimeout(() => resolve(false), 400))
+      ]);
+
+      if (!soundReady && requireSound) {
+        window.portfolioUISounds?.disable();
+        entryAttempting = false;
+        requestSoundTap();
+        return;
+      }
     } else {
       window.portfolioUISounds?.disable();
     }
+
+    entryPortal.classList.remove("is-audio-needed");
+    if (entrySoundLabel) entrySoundLabel.textContent = "Enter with sound";
 
     entrySoundButton?.setAttribute("disabled", "");
     entryMutedButton?.setAttribute("disabled", "");
@@ -507,18 +531,7 @@ if (introStatement) {
     entryPortal.classList.add("is-entering");
     entryPortal.setAttribute("aria-hidden", "true");
 
-    // Never let browser audio permission block the visual transition. A click
-    // can unlock sound immediately; wheel gestures may be denied by the browser,
-    // but should still enter the portfolio without getting stuck halfway.
-    let soundReady = false;
-    if (withSound) {
-      enableAudio()
-        .then((enabled) => {
-          soundReady = enabled;
-          if (enabled) playPortalSwell();
-        })
-        .catch(() => {});
-    }
+    if (soundReady) playPortalSwell();
 
     const introDelay = reduceMotion.matches ? 120 : 820;
     const finishDelay = reduceMotion.matches ? 430 : 1450;
@@ -549,7 +562,7 @@ if (introStatement) {
       liquidRoot?.style.setProperty("--entry-sphere-scale", previewScale.toFixed(3));
 
       if (wheelDistance >= 120) {
-        enterPortfolio({ withSound: true });
+        enterPortfolio({ withSound: true, requireSound: true });
         return;
       }
 
@@ -563,7 +576,12 @@ if (introStatement) {
     homeTop?.setAttribute("aria-hidden", "true");
     homeFooter?.setAttribute("inert", "");
     homeFooter?.setAttribute("aria-hidden", "true");
-    entrySoundButton?.addEventListener("click", () => enterPortfolio({ withSound: true }));
+    entryPortal.addEventListener("pointerdown", (event) => {
+      if (event.target.closest?.("[data-entry-muted]")) return;
+      enableAudio().catch(() => false);
+      window.portfolioUISounds?.enable();
+    }, { capture: true });
+    entrySoundButton?.addEventListener("click", () => enterPortfolio({ withSound: true, requireSound: true }));
     entryMutedButton?.addEventListener("click", () => enterPortfolio({ withSound: false }));
     entryPortal.addEventListener("wheel", handleEntryWheel, { passive: false });
   } else {

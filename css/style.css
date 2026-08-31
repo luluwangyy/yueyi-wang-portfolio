@@ -1017,22 +1017,63 @@ a:focus-visible, button:focus-visible {
 
 .hero-inner--statement .hero-cta {
   margin-top: 0;
-  border: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.62);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  isolation: isolate;
+  overflow: visible;
   opacity: 1;
   animation: none;
-  transition:
-    color 0.2s var(--ease),
-    border-color 0.2s var(--ease),
-    background 0.2s var(--ease),
-    transform 0.15s var(--ease);
+  transition: transform 0.15s var(--ease);
 }
 
-.hero-inner--statement .hero-cta:hover {
-  border-color: color-mix(in srgb, var(--color-emphasis) 52%, transparent);
-  background: rgba(255, 255, 255, 0.88);
+.hero-inner--statement .hero-cta::before,
+.hero-inner--statement .hero-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.hero-inner--statement .hero-cta::before {
+  display: none;
+}
+
+.hero-inner--statement .hero-cta::after {
+  z-index: 1;
+  background: #f0f0f2;
+}
+
+.hero-inner--statement .hero-cta .specular-button__label {
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: 16px 36px;
+  border: 1px solid rgba(35, 42, 53, 0.12);
+  border-radius: inherit;
+  background: rgba(251, 251, 251, 0.96);
+  transition:
+    transform 560ms cubic-bezier(0, 0.9, 0.13, 0.9),
+    background-color 220ms var(--ease),
+    box-shadow 220ms var(--ease);
+}
+
+.hero-inner--statement .hero-cta:hover .specular-button__label,
+.hero-inner--statement .hero-cta:focus-visible .specular-button__label {
+  background: #ffffff;
+  box-shadow: none;
+  transform: translate3d(0, -6px, 0);
+}
+
+.hero-inner--statement .hero-cta:active .specular-button__label {
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-inner--statement .hero-cta .specular-button__label {
+    transition-duration: 160ms;
+  }
 }
 
 .home-intro-sound {
@@ -1175,6 +1216,16 @@ a:focus-visible, button:focus-visible {
   background: rgba(255, 255, 255, 0.13);
   box-shadow: none;
   transform: translateY(-0.18rem);
+}
+
+.entry-portal.is-audio-needed .entry-portal__sound {
+  background: rgba(255, 255, 255, 0.18);
+  animation: entrySoundPrompt 620ms var(--ease);
+}
+
+@keyframes entrySoundPrompt {
+  0%, 100% { transform: translateY(0) scale(1); }
+  45% { transform: translateY(-0.22rem) scale(1.035); }
 }
 
 .entry-portal__scroll-mark {
@@ -2331,6 +2382,7 @@ a:focus-visible, button:focus-visible {
 
 @media (min-width: 901px) {
   .project-detail-body {
+    padding-left: 3%;
     padding-right: 15%;
   }
 }
@@ -3285,11 +3337,8 @@ html.nomi-fullscreen-lock body {
 
 @media (min-width: 901px) {
   .case-story {
+    padding-left: 3%;
     padding-right: 15%;
-  }
-
-  .sketchtrace-case .case-story {
-    padding-left: clamp(1rem, 1.8vw, 1.75rem);
   }
 }
 
