@@ -30,23 +30,58 @@
   <main>
     <section class="about-body about-body--minimal">
       <h1 class="about-headline"><span class="reveal-word">I design,</span><br><span class="reveal-word">prototype,</span>&nbsp;<span class="reveal-word">and build</span></h1>
-      <div>
-        <p>
-          Hi, I'm Yueyi Lulu Wang. I design and prototype interactive experiences across generative AI, embodied AI, and digital-physical environments. As a recent graduate of Columbia University
-          with a double major in Computer Science and Visual Arts, she
-          combines technical precision with creative experimentation to
-          explore new forms of interaction.
-        </p>
-        <p>
-          Her experience spans the Computational Design Lab, directed by
-          Dr. Lydia Chilton; the Imaging and Vision Laboratory, directed by
-          Dr. Shree Nayar; and the Design Tool Lab, directed by Dr. Tiffany
-          Tseng. Beyond her work and research in software and interface
-          design, she is particularly interested in embodied AI and
-          intelligent systems. Most recently, she completed an interactive
-          robotic installation as a 2025–26 Student Artist-in-Residence at
-          the Barnard Movement Lab.
-        </p>
+      <div class="about-content-grid">
+        <div class="about-bio">
+          <p>
+            Hi, I'm Yueyi Lulu Wang. I'm a <span class="about-bio__accent">design engineer</span> and <span class="about-bio__accent">creative technologist</span> who creates <span class="about-bio__accent">interactive experiences</span> across generative AI, embodied AI, and digital-physical environments.
+          </p>
+          <p>
+            My experience spans the <em>Computational Design Lab</em>, directed by
+            Dr. Lydia Chilton; the <em>Imaging and Vision Laboratory</em>, directed by
+            Dr. Shree Nayar; and the <em>Design Tool Lab</em>, directed by Dr. Tiffany
+            Tseng. Beyond my work and research in software and interface
+            design, I am particularly interested in embodied AI and
+            intelligent systems. Most recently, I completed an interactive
+            robotic installation as a 2025–26 Student Artist-in-Residence at
+            the <em>Barnard Movement Lab</em>.
+          </p>
+          <p>
+            As a recent graduate of Columbia University with a double major in <span class="about-bio__accent">Computer Science and Visual Arts</span>, I combine technical precision with creative experimentation to explore new forms of interaction.
+          </p>
+        </div>
+
+        <aside class="about-canvas" data-sound-canvas aria-labelledby="about-canvas-title">
+          <div class="about-canvas__topbar">
+            <h2 id="about-canvas-title">Draw with sound</h2>
+            <div class="about-canvas__info-wrap">
+              <button class="about-canvas__info" type="button" aria-label="About this drawing canvas" aria-expanded="false" aria-describedby="about-canvas-note" data-canvas-info>i</button>
+              <p class="about-canvas__note" id="about-canvas-note" role="tooltip">I love to paint, draw, and move with music. Feel free to de-stress and play on this little open canvas.</p>
+            </div>
+          </div>
+
+          <canvas class="about-canvas__surface" width="720" height="520" tabindex="0" aria-label="Interactive drawing canvas. Drag to draw and create synthesized sound." data-canvas-surface></canvas>
+
+          <div class="about-canvas__controls">
+            <div class="about-canvas__palette" role="group" aria-label="Drawing color">
+              <button class="about-canvas__swatch is-active" type="button" style="--swatch:#285f4a" data-draw-color="#285f4a" aria-label="Draw in green" aria-pressed="true"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#9dd3f2" data-draw-color="#9dd3f2" aria-label="Draw in blue" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#9df2bc" data-draw-color="#9df2bc" aria-label="Draw in mint" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#9df2e6" data-draw-color="#9df2e6" aria-label="Draw in aqua" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#f4df78" data-draw-color="#f4df78" aria-label="Draw in yellow" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#f5a88d" data-draw-color="#f5a88d" aria-label="Draw in coral" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#c9b8f4" data-draw-color="#c9b8f4" aria-label="Draw in lavender" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#f3b6d2" data-draw-color="#f3b6d2" aria-label="Draw in pink" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#b86c45" data-draw-color="#b86c45" aria-label="Draw in terracotta" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#232a35" data-draw-color="#232a35" aria-label="Draw in charcoal" aria-pressed="false"></button>
+            </div>
+            <button class="about-canvas__reset" type="button" data-canvas-reset>Reset</button>
+            <label class="about-canvas__volume">
+              <span>Sound level</span>
+              <input type="range" min="0" max="100" value="55" step="1" aria-label="Canvas sound level" data-canvas-volume>
+              <output data-canvas-volume-output>55%</output>
+            </label>
+          </div>
+        </aside>
       </div>
     </section>
   </main>
@@ -61,6 +96,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=ui-sound-2"></script>
+  <script src="js/main.js?v=about-sound-canvas-2"></script>
 </body>
 </html>

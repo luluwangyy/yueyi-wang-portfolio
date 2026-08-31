@@ -664,3 +664,202 @@ document.querySelectorAll("[data-research-slider]").forEach((slider) => {
     if (event.target === dialog) dialog.close();
   });
 });
+
+// About page: a small drawing instrument. Position controls pitch and
+// stereo placement, movement controls brightness and volume, and each
+// palette color selects a distinct oscillator voice.
+document.querySelectorAll("[data-sound-canvas]").forEach((instrument) => {
+  const canvas = instrument.querySelector("[data-canvas-surface]");
+  const resetButton = instrument.querySelector("[data-canvas-reset]");
+  const volumeControl = instrument.querySelector("[data-canvas-volume]");
+  const volumeOutput = instrument.querySelector("[data-canvas-volume-output]");
+  const swatches = Array.from(instrument.querySelectorAll("[data-draw-color]"));
+  const infoButton = instrument.querySelector("[data-canvas-info]");
+  const infoWrap = infoButton?.closest(".about-canvas__info-wrap");
+  if (!canvas || !resetButton || !swatches.length) return;
+
+  const context = canvas.getContext("2d");
+  const strokes = [];
+  const voiceMap = {
+    "#285f4a": { base: 130.81, type: "sine" },
+    "#9dd3f2": { base: 196, type: "triangle" },
+    "#9df2bc": { base: 174.61, type: "sine" },
+    "#9df2e6": { base: 220, type: "triangle" },
+    "#f4df78": { base: 261.63, type: "sine" },
+    "#f5a88d": { base: 233.08, type: "triangle" },
+    "#c9b8f4": { base: 293.66, type: "sine" },
+    "#f3b6d2": { base: 329.63, type: "triangle" },
+    "#b86c45": { base: 164.81, type: "sawtooth" },
+    "#232a35": { base: 110, type: "square" }
+  };
+  let activeColor = swatches[0].dataset.drawColor;
+  let activeStroke = null;
+  let drawing = false;
+  let outputLevel = Number(volumeControl?.value || 55) / 100;
+  let audioContext;
+  let voice;
+
+  const drawStroke = (stroke) => {
+    if (stroke.points.length < 2) return;
+    context.beginPath();
+    context.strokeStyle = stroke.color;
+    context.lineWidth = 4;
+    context.lineCap = "round";
+    context.lineJoin = "round";
+    stroke.points.forEach((point, index) => {
+      const x = point.x * canvas.clientWidth;
+      const y = point.y * canvas.clientHeight;
+      if (index === 0) context.moveTo(x, y);
+      else context.lineTo(x, y);
+    });
+    context.stroke();
+  };
+
+  const redraw = () => {
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.setTransform(window.devicePixelRatio || 1, 0, 0, window.devicePixelRatio || 1, 0, 0);
+    strokes.forEach(drawStroke);
+  };
+
+  const resizeCanvas = () => {
+    const ratio = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = Math.max(1, Math.round(rect.width * ratio));
+    canvas.height = Math.max(1, Math.round(rect.height * ratio));
+    redraw();
+  };
+
+  const canvasPoint = (event) => {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)),
+      y: Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height)),
+      time: performance.now()
+    };
+  };
+
+  const startVoice = (point) => {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    if (!audioContext) audioContext = new AudioContextClass();
+    if (audioContext.state === "suspended") audioContext.resume();
+
+    const settings = voiceMap[activeColor] || voiceMap["#285f4a"];
+    const oscillator = audioContext.createOscillator();
+    const filter = audioContext.createBiquadFilter();
+    const gain = audioContext.createGain();
+    const panner = audioContext.createStereoPanner?.();
+    oscillator.type = settings.type;
+    filter.type = "lowpass";
+    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(Math.max(0.0001, 0.045 * outputLevel), audioContext.currentTime + 0.035);
+    oscillator.connect(filter);
+    filter.connect(gain);
+    if (panner) {
+      gain.connect(panner);
+      panner.connect(audioContext.destination);
+    } else {
+      gain.connect(audioContext.destination);
+    }
+    oscillator.start();
+    voice = { oscillator, filter, gain, panner, settings, lastPoint: point, distance: 0 };
+  };
+
+  const updateVoice = (point) => {
+    if (!voice || !audioContext) return;
+    const now = audioContext.currentTime;
+    const dx = point.x - voice.lastPoint.x;
+    const dy = point.y - voice.lastPoint.y;
+    const elapsed = Math.max(16, point.time - voice.lastPoint.time);
+    const movement = Math.min(1, Math.hypot(dx, dy) * 900 / elapsed);
+    voice.distance += Math.hypot(dx, dy);
+
+    const verticalOctaves = (1 - point.y) * 1.35;
+    const horizontalSteps = point.x * 7;
+    const traceDrift = Math.min(5, voice.distance * 2);
+    const frequency = voice.settings.base * (2 ** verticalOctaves) * (2 ** ((horizontalSteps + traceDrift) / 12));
+    voice.oscillator.frequency.setTargetAtTime(frequency, now, 0.025);
+    voice.filter.frequency.setTargetAtTime(550 + movement * 2600 + (1 - point.y) * 900, now, 0.035);
+    voice.gain.gain.setTargetAtTime(Math.max(0.0001, (0.018 + movement * 0.055) * outputLevel), now, 0.025);
+    voice.panner?.pan.setTargetAtTime(point.x * 1.6 - 0.8, now, 0.04);
+    voice.lastPoint = point;
+  };
+
+  const stopVoice = () => {
+    if (!voice || !audioContext) return;
+    const endingVoice = voice;
+    voice = null;
+    endingVoice.gain.gain.cancelScheduledValues(audioContext.currentTime);
+    endingVoice.gain.gain.setTargetAtTime(0.0001, audioContext.currentTime, 0.045);
+    endingVoice.oscillator.stop(audioContext.currentTime + 0.22);
+  };
+
+  canvas.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    canvas.setPointerCapture(event.pointerId);
+    drawing = true;
+    const point = canvasPoint(event);
+    activeStroke = { color: activeColor, points: [point] };
+    strokes.push(activeStroke);
+    startVoice(point);
+  });
+
+  canvas.addEventListener("pointermove", (event) => {
+    if (!drawing || !activeStroke) return;
+    const point = canvasPoint(event);
+    activeStroke.points.push(point);
+    redraw();
+    updateVoice(point);
+  });
+
+  const endStroke = () => {
+    drawing = false;
+    activeStroke = null;
+    stopVoice();
+  };
+  canvas.addEventListener("pointerup", endStroke);
+  canvas.addEventListener("pointercancel", endStroke);
+  canvas.addEventListener("lostpointercapture", endStroke);
+
+  swatches.forEach((swatch) => {
+    swatch.addEventListener("click", () => {
+      activeColor = swatch.dataset.drawColor;
+      swatches.forEach((item) => {
+        const selected = item === swatch;
+        item.classList.toggle("is-active", selected);
+        item.setAttribute("aria-pressed", String(selected));
+      });
+    });
+  });
+
+  resetButton.addEventListener("click", () => {
+    strokes.length = 0;
+    endStroke();
+    redraw();
+  });
+
+  volumeControl?.addEventListener("input", () => {
+    outputLevel = Number(volumeControl.value) / 100;
+    if (volumeOutput) volumeOutput.value = `${volumeControl.value}%`;
+    if (voice && audioContext) {
+      voice.gain.gain.setTargetAtTime(Math.max(0.0001, 0.05 * outputLevel), audioContext.currentTime, 0.025);
+    }
+  });
+
+  infoButton?.addEventListener("click", () => {
+    const open = !infoWrap.classList.contains("is-open");
+    infoWrap.classList.toggle("is-open", open);
+    infoButton.setAttribute("aria-expanded", String(open));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (infoWrap && !infoWrap.contains(event.target)) {
+      infoWrap.classList.remove("is-open");
+      infoButton?.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  new ResizeObserver(resizeCanvas).observe(canvas);
+  resizeCanvas();
+});

@@ -1743,7 +1743,7 @@ a:focus-visible, button:focus-visible {
      (.hero-title .mono-accent) — that selector is scoped to .hero-title,
      so it's repeated here rather than reused directly. */
   font-family: "VT323", monospace;
-  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.15;
@@ -1804,6 +1804,187 @@ a:focus-visible, button:focus-visible {
   color: var(--color-text);
   font-size: 1.05rem;
   max-width: 60ch;
+}
+
+.about-content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(19rem, 0.95fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.about-bio__accent {
+  color: var(--color-emphasis);
+  font-weight: 600;
+}
+
+.about-bio em {
+  font-style: italic;
+}
+
+.about-canvas {
+  position: relative;
+  min-width: 0;
+  padding: 1rem;
+  border-radius: 1.35rem;
+  background: color-mix(in srgb, var(--color-bg-alt) 85%, transparent);
+}
+
+.about-canvas__topbar,
+.about-canvas__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.about-canvas__topbar {
+  min-height: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.about-canvas__topbar h2 {
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.about-canvas__info-wrap {
+  position: relative;
+}
+
+.about-canvas__info {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--color-text);
+  font-family: Georgia, serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.about-canvas__note {
+  position: absolute;
+  z-index: 3;
+  top: calc(100% + 0.65rem);
+  right: 0;
+  width: min(17rem, calc(100vw - 3rem));
+  padding: 0.9rem 1rem;
+  border-radius: 0.85rem;
+  background: #ffffff;
+  box-shadow: 0 0.75rem 2rem rgba(35, 42, 53, 0.12);
+  color: var(--color-text);
+  font-size: 0.78rem !important;
+  line-height: 1.45;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.35rem);
+  pointer-events: none;
+  transition: opacity 180ms var(--ease), transform 180ms var(--ease), visibility 180ms;
+}
+
+.about-canvas__info-wrap:hover .about-canvas__note,
+.about-canvas__info-wrap:focus-within .about-canvas__note,
+.about-canvas__info-wrap.is-open .about-canvas__note {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.about-canvas__surface {
+  display: block;
+  width: 100%;
+  aspect-ratio: 7 / 5;
+  border: 0;
+  border-radius: 0.85rem;
+  outline: 0;
+  background: rgba(255, 255, 255, 0.58);
+  touch-action: none;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4 20l4.2-1 10.9-10.9-3.2-3.2L5 15.8 4 20Z' fill='%23232a35'/%3E%3Cpath d='m14.9 5.9 3.2 3.2' stroke='white' stroke-width='1.2'/%3E%3C/svg%3E") 4 20, crosshair;
+}
+
+.about-canvas__surface:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+.about-canvas__controls {
+  margin-top: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.about-canvas__palette {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.about-canvas__swatch {
+  width: 1.35rem;
+  height: 1.35rem;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: var(--swatch);
+  cursor: pointer;
+}
+
+.about-canvas__swatch.is-active {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 1px var(--color-text-muted);
+}
+
+.about-canvas__reset {
+  padding: 0.45rem 0.8rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.about-canvas__reset:hover {
+  color: var(--color-text);
+}
+
+.about-canvas__volume {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 2.2rem;
+  align-items: center;
+  gap: 0.65rem;
+  flex-basis: 100%;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+}
+
+.about-canvas__volume input {
+  width: 100%;
+  accent-color: var(--color-emphasis);
+  cursor: pointer;
+}
+
+.about-canvas__volume output {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+@media (max-width: 860px) {
+  .about-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-canvas {
+    max-width: 42rem;
+  }
 }
 
 .skills-block h2 {
