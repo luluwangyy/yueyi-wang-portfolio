@@ -168,7 +168,7 @@ a:focus-visible, button:focus-visible {
 }
 
 /* Floating segmented control (every page's header) — a pill-track
-   "Home / Work / Make / About" switcher. Each item is a real link; which one carries
+   "Home / Work / Play / Make / About" switcher. Each item is a real link; which one carries
    .is-active is fixed per page (no client-side tab state, since this is a
    static multi-page site, not an SPA). A white pill (.segmented-control__pill)
    slides beneath whichever item is hovered, tracked in JS (see main.js),
@@ -225,7 +225,7 @@ a:focus-visible, button:focus-visible {
 }
 
 /* Collapsed nav (project detail pages): a plain circular icon button at
-   rest, cross-fading in place into the same four-route segmented control
+   rest, cross-fading in place into the same five-route segmented control
    when clicked/tapped open (.is-open, toggled in main.js). */
 .nav-morph {
   position: relative;
@@ -1543,6 +1543,72 @@ a:focus-visible, button:focus-visible {
   color: #9a5538;
 }
 
+.collection-hero--play .collection-hero__index,
+.collection-hero--play h1 {
+  color: #3f8f91;
+}
+
+.collection-hero--play {
+  padding-right: var(--gutter);
+  padding-bottom: clamp(2rem, 4vh, 2.75rem);
+  padding-left: var(--gutter);
+}
+
+.collection-hero--play h1 {
+  max-width: 16ch;
+  font-size: clamp(2.8rem, 5.2vw, 4.7rem);
+  line-height: 0.92;
+}
+
+.play-projects {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: 0 var(--gutter) 5rem;
+}
+
+.play-project {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.play-project__intro {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.85fr) minmax(19rem, 1.15fr);
+  gap: clamp(2rem, 7vw, 7rem);
+  align-items: end;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.play-project__number {
+  margin-bottom: 0.55rem;
+  color: #3f8f91;
+  font-family: "VT323", monospace;
+  font-size: 1.05rem;
+  letter-spacing: 0.025em;
+}
+
+.play-project__intro h2,
+.sound-canvas-stage__heading h1 {
+  color: #3f8f91;
+  font-family: var(--font-serif-highlight);
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: -0.045em;
+}
+
+.play-project__intro h2 {
+  font-size: clamp(2rem, 3.5vw, 2.9rem);
+  line-height: 1;
+}
+
+.play-project__description {
+  max-width: 46ch;
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 .projects--collection {
   padding-top: 1rem;
 }
@@ -1795,6 +1861,15 @@ a:focus-visible, button:focus-visible {
   padding-top: 7rem;
 }
 
+.minimal-page .about-body--minimal {
+  padding-bottom: 0.75rem;
+}
+
+.minimal-page .site-footer {
+  padding-top: 0.5rem;
+  padding-bottom: 0.75rem;
+}
+
 .about-headline {
   /* Same font/size treatment as the index hero's accent words
      (.hero-title .mono-accent) — that selector is scoped to .hero-title,
@@ -1865,9 +1940,13 @@ a:focus-visible, button:focus-visible {
 
 .about-content-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(19rem, 0.95fr);
-  gap: clamp(2.5rem, 6vw, 6rem);
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(2.25rem, 5vw, 5rem);
   align-items: start;
+}
+
+.about-copy-column {
+  min-width: 0;
 }
 
 .about-bio__accent {
@@ -1881,10 +1960,21 @@ a:focus-visible, button:focus-visible {
 
 .about-canvas {
   position: relative;
-  min-width: 0;
+  display: grid;
+  grid-template-rows: auto minmax(12rem, 1fr) auto;
+  align-self: stretch;
+  width: clamp(18rem, 30vw, 21rem);
+  height: auto;
+  min-width: 17rem;
+  min-height: 22rem;
+  max-width: min(44vw, 34rem);
+  max-height: none;
+  margin-top: 0;
   padding: 1rem;
   border-radius: 1.35rem;
   background: color-mix(in srgb, var(--color-bg-alt) 85%, transparent);
+  overflow: auto;
+  resize: vertical;
 }
 
 .about-canvas__topbar,
@@ -1900,11 +1990,18 @@ a:focus-visible, button:focus-visible {
   margin-bottom: 0.75rem;
 }
 
-.about-canvas__topbar h2 {
+.about-canvas__topbar h2,
+.about-canvas__topbar h3 {
   font-size: 0.95rem;
   font-weight: 400;
   letter-spacing: 0.01em;
   text-transform: none;
+}
+
+.about-canvas__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
 }
 
 .about-canvas__info-wrap {
@@ -1927,6 +2024,29 @@ a:focus-visible, button:focus-visible {
   cursor: pointer;
 }
 
+.about-canvas__expand {
+  width: 1.8rem;
+  height: 1.8rem;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  transition: color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.about-canvas__expand svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.about-canvas__expand:hover {
+  color: var(--color-text);
+  background: #fff;
+  transform: scale(1.05);
+}
+
 .about-canvas__note {
   position: absolute;
   z-index: 3;
@@ -1938,6 +2058,8 @@ a:focus-visible, button:focus-visible {
   background: #ffffff;
   box-shadow: 0 0.75rem 2rem rgba(35, 42, 53, 0.12);
   color: var(--color-text);
+  font-family: "Source Code Pro", monospace;
+  font-weight: 400;
   font-size: 0.78rem !important;
   line-height: 1.45;
   opacity: 0;
@@ -1958,7 +2080,9 @@ a:focus-visible, button:focus-visible {
 .about-canvas__surface {
   display: block;
   width: 100%;
-  aspect-ratio: 7 / 5;
+  height: 100%;
+  min-height: 12rem;
+  aspect-ratio: auto;
   border: 0;
   border-radius: 0.85rem;
   outline: 0;
@@ -2034,13 +2158,434 @@ a:focus-visible, button:focus-visible {
   text-align: right;
 }
 
+.about-canvas--play {
+  width: 100%;
+  height: clamp(31rem, 66vh, 44rem);
+  min-width: 0;
+  min-height: 28rem;
+  max-width: none;
+  margin-top: 0.5rem;
+  resize: vertical;
+}
+
+.sound-canvas--expanded .about-canvas__controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.7rem 1rem;
+}
+
+.sound-canvas__toolbar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding-top: 0.45rem;
+}
+
+.sound-canvas__tool,
+.sound-canvas__magic {
+  min-height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.38rem 0.7rem;
+  border: 1px solid rgba(35, 42, 53, 0.15);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--color-text);
+  font-family: "Source Code Pro", monospace;
+  font-weight: 400;
+  font-size: 0.72rem;
+  cursor: pointer;
+  box-shadow: 0 1px 0 #d7dad9;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.sound-canvas__tool .sound-canvas__tool-model {
+  width: 1.2rem;
+  height: 1.2rem;
+  flex: 0 0 auto;
+}
+
+.sound-canvas__sizes {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.12rem;
+  padding: 0.17rem;
+  border: 1px solid rgba(35, 42, 53, 0.15);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 0 #d7dad9;
+}
+
+.sound-canvas__sizes button {
+  width: 1.62rem;
+  height: 1.62rem;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.18s var(--ease), box-shadow 0.18s var(--ease), transform 0.18s var(--ease);
+}
+
+.sound-canvas__sizes button span {
+  display: block;
+  border-radius: 50%;
+  background: #4c535a;
+}
+
+.sound-canvas__sizes [data-canvas-size="small"] span { width: 0.25rem; height: 0.25rem; }
+.sound-canvas__sizes [data-canvas-size="medium"] span { width: 0.43rem; height: 0.43rem; }
+.sound-canvas__sizes [data-canvas-size="large"] span { width: 0.63rem; height: 0.63rem; }
+
+.sound-canvas__sizes button.is-active {
+  background: #eceeec;
+  box-shadow: inset 0 1px 2px rgba(35, 42, 53, 0.08);
+}
+
+.sound-canvas__magic svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+
+.sound-canvas__tool:hover,
+.sound-canvas__magic:hover {
+  color: var(--color-text);
+  background: #f8f8f6;
+}
+
+.sound-canvas__tool.is-active {
+  color: #1f252b;
+  border-color: rgba(35, 42, 53, 0.28);
+  background: #eceeec;
+  box-shadow: inset 0 1px 2px rgba(35, 42, 53, 0.08);
+}
+
+.sound-canvas__magic {
+  margin-left: auto;
+  color: #232a35;
+  border-color: rgba(35, 42, 53, 0.18);
+  background: #ffffff;
+}
+
+.sound-canvas__magic.is-active {
+  color: #fff;
+  border-color: #30363d;
+  background: #30363d;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22);
+}
+
+.sound-canvas--expanded .about-canvas__topbar h3,
+.sound-canvas--expanded .about-canvas__controls {
+  font-family: "Source Code Pro", monospace;
+}
+
+.about-canvas--stage .about-canvas__topbar,
+.about-canvas--play .about-canvas__topbar {
+  justify-content: flex-end;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sound-canvas__tool:not(.is-active):hover,
+  .sound-canvas__magic:not(.is-active):hover,
+  .sound-canvas__sizes button:not(.is-active):hover,
+  .sound-canvas--expanded .about-canvas__reset:hover,
+  .sound-canvas--expanded .about-canvas__info:hover,
+  .sound-canvas--expanded .about-canvas__expand:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 0 #d5d8d6, 0 7px 12px rgba(35, 42, 53, 0.08);
+  }
+}
+
+.sound-canvas--expanded .about-canvas__palette {
+  flex-wrap: wrap;
+}
+
+.sound-canvas--expanded .about-canvas__reset {
+  justify-self: end;
+}
+
+.sound-canvas--expanded .about-canvas__volume {
+  grid-column: 1 / -1;
+}
+
+.sound-canvas__custom-color {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.sound-canvas__color-toggle {
+  width: 1.55rem;
+  height: 1.55rem;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(35, 42, 53, 0.18);
+  border-radius: 0.48rem;
+  background: #fff;
+  box-shadow: 0 1px 0 #d7dad9;
+  cursor: pointer;
+}
+
+.sound-canvas__color-toggle span {
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 0.27rem;
+  background: var(--custom-color, #74d6d6);
+  box-shadow: inset 0 0 0 1px rgba(35, 42, 53, 0.08);
+}
+
+.sound-canvas__custom-color.is-active .sound-canvas__color-toggle {
+  border-color: rgba(35, 42, 53, 0.4);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(35, 42, 53, 0.3);
+}
+
+.sound-canvas__color-panel {
+  position: absolute;
+  z-index: 8;
+  bottom: calc(100% + 0.8rem);
+  left: 50%;
+  width: min(15.5rem, calc(100vw - 3rem));
+  padding: 0.7rem;
+  border: 1px solid rgba(35, 42, 53, 0.1);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 0.9rem 2.5rem rgba(35, 42, 53, 0.14);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 0.35rem) scale(0.98);
+  transform-origin: bottom center;
+  pointer-events: none;
+  transition: opacity 160ms var(--ease), transform 160ms var(--ease), visibility 160ms;
+}
+
+.sound-canvas__custom-color.is-open .sound-canvas__color-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0) scale(1);
+  pointer-events: auto;
+}
+
+.sound-canvas__color-area {
+  position: relative;
+  width: 100%;
+  height: 8.5rem;
+  overflow: hidden;
+  border-radius: 0.62rem;
+  background:
+    linear-gradient(to top, #000, transparent),
+    linear-gradient(to right, #fff, transparent),
+    var(--picker-hue, hsl(180 100% 50%));
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.sound-canvas__color-handle {
+  position: absolute;
+  top: var(--picker-y, 18%);
+  left: var(--picker-x, 68%);
+  width: 0.85rem;
+  height: 0.85rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(35, 42, 53, 0.45), 0 2px 5px rgba(35, 42, 53, 0.22);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.sound-canvas__hue-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 4.3rem;
+  gap: 0.65rem;
+  align-items: center;
+  margin-top: 0.65rem;
+}
+
+.sound-canvas__hue-row input {
+  width: 100%;
+  height: 0.7rem;
+  margin: 0;
+  border-radius: 999px;
+  background: linear-gradient(to right, #f44, #ff0, #35c96b, #37d5d8, #4f70ef, #bb59df, #f44);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.sound-canvas__hue-row input::-webkit-slider-thumb {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: hsl(var(--picker-hue-number, 180) 100% 50%);
+  box-shadow: 0 0 0 1px rgba(35, 42, 53, 0.3), 0 2px 5px rgba(35, 42, 53, 0.18);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.sound-canvas__hue-row input::-moz-range-thumb {
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: hsl(var(--picker-hue-number, 180) 100% 50%);
+  box-shadow: 0 0 0 1px rgba(35, 42, 53, 0.3);
+}
+
+.sound-canvas__hue-row output {
+  color: var(--color-text-muted);
+  font-family: "Source Code Pro", monospace;
+  font-size: 0.67rem;
+  text-align: right;
+}
+
+.sound-canvas--expanded .about-canvas__surface.is-erasing {
+  cursor: cell;
+}
+
+.sound-canvas--expanded .about-canvas__surface.is-highlighting {
+  cursor: crosshair;
+}
+
+.sound-canvas--expanded.is-magic .about-canvas__surface {
+  cursor: default;
+}
+
+.sound-canvas-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.sound-canvas-stage {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: 1rem var(--gutter) 1.5rem;
+}
+
+.sound-canvas-stage__heading {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.sound-canvas-stage__heading h1 {
+  margin-top: 0.35rem;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: 0.9;
+}
+
+.sound-canvas-stage__heading > p {
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.sound-canvas-stage__back {
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+}
+
+.sound-canvas-stage__back:hover {
+  color: var(--color-text);
+}
+
+.about-canvas--stage {
+  width: 100%;
+  height: calc(100svh - 15rem);
+  min-width: 0;
+  min-height: 25rem;
+  max-width: none;
+  max-height: none;
+  resize: vertical;
+}
+
 @media (max-width: 860px) {
+  .play-project__intro {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
   .about-content-grid {
     grid-template-columns: 1fr;
   }
 
   .about-canvas {
+    position: relative;
+    top: auto;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+    min-height: 0;
     max-width: 42rem;
+    max-height: none;
+    margin-top: 0;
+    resize: none;
+  }
+
+  .about-canvas__surface {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .about-canvas--play,
+  .about-canvas--stage {
+    height: auto;
+    min-height: 0;
+    max-width: none;
+    resize: none;
+  }
+
+  .sound-canvas-stage__heading {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .sound-canvas__toolbar {
+    overflow-x: auto;
+    padding-bottom: 0.15rem;
+  }
+
+  .sound-canvas__tool,
+  .sound-canvas__magic,
+  .sound-canvas__sizes {
+    flex: 0 0 auto;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 860px) {
+  .sound-canvas-page .sound-canvas-stage__heading {
+    display: block;
+  }
+
+  .sound-canvas-page .sound-canvas-stage__heading h1 {
+    font-size: clamp(3rem, 7vw, 4rem);
+  }
+
+  .sound-canvas-page .about-canvas--stage {
+    height: calc(100svh - 14.25rem);
+    min-height: 25rem;
+    resize: vertical;
+  }
+
+  .sound-canvas-page .about-canvas--stage .about-canvas__surface {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .play-index .about-canvas--play {
+    height: clamp(31rem, 66vh, 44rem);
+    min-height: 28rem;
+    resize: vertical;
+  }
+
+  .play-index .about-canvas--play .about-canvas__surface {
+    height: 100%;
+    aspect-ratio: auto;
   }
 }
 

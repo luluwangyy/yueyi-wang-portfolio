@@ -665,10 +665,10 @@ document.querySelectorAll("[data-research-slider]").forEach((slider) => {
   });
 });
 
-// About page: a small drawing instrument. Position controls pitch and
+// Shared drawing instrument for About, Play, and the large canvas page. Position controls pitch and
 // stereo placement, movement controls brightness and volume, and each
 // palette color selects a distinct oscillator voice.
-document.querySelectorAll("[data-sound-canvas]").forEach((instrument) => {
+document.querySelectorAll("[data-sound-canvas]:not([data-sound-canvas-expanded])").forEach((instrument) => {
   const canvas = instrument.querySelector("[data-canvas-surface]");
   const resetButton = instrument.querySelector("[data-canvas-reset]");
   const volumeControl = instrument.querySelector("[data-canvas-volume]");

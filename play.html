@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Play — Yueyi Lulu Wang</title>
+  <meta name="description" content="Interactive sketches and playful experiments by Yueyi Lulu Wang.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;family=Averia+Serif+Libre:ital,wght@0,300;1,300&amp;family=Source+Code+Pro:wght@400;500&amp;family=VT323&amp;display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css?v=play-12">
+</head>
+<body class="project-index-page play-index">
+
+  <header class="site-header">
+    <div class="header-inner">
+      <nav class="segmented-control" aria-label="Primary">
+        <span class="segmented-control__pill" aria-hidden="true"></span>
+        <a href="index.html" class="segmented-control__item">Home</a>
+        <a href="work.html" class="segmented-control__item">Work</a>
+        <a href="play.html" class="segmented-control__item is-active" aria-current="page">Play</a>
+        <a href="make.html" class="segmented-control__item">Make</a>
+        <a href="about.html" class="segmented-control__item">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="collection-hero collection-hero--play">
+      <p class="collection-hero__index">02 / Play</p>
+      <h1>Experiments made to be fun.</h1>
+    </section>
+
+    <section class="play-projects" aria-labelledby="draw-with-sound-project">
+      <article class="play-project">
+        <div class="play-project__intro">
+          <div class="play-project__heading">
+            <p class="play-project__number">01 / Interactive sketch</p>
+            <h2 id="draw-with-sound-project">Draw with sound</h2>
+          </div>
+          <p class="play-project__description">Move slowly, scribble quickly, or layer colors. Every trace turns position, movement, and color into a different synthesized voice.</p>
+        </div>
+
+        <aside class="about-canvas about-canvas--play sound-canvas--expanded" data-sound-canvas data-sound-canvas-expanded aria-label="Interactive sound drawing canvas">
+          <div class="about-canvas__topbar">
+            <div class="about-canvas__actions">
+              <div class="about-canvas__info-wrap">
+                <button class="about-canvas__info" type="button" aria-label="About this drawing canvas" aria-expanded="false" aria-describedby="play-canvas-note" data-canvas-info>i</button>
+                <p class="about-canvas__note" id="play-canvas-note" role="tooltip">I love to paint, draw, and move with music. Feel free to de-stress and play on this little open canvas.</p>
+              </div>
+              <a class="about-canvas__expand" href="draw-with-sound.html" aria-label="Open Draw with sound on a larger canvas" title="Open large canvas">
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.25 3.5H3.5v3.75M12.75 3.5h3.75v3.75M7.25 16.5H3.5v-3.75M12.75 16.5h3.75v-3.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <canvas class="about-canvas__surface" width="1200" height="700" tabindex="0" aria-label="Interactive drawing canvas. Drag to draw and create synthesized sound." data-canvas-surface></canvas>
+
+          <div class="about-canvas__controls">
+            <div class="sound-canvas__toolbar" role="toolbar" aria-label="Drawing tools">
+              <button class="sound-canvas__tool is-active" type="button" data-canvas-tool="pen" aria-pressed="true">
+                <svg class="sound-canvas__tool-model" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 19 1.15-4.05L16.9 4.2a1.7 1.7 0 0 1 2.4 2.4L8.55 17.35 5 19Z" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/><path d="m14.9 6.2 2.9 2.9M6.15 14.95l2.4 2.4" stroke="currentColor" stroke-width="1.45"/></svg>
+                <span>Pen</span>
+              </button>
+              <button class="sound-canvas__tool" type="button" data-canvas-tool="highlighter" aria-pressed="false">
+                <svg class="sound-canvas__tool-model" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6.1 15.8 8.95-10.55a1.55 1.55 0 0 1 2.2-.18l1.68 1.43a1.55 1.55 0 0 1 .18 2.19l-8.96 10.56-4.05-3.45Z" stroke="currentColor" stroke-width="1.45" stroke-linejoin="round"/><path d="m6.1 15.8-1.05 3.95 4.05-1.08M4.5 21h7" stroke="currentColor" stroke-width="1.45" stroke-linecap="round"/></svg>
+                <span>Highlighter</span>
+              </button>
+              <button class="sound-canvas__tool" type="button" data-canvas-tool="eraser" aria-pressed="false">
+                <svg class="sound-canvas__tool-model" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5.2 14.5 7.15-8.1a2 2 0 0 1 2.82-.18l3.42 3.02a2 2 0 0 1 .18 2.82l-6.55 7.42H8.94L5.38 16.3a1.28 1.28 0 0 1-.18-1.8Z" stroke="currentColor" stroke-width="1.45" stroke-linejoin="round"/><path d="m9.7 11.6 5.8 5.12M12.22 19.48H19" stroke="currentColor" stroke-width="1.45" stroke-linecap="round"/></svg>
+                <span>Eraser</span>
+              </button>
+              <div class="sound-canvas__sizes" role="group" aria-label="Tool size">
+                <button type="button" data-canvas-size="small" aria-label="Small tool size" aria-pressed="false"><span aria-hidden="true"></span></button>
+                <button class="is-active" type="button" data-canvas-size="medium" aria-label="Medium tool size" aria-pressed="true"><span aria-hidden="true"></span></button>
+                <button type="button" data-canvas-size="large" aria-label="Large tool size" aria-pressed="false"><span aria-hidden="true"></span></button>
+              </div>
+              <button class="sound-canvas__magic" type="button" data-canvas-magic aria-pressed="false">
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m10 2 .8 3.2L14 6l-3.2.8L10 10l-.8-3.2L6 6l3.2-.8L10 2ZM15.5 10l.6 2.4 2.4.6-2.4.6-.6 2.4-.6-2.4-2.4-.6 2.4-.6.6-2.4ZM5 11l.7 2.8 2.8.7-2.8.7L5 18l-.7-2.8-2.8-.7 2.8-.7L5 11Z" fill="currentColor"/></svg>
+                <span>Dance</span>
+              </button>
+            </div>
+            <div class="about-canvas__palette" role="group" aria-label="Drawing color">
+              <button class="about-canvas__swatch is-active" type="button" style="--swatch:#285f4a" data-draw-color="#285f4a" aria-label="Draw in green" aria-pressed="true"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#9dd3f2" data-draw-color="#9dd3f2" aria-label="Draw in blue" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#9df2bc" data-draw-color="#9df2bc" aria-label="Draw in mint" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#9df2e6" data-draw-color="#9df2e6" aria-label="Draw in aqua" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#f4df78" data-draw-color="#f4df78" aria-label="Draw in yellow" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#f5a88d" data-draw-color="#f5a88d" aria-label="Draw in coral" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#c9b8f4" data-draw-color="#c9b8f4" aria-label="Draw in lavender" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#f3b6d2" data-draw-color="#f3b6d2" aria-label="Draw in pink" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#b86c45" data-draw-color="#b86c45" aria-label="Draw in terracotta" aria-pressed="false"></button>
+              <button class="about-canvas__swatch" type="button" style="--swatch:#232a35" data-draw-color="#232a35" aria-label="Draw in charcoal" aria-pressed="false"></button>
+              <div class="sound-canvas__custom-color" data-color-picker>
+                <button class="sound-canvas__color-toggle" type="button" aria-label="Open custom color and timbre picker" aria-expanded="false" data-color-toggle>
+                  <span aria-hidden="true"></span>
+                </button>
+                <div class="sound-canvas__color-panel" aria-label="Custom color and timbre" data-color-panel>
+                  <div class="sound-canvas__color-area" role="slider" tabindex="0" aria-label="Color saturation and brightness" aria-valuemin="0" aria-valuemax="100" data-color-area>
+                    <span class="sound-canvas__color-handle" aria-hidden="true" data-color-handle></span>
+                  </div>
+                  <div class="sound-canvas__hue-row">
+                    <input type="range" min="0" max="360" value="180" step="1" aria-label="Color hue" data-color-hue>
+                    <output data-color-value>#74D6D6</output>
+                  </div>
+                </div>
+                <input type="hidden" value="#74d6d6" data-custom-color>
+              </div>
+            </div>
+            <button class="about-canvas__reset" type="button" data-canvas-reset>Reset</button>
+            <label class="about-canvas__volume">
+              <span>Sound level</span>
+              <input type="range" min="0" max="100" value="55" step="1" aria-label="Canvas sound level" data-canvas-volume>
+              <output data-canvas-volume-output>55%</output>
+            </label>
+          </div>
+        </aside>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 Yueyi Lulu Wang</span>
+      <div class="footer-links">
+        <a href="mailto:lulu.yueyi.wang@gmail.com">Email</a>
+        <a href="https://github.com/luluwangyy" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=play-3"></script>
+  <script src="js/play-canvas.js?v=play-12"></script>
+</body>
+</html>

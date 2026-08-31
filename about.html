@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=VT323&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=play-1">
 </head>
 <body class="minimal-page">
 
@@ -21,6 +21,7 @@
         <span class="segmented-control__pill" aria-hidden="true"></span>
         <a href="index.html" class="segmented-control__item">Home</a>
         <a href="work.html" class="segmented-control__item">Work</a>
+        <a href="play.html" class="segmented-control__item">Play</a>
         <a href="make.html" class="segmented-control__item">Make</a>
         <a href="about.html" class="segmented-control__item is-active">About</a>
       </nav>
@@ -29,33 +30,40 @@
 
   <main>
     <section class="about-body about-body--minimal">
-      <h1 class="about-headline"><span class="reveal-word">I design,</span><br><span class="reveal-word">prototype,</span>&nbsp;<span class="reveal-word">and build</span></h1>
       <div class="about-content-grid">
-        <div class="about-bio">
-          <p>
-            Hi, I'm Yueyi Lulu Wang. I'm a <span class="about-bio__accent">design engineer</span> and <span class="about-bio__accent">creative technologist</span> who creates <span class="about-bio__accent">interactive experiences</span> across generative AI, embodied AI, and digital-physical environments.
-          </p>
-          <p>
-            My experience spans the <em>Computational Design Lab</em>, directed by
-            Dr. Lydia Chilton; the <em>Imaging and Vision Laboratory</em>, directed by
-            Dr. Shree Nayar; and the <em>Design Tool Lab</em>, directed by Dr. Tiffany
-            Tseng. Beyond my work and research in software and interface
-            design, I am particularly interested in embodied AI and
-            intelligent systems. Most recently, I completed an interactive
-            robotic installation as a 2025–26 Student Artist-in-Residence at
-            the <em>Barnard Movement Lab</em>.
-          </p>
-          <p>
-            As a recent graduate of Columbia University with a double major in <span class="about-bio__accent">Computer Science and Visual Arts</span>, I combine technical precision with creative experimentation to explore new forms of interaction.
-          </p>
+        <div class="about-copy-column">
+          <h1 class="about-headline"><span class="reveal-word">I design,</span><br><span class="reveal-word">prototype,</span>&nbsp;<span class="reveal-word">and build</span></h1>
+          <div class="about-bio">
+            <p>
+              Hi, I'm Yueyi Lulu Wang. I'm a <span class="about-bio__accent">design engineer</span> and <span class="about-bio__accent">creative technologist</span> who creates <span class="about-bio__accent">interactive experiences</span> across generative AI, embodied AI, and digital-physical environments.
+            </p>
+            <p>
+              My experience spans the <em>Computational Design Lab</em>, directed by
+              Dr. Lydia Chilton; the <em>Imaging and Vision Laboratory</em>, directed by
+              Dr. Shree Nayar; and the <em>Design Tool Lab</em>, directed by Dr. Tiffany
+              Tseng. Beyond my work and research in software and interface
+              design, I am particularly interested in embodied AI and
+              intelligent systems. Most recently, I completed an interactive
+              robotic installation as a 2025–26 Student Artist-in-Residence at
+              the <em>Barnard Movement Lab</em>.
+            </p>
+            <p>
+              As a recent graduate of Columbia University with a double major in <span class="about-bio__accent">Computer Science and Visual Arts</span>, I combine technical precision with creative experimentation to explore new forms of interaction.
+            </p>
+          </div>
         </div>
 
-        <aside class="about-canvas" data-sound-canvas aria-labelledby="about-canvas-title">
+        <aside class="about-canvas" data-sound-canvas aria-labelledby="about-canvas-title" title="Drag the lower-right corner to resize">
           <div class="about-canvas__topbar">
             <h2 id="about-canvas-title">Draw with sound</h2>
-            <div class="about-canvas__info-wrap">
-              <button class="about-canvas__info" type="button" aria-label="About this drawing canvas" aria-expanded="false" aria-describedby="about-canvas-note" data-canvas-info>i</button>
-              <p class="about-canvas__note" id="about-canvas-note" role="tooltip">I love to paint, draw, and move with music. Feel free to de-stress and play on this little open canvas.</p>
+            <div class="about-canvas__actions">
+              <div class="about-canvas__info-wrap">
+                <button class="about-canvas__info" type="button" aria-label="About this drawing canvas" aria-expanded="false" aria-describedby="about-canvas-note" data-canvas-info>i</button>
+                <p class="about-canvas__note" id="about-canvas-note" role="tooltip">I love to paint, draw, and move with music. Feel free to de-stress and play on this little open canvas.</p>
+              </div>
+              <a class="about-canvas__expand" href="draw-with-sound.html" aria-label="Open Draw with sound on a larger canvas" title="Open large canvas">
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.25 3.5H3.5v3.75M12.75 3.5h3.75v3.75M7.25 16.5H3.5v-3.75M12.75 16.5h3.75v-3.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
             </div>
           </div>
 
