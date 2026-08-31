@@ -319,10 +319,10 @@ document.querySelectorAll(".project-card").forEach((card) => {
   });
 });
 
-// Cover videos are always-muted ambient media. Explicitly ask them to play
-// after loading and when a cached page becomes active again so playback never
-// depends on a click or on the scroll-triggered video observer below.
-document.querySelectorAll("video.case-cover-autoplay").forEach((video) => {
+// Always-autoplay media stays muted and loops. Explicitly ask it to play after
+// loading and when a cached page becomes active again, so large walkthroughs
+// do not depend on an intersection threshold that their height may never meet.
+document.querySelectorAll("video.case-cover-autoplay, video.autoplay-loop").forEach((video) => {
   video.defaultMuted = true;
   video.muted = true;
   video.autoplay = true;
@@ -380,17 +380,19 @@ if (scrollAutoplayVideos.length) {
   });
 }
 
-// Creative-practice videos begin muted for reliable autoplay. On devices
-// with a pointer, hovering temporarily reveals the soundtrack. The visible
-// button lets people explicitly keep sound on or off and works for touch and
-// keyboard users as well.
-document.querySelectorAll("[data-hover-sound]").forEach((media) => {
+// Creative-practice videos remain muted until the reader explicitly presses
+// the sound button. Hovering never changes audio. The adjacent range control
+// adjusts volume without silently opting the reader into sound.
+document.querySelectorAll("[data-controlled-sound]").forEach((media) => {
   const video = media.querySelector("video");
   const toggle = media.querySelector("[data-sound-toggle]");
   const label = media.querySelector("[data-sound-label]");
-  if (!video || !toggle || !label) return;
+  const volume = media.querySelector("[data-volume-control]");
+  if (!video || !toggle || !label || !volume) return;
 
-  let soundPreference = null;
+  video.defaultMuted = true;
+  video.muted = true;
+  video.volume = Number(volume.value);
 
   const updateSoundControl = () => {
     const soundIsOn = !video.muted;
@@ -399,25 +401,14 @@ document.querySelectorAll("[data-hover-sound]").forEach((media) => {
     label.textContent = soundIsOn ? "Mute" : "Sound on";
   };
 
-  media.addEventListener("mouseenter", () => {
-    if (soundPreference === null) {
-      video.muted = false;
-      updateSoundControl();
-    }
-  });
-
-  media.addEventListener("mouseleave", () => {
-    if (soundPreference === null) {
-      video.muted = true;
-      updateSoundControl();
-    }
-  });
-
   toggle.addEventListener("click", () => {
     video.muted = !video.muted;
-    soundPreference = !video.muted;
     if (!video.paused) video.play().catch(() => {});
     updateSoundControl();
+  });
+
+  volume.addEventListener("input", () => {
+    video.volume = Number(volume.value);
   });
 
   updateSoundControl();

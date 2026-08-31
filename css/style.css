@@ -4495,24 +4495,35 @@ html.nomi-fullscreen-lock body {
   line-height: 1.5;
 }
 
-.story-sound-toggle {
+.story-sound-controls {
   position: absolute;
   right: 0.8rem;
   bottom: 0.8rem;
   display: inline-flex;
   align-items: center;
+  gap: 0.6rem;
   min-height: 2.35rem;
-  padding: 0.55rem 0.8rem;
+  padding: 0.3rem 0.45rem 0.3rem 0.35rem;
   border: 1px solid rgba(255, 255, 255, 0.62);
   border-radius: 999px;
   background: rgba(15, 20, 18, 0.78);
+  backdrop-filter: blur(10px);
+}
+
+.story-sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.7rem;
+  padding: 0.35rem 0.55rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
   color: #fff;
   font: inherit;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   cursor: pointer;
-  backdrop-filter: blur(10px);
   transition: background 180ms ease, transform 180ms ease;
 }
 
@@ -4524,6 +4535,12 @@ html.nomi-fullscreen-lock body {
 .story-sound-toggle:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
+}
+
+.story-volume-slider {
+  width: clamp(4.5rem, 9vw, 6.5rem);
+  accent-color: #ffffff;
+  cursor: pointer;
 }
 
 .story-workflow--compact {
