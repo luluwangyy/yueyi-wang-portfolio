@@ -19,6 +19,7 @@
   --gutter: clamp(1.25rem, 3.5vw, 3rem);
   --content-max: 1180px;
   --radius: 8px;
+  --project-cover-radius: 0;
 }
 
 /* Native cross-fade between pages (Chrome/Edge; no-op elsewhere) */
@@ -1501,6 +1502,14 @@ a:focus-visible, button:focus-visible {
   aspect-ratio: 16 / 9;
 }
 
+.work-index .project-card[href="projects/sketchtrace.html"] .project-visual {
+  aspect-ratio: 2000 / 1330;
+}
+
+.work-index .project-card[href="projects/sketchtrace.html"] .project-visual img {
+  object-fit: contain;
+}
+
 /* ============================================
    Projects grid
    ============================================ */
@@ -1546,6 +1555,22 @@ a:focus-visible, button:focus-visible {
   transition: transform 0.4s var(--ease);
 }
 
+/* Collection thumbnails use the same square-edge treatment as the
+   opening media on their corresponding project pages. */
+.project-index-page .project-visual {
+  border: 0;
+  border-radius: var(--project-cover-radius);
+  outline: 0;
+  box-shadow: none;
+}
+
+.project-index-page .project-visual img,
+.project-index-page .project-visual video {
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+
 .project-card:hover .project-visual {
   transform: translateY(-6px);
 }
@@ -1561,6 +1586,13 @@ a:focus-visible, button:focus-visible {
 
 .project-info h2 {
   font-size: 1.25rem;
+}
+
+.project-index-page .project-info h2,
+.project-index-page .project-info h3 {
+  font-family: var(--font-serif-highlight);
+  font-style: italic;
+  font-weight: 300;
 }
 
 .project-info p {
@@ -1900,6 +1932,9 @@ a:focus-visible, button:focus-visible {
 .project-detail-visual .project-visual {
   aspect-ratio: 16 / 9;
   border: none;
+  border-radius: var(--project-cover-radius);
+  outline: 0;
+  box-shadow: none;
 }
 
 /* Media placeholders: images/videos are shown exactly as supplied
@@ -2105,6 +2140,12 @@ a:focus-visible, button:focus-visible {
   padding-bottom: 6rem;
   display: grid;
   grid-template-columns: 1fr;
+}
+
+@media (min-width: 901px) {
+  .project-detail-body {
+    padding-right: 15%;
+  }
 }
 
 .project-detail-body p {
@@ -2715,6 +2756,10 @@ html.nomi-fullscreen-lock body {
     aspect-ratio: 4 / 3;
   }
 
+  .work-index .project-card[href="projects/sketchtrace.html"]:first-child .project-visual {
+    aspect-ratio: 2000 / 1330;
+  }
+
   .related-grid {
     grid-template-columns: 1fr;
   }
@@ -2801,7 +2846,10 @@ html.nomi-fullscreen-lock body {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: var(--radius);
+  border: 0;
+  border-radius: var(--project-cover-radius);
+  outline: 0;
+  box-shadow: none;
 }
 
 .case-front-image figcaption,
@@ -3049,8 +3097,12 @@ html.nomi-fullscreen-lock body {
 .case-story { min-width: 0; }
 
 @media (min-width: 901px) {
+  .case-story {
+    padding-right: 15%;
+  }
+
   .sketchtrace-case .case-story {
-    padding-inline: clamp(1rem, 1.8vw, 1.75rem);
+    padding-left: clamp(1rem, 1.8vw, 1.75rem);
   }
 }
 
