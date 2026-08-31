@@ -2279,6 +2279,33 @@ a:focus-visible, button:focus-visible {
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22);
 }
 
+.sound-canvas__sound-toggle {
+  min-height: 2rem;
+  display: none;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.38rem 0.7rem;
+  border: 1px solid rgba(35, 42, 53, 0.18);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--color-text);
+  font-family: "Source Code Pro", monospace;
+  font-size: 0.72rem;
+  cursor: pointer;
+  box-shadow: 0 1px 0 #d7dad9;
+}
+
+.sound-canvas__sound-toggle svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sound-canvas__sound-toggle.is-active {
+  border-color: #285f4a;
+  background: #285f4a;
+  color: #fff;
+}
+
 .sound-canvas--expanded .about-canvas__topbar h3,
 .sound-canvas--expanded .about-canvas__controls {
   font-family: "Source Code Pro", monospace;
@@ -2554,6 +2581,79 @@ a:focus-visible, button:focus-visible {
   .sound-canvas__magic,
   .sound-canvas__sizes {
     flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-canvas--play,
+  .about-canvas--stage {
+    height: clamp(40rem, 82svh, 47rem);
+    padding: 0.72rem;
+    overflow: visible;
+    grid-template-rows: auto minmax(24rem, 1fr) auto;
+  }
+
+  .about-canvas--play .about-canvas__surface,
+  .about-canvas--stage .about-canvas__surface {
+    width: 100%;
+    height: 100%;
+    min-height: 24rem;
+    aspect-ratio: auto;
+  }
+
+  .sound-canvas--expanded .about-canvas__controls {
+    gap: 0.6rem 0.7rem;
+  }
+
+  .sound-canvas__toolbar {
+    flex-wrap: wrap;
+    overflow: visible;
+    padding-top: 0.55rem;
+    padding-bottom: 0;
+    gap: 0.4rem;
+  }
+
+  .sound-canvas__tool,
+  .sound-canvas__magic {
+    padding-inline: 0.58rem;
+  }
+
+  .sound-canvas__magic {
+    margin-left: 0;
+  }
+
+  .sound-canvas__sound-toggle {
+    display: inline-flex;
+  }
+
+  .sound-canvas--expanded .about-canvas__palette {
+    gap: 0.48rem;
+  }
+
+  .about-canvas__swatch {
+    width: 1.42rem;
+    height: 1.42rem;
+  }
+
+  .sound-canvas__color-panel {
+    position: fixed;
+    z-index: 1000;
+    right: auto;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    left: 50%;
+    width: calc(100vw - 2rem);
+    max-width: 22rem;
+    transform: translate(-50%, 0.35rem) scale(0.98);
+    transform-origin: bottom center;
+  }
+
+  .sound-canvas__custom-color.is-open .sound-canvas__color-panel {
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  .sound-canvas__color-area {
+    height: min(42vw, 10rem);
+    min-height: 8.5rem;
   }
 }
 

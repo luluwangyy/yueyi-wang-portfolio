@@ -113,6 +113,8 @@
     const sizeButtons = Array.from(instrument.querySelectorAll("[data-canvas-size]"));
     const magicButton = instrument.querySelector("[data-canvas-magic]");
     const magicLabel = magicButton?.querySelector("span");
+    const soundButton = instrument.querySelector("[data-canvas-sound]");
+    const soundButtonLabel = soundButton?.querySelector("span");
     const infoButton = instrument.querySelector("[data-canvas-info]");
     const infoWrap = infoButton?.closest(".about-canvas__info-wrap");
     if (!canvas || !context || !resetButton || !swatches.length || !toolButtons.length || !magicButton) return;
@@ -420,6 +422,20 @@
         return voice;
       });
       return voices;
+    };
+
+    const playSoundReady = () => {
+      const audio = ensureAudio();
+      if (!audio) return;
+      const profile = soundProfile(activeColor);
+      [0, 4, 7].forEach((step, index) => {
+        const voice = connectTimbre(profile, profile.base * (2 ** (step / 12)), 0.0001, (index - 1) * 0.32);
+        if (!voice) return;
+        const now = audio.currentTime;
+        voice.master.gain.exponentialRampToValueAtTime(Math.max(0.0001, 0.032 * outputLevel), now + 0.025 + index * 0.018);
+        releaseNodesLater(voice, 0.16 + index * 0.025, 0.22);
+        registerOneShot(voice, 0.48);
+      });
     };
 
     const eraseAt = (point) => {
@@ -868,6 +884,21 @@
       else return;
       event.preventDefault();
       syncColorPicker(true);
+    });
+
+    soundButton?.addEventListener("click", async () => {
+      const audio = ensureAudio();
+      if (audio?.state === "suspended") {
+        try {
+          await audio.resume();
+        } catch (error) {
+          return;
+        }
+      }
+      soundButton.classList.add("is-active");
+      soundButton.setAttribute("aria-pressed", "true");
+      if (soundButtonLabel) soundButtonLabel.textContent = "Sound ready";
+      playSoundReady();
     });
 
     magicButton.addEventListener("click", async () => {
