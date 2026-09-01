@@ -19,7 +19,7 @@
 </helmet>
 <div style="position:fixed;inset:0;background:#8fbfe0;overflow:hidden;font-family:'Source Code Pro',ui-monospace,monospace">
 
-  <canvas ref="{{ canvasRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+  <canvas ref="{{ canvasRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;-webkit-user-select:none;user-select:none"></canvas>
 
   <div ref="{{ promptRef }}" style="position:absolute;z-index:4;left:50%;top:50%;padding:8px 12px;border:1px solid rgba(255,255,255,.62);border-radius:999px;background:rgba(8,15,24,.42);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-family:'Source Code Pro',ui-monospace,monospace;font-size:11px;letter-spacing:.04em;text-transform:lowercase;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(14px,12px);transition:opacity 180ms ease">enter</div>
 
@@ -238,6 +238,7 @@ class Component extends DCLogic {
     addEventListener('resize', this._onResize);
     canvas.addEventListener('pointermove', this.onMove);
     canvas.addEventListener('pointerdown', this.onDown);
+    canvas.addEventListener('touchstart', this.onTouchStart, { passive: false });
     canvas.addEventListener('pointerleave', () => { this.ndc.set(-2, -2); this.setHover(false); });
     this.loop();
     const l = this.loadRef.current;
@@ -286,10 +287,18 @@ class Component extends DCLogic {
     }
   };
 
-  hitDoor() {
+  hitDoor(generous = false) {
     if (!this.ray) return false;
     this.ray.setFromCamera(this.ndc, this.camera);
-    return this.ray.intersectObject(this.door, true).length > 0;
+    if (this.ray.intersectObject(this.door, true).length > 0) return true;
+    if (!generous || !this.doorCenter || !this.THREE) return false;
+
+    // Touchscreens do not have a stable hover phase. Give the visible door a
+    // forgiving screen-space target so the first tap always opens it.
+    const projected = this.doorCenter.clone().project(this.camera);
+    const dx = Math.abs(this.ndc.x - projected.x);
+    const dy = Math.abs(this.ndc.y - projected.y);
+    return dx <= 0.34 && dy <= 0.42;
   }
 
   setHover(v) {
@@ -303,7 +312,8 @@ class Component extends DCLogic {
 
   onDown = (e) => {
     this.updatePointer(e);
-    if (this.open || !this.hitDoor()) return;
+    const touchLike = e.pointerType === 'touch' || matchMedia('(hover: none), (pointer: coarse)').matches;
+    if (this.open || !this.hitDoor(touchLike)) return;
     this.open = true;
     const prompt = this.promptRef.current;
     if (prompt) prompt.style.opacity = '0';
@@ -314,6 +324,14 @@ class Component extends DCLogic {
     this.hingeStart = this.hinge.rotation.y;
     this.lookStart = new this.THREE.Vector3(this.lookBase.x + this.parallax.x * 0.5, this.lookBase.y + this.parallax.y * 0.3, 0);
     this.t0 = this.clock.getElapsedTime();
+  };
+
+  onTouchStart = (event) => {
+    if (this.open) return;
+    const touch = event.touches?.[0];
+    if (!touch) return;
+    event.preventDefault();
+    this.onDown({ clientX: touch.clientX, clientY: touch.clientY, pointerType: 'touch' });
   };
 
   onBack = () => {
@@ -512,6 +530,7 @@ class Component extends DCLogic {
     clearTimeout(this._t1); clearTimeout(this._t2);
     removeEventListener('resize', this._onResize);
     removeEventListener('message', this._onMessage);
+    this.canvasRef.current?.removeEventListener('touchstart', this.onTouchStart);
     if (this.renderer) this.renderer.dispose();
   }
 
