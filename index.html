@@ -11,21 +11,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;family=Averia+Serif+Libre:ital,wght@0,300;1,300&amp;family=VT323&amp;display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css?v=view-work-button-3">
+  <link rel="stylesheet" href="css/style.css?v=truman-door-3">
 </head>
 <body class="home-page entry-pending">
 
-  <div class="entry-portal" data-entry-portal role="dialog" aria-modal="true" aria-label="Enter Yueyi Lulu Wang’s portfolio">
-    <div class="entry-portal__field" aria-hidden="true"></div>
-
-    <div class="entry-portal__content">
-      <button class="entry-portal__sound" type="button" data-entry-sound>
-        <span class="entry-portal__scroll-mark" aria-hidden="true"><i></i></span>
-        <span data-entry-sound-label>Enter with sound</span>
-      </button>
-
-      <button class="entry-portal__muted" type="button" data-entry-muted>Enter muted</button>
-    </div>
+  <div class="entry-portal entry-portal--truman" data-entry-portal data-truman-landing role="dialog" aria-modal="true" aria-label="Enter Yueyi Lulu Wang’s portfolio through the door">
+    <iframe class="entry-portal__door" src="assets/door-landing/door.html?v=mobile-door-1" title="A painted sky, staircase, and interactive door" data-truman-frame></iframe>
+    <div class="entry-portal__white" aria-hidden="true"></div>
+    <button type="button" data-entry-sound hidden><span data-entry-sound-label>Enter with sound</span></button>
+    <button type="button" data-entry-muted hidden>Enter muted</button>
   </div>
 
   <div class="home-top">
@@ -103,7 +97,7 @@
   </footer>
 
   <script src="js/main.js?v=ui-sound-2"></script>
-  <script type="module" src="js/home-effects.js?v=scroll-sound-1"></script>
+  <script type="module" src="js/home-effects.js?v=intro-slower-2"></script>
   <script src="js/mouse-trail.js"></script>
 </body>
 </html>

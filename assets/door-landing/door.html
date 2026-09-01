@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#8fbfe0;overflow:hidden}
+  a{color:#e8f1f8;text-decoration:none}a:hover{color:#fff}
+  @keyframes hintpulse{0%,100%{opacity:.35}50%{opacity:.8}}
+</style>
+</helmet>
+<div style="position:fixed;inset:0;background:#8fbfe0;overflow:hidden;font-family:'Source Code Pro',ui-monospace,monospace">
+
+  <canvas ref="{{ canvasRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+
+  <div ref="{{ promptRef }}" style="position:absolute;z-index:4;left:50%;top:50%;padding:8px 12px;border:1px solid rgba(255,255,255,.62);border-radius:999px;background:rgba(8,15,24,.42);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-family:'Source Code Pro',ui-monospace,monospace;font-size:11px;letter-spacing:.04em;text-transform:lowercase;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(14px,12px);transition:opacity 180ms ease">enter</div>
+
+  <div ref="{{ loadRef }}" style="position:absolute;inset:0;background:#8fbfe0;transition:opacity 900ms ease"></div>
+
+  <div ref="{{ fadeRef }}" style="position:absolute;inset:0;background:#04050a;opacity:0;pointer-events:none;transition:opacity 1200ms ease"></div>
+
+  <div ref="{{ beyondRef }}" onClick="{{ onBack }}" style="position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 1100ms ease;background:radial-gradient(90% 70% at 50% 55%, #10141c 0%, #06070b 60%, #030407 100%);cursor:pointer"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;swayIntensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.1,&quot;min&quot;:0,&quot;max&quot;:4,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;deg&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;sound&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Audio&quot;}}">
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.canvasRef = React.createRef();
+    this.promptRef = React.createRef();
+    this.fadeRef = React.createRef();
+    this.beyondRef = React.createRef();
+    this.loadRef = React.createRef();
+    this.open = false; this.hover = false;
+    this.pointer = { x: 0, y: 0 };
+    this.parallax = { x: 0, y: 0 };
+  }
+
+  componentDidMount() {
+    this._onMessage = (event) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type === 'truman-door-release') {
+        cancelAnimationFrame(this._raf);
+        if (this.renderer) {
+          this.renderer.dispose();
+          this.renderer.forceContextLoss?.();
+        }
+        window.parent.postMessage({ type: 'truman-door-released' }, window.location.origin);
+      }
+      if (event.data?.type === 'truman-intro-sound') this.playIntroSound(event.data);
+    };
+    window.addEventListener('message', this._onMessage);
+
+    import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js')
+      .then((THREE) => this.build(THREE))
+      .catch((e) => console.error('three load failed', e));
+  }
+
+  /* ---------- painted sky texture (canvas, no image assets) ---------- */
+  makeSky(THREE, W, H) {
+    const c = document.createElement('canvas');
+    c.width = 1600; c.height = Math.round(1600 * H / W);
+    const g = c.getContext('2d');
+    const grd = g.createLinearGradient(0, 0, c.width * 0.16, c.height);
+    grd.addColorStop(0, '#7fb6dd'); grd.addColorStop(0.42, '#5c9bcd');
+    grd.addColorStop(0.74, '#8cbde1'); grd.addColorStop(1, '#bcdaeb');
+    g.fillStyle = grd; g.fillRect(0, 0, c.width, c.height);
+    let s = 8; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    const band = [[0.10, 0.55, 0.34], [0.30, 0.75, 0.5], [0.55, 0.9, 0.42], [0.78, 0.6, 0.3]];
+    band.forEach(([cy, op, sc]) => {
+      g.filter = 'blur(' + Math.round(34 * sc + 18) + 'px)';
+      for (let i = 0; i < 16; i++) {
+        const x = rnd() * c.width, y = (cy + (rnd() - 0.5) * 0.14) * c.height;
+        const rx = (90 + rnd() * 300) * (0.7 + sc), ry = rx * (0.12 + rnd() * 0.14);
+        g.fillStyle = 'rgba(255,255,255,' + (op * (0.25 + rnd() * 0.5)).toFixed(3) + ')';
+        g.beginPath(); g.ellipse(x, y, rx, ry, (rnd() - 0.5) * 0.15, 0, Math.PI * 2); g.fill();
+      }
+    });
+    g.filter = 'none';
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    t.anisotropy = 4;
+    return t;
+  }
+
+  build(THREE) {
+    this.THREE = THREE;
+    const canvas = this.canvasRef.current;
+    if (!canvas) return;
+
+    const W = 68, H = 34;                       // wall size
+    const D = { x0: 7.0, x1: 9.6, y0: 10, y1: 15.2 };  // doorway hole
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.renderer = renderer;
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color('#8fbfe0');
+    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 300);
+    this.camBase = new THREE.Vector3(1.5, 9.5, 34);
+    camera.position.copy(this.camBase);
+    this.lookBase = new THREE.Vector3(1.5, 9.5, 0);
+    camera.lookAt(this.lookBase);
+    this.scene = scene; this.camera = camera;
+
+    /* lights */
+    scene.add(new THREE.HemisphereLight('#dceefb', '#5b7f9e', 1.15));
+    const key = new THREE.DirectionalLight('#fff6e8', 2.0);
+    key.position.set(-24, 24, 30);
+    key.castShadow = true;
+    key.shadow.mapSize.set(1024, 1024);
+    const cs = key.shadow.camera;
+    cs.left = -48; cs.right = 48; cs.top = 38; cs.bottom = -22; cs.near = 1; cs.far = 140;
+    key.shadow.bias = -0.0012; key.shadow.radius = 3;
+    scene.add(key);
+    scene.add(new THREE.DirectionalLight('#bcd9f0', 0.45).translateX(0));
+
+    /* wall with a doorway hole, UVs remapped so the painting is continuous */
+    const sky = this.makeSky(THREE, W, H);
+    const BOT = -18;
+    const shape = new THREE.Shape();
+    shape.moveTo(-W / 2, BOT); shape.lineTo(W / 2, BOT); shape.lineTo(W / 2, H); shape.lineTo(-W / 2, H); shape.closePath();
+    const hole = new THREE.Path();
+    hole.moveTo(D.x0, D.y0); hole.lineTo(D.x0, D.y1); hole.lineTo(D.x1, D.y1); hole.lineTo(D.x1, D.y0); hole.closePath();
+    shape.holes.push(hole);
+    const wallGeo = new THREE.ShapeGeometry(shape);
+    const pos = wallGeo.attributes.position, uv = wallGeo.attributes.uv;
+    for (let i = 0; i < pos.count; i++) uv.setXY(i, (pos.getX(i) + W / 2) / W, pos.getY(i) / H);
+    uv.needsUpdate = true;
+    const wall = new THREE.Mesh(wallGeo, new THREE.MeshStandardMaterial({ map: sky, color: '#eaeff2', roughness: 0.96, metalness: 0 }));
+    wall.receiveShadow = true;
+    scene.add(wall);
+
+    /* darkness behind the wall */
+    const voidBox = new THREE.Mesh(
+      new THREE.BoxGeometry(D.x1 - D.x0 + 1.6, D.y1 - D.y0 + 1.2, 16),
+      new THREE.MeshStandardMaterial({ color: '#0a0e14', roughness: 1, side: THREE.BackSide })
+    );
+    voidBox.position.set((D.x0 + D.x1) / 2, (D.y0 + D.y1) / 2, -8.2);
+    scene.add(voidBox);
+    const inner = new THREE.PointLight('#7fa6cc', 6, 22, 2);
+    inner.position.set((D.x0 + D.x1) / 2, D.y0 + 1.2, -3.2);
+    scene.add(inner);
+    /* white staircase, standing in front of the wall so it casts a real shadow */
+    const stairMat = new THREE.MeshStandardMaterial({ map: sky, color: '#ffffff', emissive: '#cfe7f8', emissiveIntensity: 0.13, roughness: 0.88, metalness: 0 });
+    const edgeLit = new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#ffffff', emissiveIntensity: 0.45, roughness: 0.7 });
+    this.stairMat = stairMat;
+    // UVs are baked from world position so the painted sky runs continuously across the steps
+    const skinned = (geo, x, y, z) => {
+      geo.translate(x, y, z);
+      const p = geo.attributes.position, u = geo.attributes.uv;
+      for (let i = 0; i < p.count; i++) u.setXY(i, (p.getX(i) + W / 2) / W, p.getY(i) / H);
+      u.needsUpdate = true;
+      return geo;
+    };
+    const gap = 0.4, platTop = D.y0 - gap;
+    const steps = 20, rise = platTop / steps, run = 0.92, depth = 4.2;
+    const stairs = new THREE.Group();
+    const lip = (x, y, w) => {
+      const e = new THREE.Mesh(new THREE.BoxGeometry(w, 0.09, 0.09), edgeLit);
+      e.position.set(x, y, depth + 0.06);
+      stairs.add(e);
+    };
+    for (let i = 0; i < steps; i++) {
+      const h = rise * (i + 1);
+      const cx = D.x0 - 0.6 - (steps - 1 - i) * run - run / 2;
+      const m = new THREE.Mesh(skinned(new THREE.BoxGeometry(run, h - BOT, depth), cx, (h + BOT) / 2, depth / 2 + 0.06), stairMat);
+      m.castShadow = true; m.receiveShadow = true;
+      stairs.add(m);
+      lip(cx, h, run);
+    }
+    lip((D.x0 - 0.6 + W / 2 + 2) / 2, platTop, W / 2 - (D.x0 - 0.6) + 2);
+    const plat = new THREE.Mesh(skinned(new THREE.BoxGeometry(W / 2 - (D.x0 - 0.6) + 2, platTop - BOT, depth), (D.x0 - 0.6 + W / 2 + 2) / 2, (platTop + BOT) / 2, depth / 2 + 0.06), stairMat);
+    plat.castShadow = true; plat.receiveShadow = true;
+    stairs.add(plat);
+    scene.add(stairs);
+
+    /* the door — front face keeps painting the sky */
+    const dw = D.x1 - D.x0, dh = D.y1 - D.y0;
+    const face = sky.clone(); face.needsUpdate = true;
+    face.repeat.set(dw / W, dh / H);
+    face.offset.set((D.x0 + W / 2) / W, D.y0 / H);
+    const edge = new THREE.MeshStandardMaterial({ color: '#9dc3de', roughness: 0.9 });
+    const back = new THREE.MeshStandardMaterial({ color: '#12161c', roughness: 1 });
+    const door = new THREE.Mesh(
+      new THREE.BoxGeometry(dw, dh, 0.16),
+      [edge, edge, edge, edge, new THREE.MeshStandardMaterial({ map: face, roughness: 0.95 }), back]
+    );
+    door.position.set(dw / 2, 0, 0);
+    door.castShadow = true;
+    const hinge = new THREE.Group();
+    hinge.position.set(D.x0, (D.y0 + D.y1) / 2, 0.02);
+    hinge.add(door);
+    const knobMat = new THREE.MeshStandardMaterial({ color: '#eef4f9', roughness: 0.35, metalness: 0.35 });
+    [0.115, -0.115].forEach((z) => {
+      const k = new THREE.Mesh(new THREE.SphereGeometry(0.14, 18, 14), knobMat);
+      k.position.set(dw / 2 - 0.32, -0.15, z * 1.6);
+      k.castShadow = true;
+      const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.16, 10), knobMat);
+      rod.rotation.x = Math.PI / 2; rod.position.set(dw / 2 - 0.32, -0.15, z);
+      door.add(k); door.add(rod);
+    });
+    scene.add(hinge);
+    this.hinge = hinge; this.door = door; this.doorCenter = new THREE.Vector3((D.x0 + D.x1) / 2, (D.y0 + D.y1) / 2, 0);
+
+    /* swap the procedural paint for the real sky photograph once it arrives */
+    new THREE.TextureLoader().load('assets/sky-wall.jpg', (tex) => {
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = Math.min(8, this.renderer.capabilities.getMaxAnisotropy());
+      tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
+      wall.material.map = tex; wall.material.needsUpdate = true;
+      this.stairMat.map = tex; this.stairMat.needsUpdate = true;
+      const f = tex.clone(); f.needsUpdate = true;
+      f.repeat.set(dw / W, dh / H);
+      f.offset.set((D.x0 + W / 2) / W, D.y0 / H);
+      door.material[4].map = f; door.material[4].needsUpdate = true;
+    });
+
+    this.ray = new THREE.Raycaster();
+    this.ndc = new THREE.Vector2(-2, -2);
+    this.clock = new THREE.Clock();
+    this.resize();
+    this._onResize = () => this.resize();
+    addEventListener('resize', this._onResize);
+    canvas.addEventListener('pointermove', this.onMove);
+    canvas.addEventListener('pointerdown', this.onDown);
+    canvas.addEventListener('pointerleave', () => { this.ndc.set(-2, -2); this.setHover(false); });
+    this.loop();
+    const l = this.loadRef.current;
+    if (l) { l.style.opacity = '0'; setTimeout(() => { if (l) l.style.display = 'none'; }, 900); }
+  }
+
+  resize() {
+    const c = this.canvasRef.current; if (!c || !this.renderer) return;
+    const w = c.clientWidth || innerWidth, h = c.clientHeight || innerHeight;
+    this.renderer.setSize(w, h, false);
+    const a = w / h;
+    this.camera.aspect = a;
+    const portrait = Math.min(1, Math.max(0, (0.95 - a) / 0.48));
+    // Portrait screens move toward and re-center the doorway rather than
+    // pulling backward, keeping the entrance prominent on a narrow display.
+    this.camBase.set(
+      1.5 + portrait * 5.2,
+      9.5 + portrait * 1.15,
+      34 - portrait * 8
+    );
+    this.lookBase.set(
+      1.5 + portrait * 5.2,
+      9.5 + portrait * 1.15,
+      0
+    );
+    if (!this.open) {
+      this.camera.position.copy(this.camBase);
+      this.camera.lookAt(this.lookBase);
+    }
+    this.camera.updateProjectionMatrix();
+  }
+
+  updatePointer(e) {
+    const r = this.canvasRef.current.getBoundingClientRect();
+    this.ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+    this.parallax.x = this.ndc.x; this.parallax.y = this.ndc.y;
+    return r;
+  }
+
+  onMove = (e) => {
+    const r = this.updatePointer(e);
+    const prompt = this.promptRef.current;
+    if (prompt) {
+      prompt.style.left = `${e.clientX - r.left}px`;
+      prompt.style.top = `${e.clientY - r.top}px`;
+    }
+  };
+
+  hitDoor() {
+    if (!this.ray) return false;
+    this.ray.setFromCamera(this.ndc, this.camera);
+    return this.ray.intersectObject(this.door, true).length > 0;
+  }
+
+  setHover(v) {
+    if (v === this.hover || this.open) return;
+    this.hover = v;
+    this.canvasRef.current.style.cursor = v ? 'pointer' : 'default';
+    const prompt = this.promptRef.current;
+    if (prompt) prompt.style.opacity = v ? '1' : '0';
+    if (v) this.doorOpenSound(true);
+  }
+
+  onDown = (e) => {
+    this.updatePointer(e);
+    if (this.open || !this.hitDoor()) return;
+    this.open = true;
+    const prompt = this.promptRef.current;
+    if (prompt) prompt.style.opacity = '0';
+    window.parent.postMessage({ type: 'truman-door-enter' }, window.location.origin);
+    this.doorOpenSound(false);
+    this.canvasRef.current.style.cursor = 'default';
+    this.camStart = this.camera.position.clone();
+    this.hingeStart = this.hinge.rotation.y;
+    this.lookStart = new this.THREE.Vector3(this.lookBase.x + this.parallax.x * 0.5, this.lookBase.y + this.parallax.y * 0.3, 0);
+    this.t0 = this.clock.getElapsedTime();
+  };
+
+  onBack = () => {
+    clearTimeout(this._t1); clearTimeout(this._t2);
+    const b = this.beyondRef.current; if (b) { b.style.opacity = '0'; b.style.pointerEvents = 'none'; }
+    const f = this.fadeRef.current; if (f) f.style.opacity = '0';
+    this.closing = this.clock.getElapsedTime();
+    this.camStart = this.camera.position.clone();
+    this.open = false; this.hover = false;
+  };
+
+  loop = () => {
+    this._raf = requestAnimationFrame(this.loop);
+    const T = this.THREE, t = this.clock.getElapsedTime();
+    const ease = (x) => x * x * x * (x * (x * 6 - 15) + 10);
+
+    if (!this.open) {
+      if (!this.dragging) this.setHover(this.hitDoor());
+      const sway = (this.props.swayIntensity ?? 1.1) * Math.PI / 180;
+      const target = this.hover ? -0.4 * 1.48 : -sway * (0.6 * Math.sin(t * 0.55) + 0.4 * Math.sin(t * 0.23 + 1.3));
+      this.hinge.rotation.y += (target - this.hinge.rotation.y) * (this.hover ? 0.085 : 0.05);
+      const cp = this.closing ? Math.min(1, (t - this.closing) / 1.6) : 1;
+      const p = this.parallax;
+      const tx = this.camBase.x + p.x * 1.6, ty = this.camBase.y + p.y * 0.9;
+      this.camera.position.lerp(new T.Vector3(tx, ty, this.camBase.z), this.closing ? 0.04 * ease(cp) + 0.02 : 0.045);
+      this.camera.lookAt(this.lookBase.x + p.x * 0.5, this.lookBase.y + p.y * 0.3, 0);
+    } else {
+      const k = Math.min(1, (t - this.t0) / 2.05);
+      const hs = this.hingeStart || 0;
+      this.hinge.rotation.y = hs + (-1.48 - hs) * ease(k);
+      const d = Math.min(1, Math.max(0, (t - this.t0 - 0.12) / 2.45));
+      const e = ease(d);
+      const cs = this.camStart || this.camBase;
+      this.camera.position.set(
+        cs.x + (this.doorCenter.x - cs.x) * e * 0.98,
+        cs.y + (this.doorCenter.y - 1.2 - cs.y) * e * 0.98,
+        cs.z + (-2.5 - cs.z) * e
+      );
+      const ls = this.lookStart || this.lookBase;
+      const lookTarget = new T.Vector3(
+        ls.x + (this.doorCenter.x - ls.x) * e,
+        ls.y + (this.doorCenter.y - 1.2 - ls.y) * e,
+        ls.z + (-12 - ls.z) * e
+      );
+      this.camera.lookAt(lookTarget);
+    }
+    this.renderer.render(this.scene, this.camera);
+  };
+
+  /* ---------- synthesized creak (no audio files) ---------- */
+  ctx() {
+    if (this.props.sound === false) return null;
+    if (!this._ac) { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null; this._ac = new AC(); }
+    if (this._ac.state === 'suspended') this._ac.resume();
+    return this._ac;
+  }
+  creak(dur, level) {
+    const ac = this.ctx(); if (!ac) return;
+    const t = ac.currentTime, len = Math.floor(ac.sampleRate * dur);
+    const buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+    let phase = 0;
+    for (let i = 0; i < len; i++) {
+      const p = i / len; phase += 0.012 * (1 + p * 2.2);
+      let v = 0; if (phase >= 1) { phase -= 1; v = Math.random() * 2 - 1; }
+      d[i] = v * (1 - p * 0.35);
+    }
+    const src = ac.createBufferSource(); src.buffer = buf;
+    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 7;
+    bp.frequency.setValueAtTime(520, t); bp.frequency.exponentialRampToValueAtTime(1500, t + dur);
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(level, t + 0.12);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(bp).connect(g).connect(ac.destination);
+    src.start(t); src.stop(t + dur + 0.05);
+  }
+  doorOpenSound(preview = false) {
+    const ac = this.ctx(); if (!ac) return;
+    const t = ac.currentTime;
+    const duration = preview ? 0.62 : 1.72;
+    const level = preview ? 0.026 : 0.072;
+
+    // Do not layer the hover preview underneath the full opening sound.
+    (this._doorVoices || []).forEach((voice) => {
+      try { voice.stop(); } catch {}
+    });
+    this._doorVoices = [];
+
+    // A muted wooden latch: low, short, and deliberately free of a metallic
+    // high-frequency click.
+    const latch = ac.createOscillator();
+    const latchGain = ac.createGain();
+    const latchFilter = ac.createBiquadFilter();
+    latch.type = 'triangle';
+    latch.frequency.setValueAtTime(178, t);
+    latch.frequency.exponentialRampToValueAtTime(92, t + 0.115);
+    latchFilter.type = 'lowpass';
+    latchFilter.frequency.setValueAtTime(620, t);
+    latchGain.gain.setValueAtTime(0.0001, t);
+    latchGain.gain.exponentialRampToValueAtTime(level * 0.7, t + 0.012);
+    latchGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+    latch.connect(latchFilter).connect(latchGain).connect(ac.destination);
+    latch.start(t); latch.stop(t + 0.15);
+    this._doorVoices.push(latch);
+
+    // Stick-slip hinge friction shaped from brown noise and low wooden
+    // resonances. Irregular pulses make it read as a real door swinging.
+    const len = Math.floor(ac.sampleRate * duration);
+    const buffer = ac.createBuffer(1, len, ac.sampleRate);
+    const data = buffer.getChannelData(0);
+    let brown = 0;
+    let phaseA = 0;
+    let phaseB = 0;
+    const pulseCenters = preview ? [0.1, 0.34, 0.56] : [0.07, 0.22, 0.43, 0.68, 0.86];
+    for (let i = 0; i < len; i++) {
+      const p = i / len;
+      brown = brown * 0.985 + (Math.random() * 2 - 1) * 0.055;
+      phaseA += (74 + 16 * Math.sin(p * Math.PI * 3.2)) / ac.sampleRate;
+      phaseB += (119 - 21 * p + 8 * Math.sin(p * Math.PI * 5.1)) / ac.sampleRate;
+      let pulse = 0;
+      pulseCenters.forEach((center, index) => {
+        const width = 0.045 + index * 0.009;
+        const distance = (p - center) / width;
+        pulse += Math.exp(-distance * distance) * (0.88 - index * 0.08);
+      });
+      const body = Math.sin(phaseA * Math.PI * 2) * 0.34 + Math.sin(phaseB * Math.PI * 2) * 0.16;
+      const swing = Math.sin(Math.PI * Math.min(1, p * 7)) * Math.pow(1 - p, 0.3);
+      data[i] = (brown * 0.58 + body) * (0.18 + pulse * 0.82) * swing;
+    }
+    const source = ac.createBufferSource(); source.buffer = buffer;
+    const band = ac.createBiquadFilter(); band.type = 'bandpass'; band.Q.value = 1.15;
+    band.frequency.setValueAtTime(235, t + 0.02);
+    band.frequency.linearRampToValueAtTime(preview ? 310 : 385, t + duration * 0.72);
+    band.frequency.linearRampToValueAtTime(205, t + duration);
+    const lowpass = ac.createBiquadFilter(); lowpass.type = 'lowpass';
+    lowpass.frequency.setValueAtTime(760, t);
+    lowpass.frequency.linearRampToValueAtTime(540, t + duration);
+    const woodGain = ac.createGain();
+    woodGain.gain.setValueAtTime(0.0001, t);
+    woodGain.gain.exponentialRampToValueAtTime(level, t + 0.075);
+    woodGain.gain.setValueAtTime(level * 0.82, t + duration * 0.58);
+    woodGain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+    source.connect(band).connect(lowpass).connect(woodGain).connect(ac.destination);
+    source.start(t + 0.035); source.stop(t + duration + 0.04);
+    this._doorVoices.push(source);
+  }
+
+  playIntroSound({ characterTimes = [], highlightTimes = [] } = {}) {
+    const ac = this.ctx();
+    if (!ac || ac.state !== 'running') return;
+    const start = ac.currentTime + 0.015;
+
+    const tone = (delay, frequency, duration, volume, type) => {
+      const at = start + Math.max(0, delay) / 1000;
+      const oscillator = ac.createOscillator();
+      const filter = ac.createBiquadFilter();
+      const gain = ac.createGain();
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(frequency, at);
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(1800, at);
+      filter.Q.setValueAtTime(0.7, at);
+      gain.gain.setValueAtTime(0.0001, at);
+      gain.gain.exponentialRampToValueAtTime(volume, at + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, at + duration);
+      oscillator.connect(filter).connect(gain).connect(ac.destination);
+      oscillator.start(at);
+      oscillator.stop(at + duration + 0.02);
+    };
+
+    const detunes = [-18, 0, 14, 0];
+    characterTimes.forEach((delay, index) => {
+      tone(delay, 420 * Math.pow(2, detunes[index % detunes.length] / 1200), 0.085, 0.027, index % 2 ? 'sine' : 'triangle');
+    });
+
+    const notes = [392, 440, 493.88, 523.25, 587.33, 659.25];
+    highlightTimes.forEach((delay, index) => {
+      tone(delay, notes[index % notes.length], 0.18, 0.045, 'sine');
+    });
+  }
+
+  thud() {
+    const ac = this.ctx(); if (!ac) return;
+    const t = ac.currentTime + 1.3;
+    const o = ac.createOscillator(); o.type = 'sine';
+    o.frequency.setValueAtTime(92, t); o.frequency.exponentialRampToValueAtTime(38, t + 0.5);
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.2, t + 0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.6);
+    o.connect(g).connect(ac.destination); o.start(t); o.stop(t + 0.7);
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this._raf);
+    clearTimeout(this._t1); clearTimeout(this._t2);
+    removeEventListener('resize', this._onResize);
+    removeEventListener('message', this._onMessage);
+    if (this.renderer) this.renderer.dispose();
+  }
+
+  renderVals() {
+    return {
+      canvasRef: this.canvasRef, promptRef: this.promptRef, fadeRef: this.fadeRef, beyondRef: this.beyondRef,
+      loadRef: this.loadRef, onBack: this.onBack
+    };
+  }
+}
+</script>
+</body>
+</html>

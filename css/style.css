@@ -1427,6 +1427,81 @@ a:focus-visible, button:focus-visible {
   }
 }
 
+/* Truman Show door landing: the supplied 3D scene replaces the sphere gate,
+   while the existing homepage remains untouched behind it. */
+.entry-portal.entry-portal--truman {
+  display: block;
+  background: #8fbfe0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.entry-portal.entry-portal--truman[hidden] {
+  display: none;
+}
+
+.entry-portal__door {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #8fbfe0;
+}
+
+.entry-portal__white {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.entry-portal.entry-portal--truman.is-entering {
+  opacity: 1;
+  visibility: visible;
+  background: #0a0c10;
+  animation: none;
+}
+
+.entry-portal.entry-portal--truman.is-home-ready {
+  background: transparent;
+}
+
+.entry-portal--truman.is-home-ready .entry-portal__door {
+  opacity: 0;
+}
+
+.entry-portal--truman.is-entering .entry-portal__white {
+  animation: trumanWhitePass 3.8s linear forwards;
+}
+
+@keyframes trumanWhitePass {
+  0% { opacity: 0; }
+  12% { opacity: 0.08; }
+  38% { opacity: 0.3; }
+  66%, 77% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.entry-pending:has(.entry-portal--truman) .liquid-ether-root {
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry-portal--truman.is-entering .entry-portal__white {
+    animation: trumanWhitePassReduced 0.8s ease forwards;
+  }
+}
+
+@keyframes trumanWhitePassReduced {
+  0% { opacity: 0; }
+  45% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 @keyframes rise {
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }

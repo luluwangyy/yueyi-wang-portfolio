@@ -9,20 +9,12 @@ import { createHeroSphere } from "./hero-sphere.js?v=sphere-original-1";
 
 const liquidRoot = document.getElementById("liquid-ether-root");
 const homeTop = document.querySelector(".home-top");
+const entryPortal = document.querySelector("[data-entry-portal]");
+
+let startHeroSphere = () => {};
 
 if (liquidRoot && homeTop && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  const fx = createHeroSphere(liquidRoot, {
-    // Pale blue-white (not pure white) so the lit side still reads as a
-    // shape against the white page, harmonizing with the cyan shadow side.
-    litColor: "#dff3f6",
-    shadowColor: "#9dd3f2",
-    fillFraction: 0.86,
-    blurPx: 4,
-    idleRotateSpeed: 0.12,
-    followEase: 0.055
-  });
-  document.body.classList.add("entry-sphere-ready");
-
+  let fx = null;
   let ticking = false;
   let interactionDisabled = false;
 
@@ -40,11 +32,11 @@ if (liquidRoot && homeTop && !window.matchMedia("(prefers-reduced-motion: reduce
     const shouldDisable = progress >= 0.98;
     if (shouldDisable !== interactionDisabled) {
       interactionDisabled = shouldDisable;
-      fx.setMouseEnabled(!interactionDisabled);
+      fx?.setMouseEnabled(!interactionDisabled);
       if (interactionDisabled) {
-        fx.pause();
+        fx?.pause();
       } else {
-        fx.start();
+        fx?.start();
       }
     }
   }
@@ -56,9 +48,28 @@ if (liquidRoot && homeTop && !window.matchMedia("(prefers-reduced-motion: reduce
     }
   }
 
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
-  updateFade();
+  startHeroSphere = () => {
+    if (fx) return fx;
+    fx = createHeroSphere(liquidRoot, {
+      // Pale blue-white (not pure white) so the lit side still reads as a
+      // shape against the white page, harmonizing with the cyan shadow side.
+      litColor: "#dff3f6",
+      shadowColor: "#9dd3f2",
+      fillFraction: 0.86,
+      blurPx: 4,
+      idleRotateSpeed: 0.12,
+      followEase: 0.055
+    });
+    document.body.classList.add("entry-sphere-ready");
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    updateFade();
+    return fx;
+  };
+
+  // The door scene gets the only WebGL context during landing. The homepage
+  // sphere mounts under the white transition after the door has finished.
+  if (!entryPortal) startHeroSphere();
 } else if (liquidRoot) {
   // Reduced-motion: keep a plain, still background instead of the sim.
   liquidRoot.style.background = "#ffffff";
@@ -72,7 +83,6 @@ if (liquidRoot && homeTop && !window.matchMedia("(prefers-reduced-motion: reduce
 const introStatement = document.querySelector("[data-home-intro]");
 const introSoundButton = document.querySelector("[data-home-intro-sound]");
 const introSoundLabel = document.querySelector("[data-home-intro-sound-label]");
-const entryPortal = document.querySelector("[data-entry-portal]");
 const entrySoundButton = document.querySelector("[data-entry-sound]");
 const entrySoundLabel = document.querySelector("[data-entry-sound-label]");
 const entryMutedButton = document.querySelector("[data-entry-muted]");
@@ -80,11 +90,11 @@ const homeFooter = document.querySelector(".home-footer");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 if (introStatement) {
-  const frameDuration = 1000 / 23;
+  const frameDuration = 1000 / 18;
   const variationCycles = 4;
-  const lineStagger = 150;
+  const lineStagger = 200;
   const highlightDuration = 240;
-  const highlightStagger = 38;
+  const highlightStagger = 52;
   const variationClasses = [
     "is-char-fill",
     "is-char-inverse",
@@ -164,6 +174,26 @@ if (introStatement) {
     });
 
     return lines.sort((a, b) => a.top - b.top).map((line) => line.characters);
+  }
+
+  function introSoundSchedule() {
+    const lines = groupCharactersByVisualLine();
+    const characterTimes = [];
+
+    lines.forEach((characters, lineIndex) => {
+      characters.forEach((_, characterIndex) => {
+        characterTimes.push(lineIndex * lineStagger + characterIndex * frameDuration);
+      });
+    });
+
+    characterTimes.sort((a, b) => a - b);
+    const characterEnd = Math.max(
+      0,
+      ...lines.map((characters, lineIndex) => lineIndex * lineStagger + (characters.length + variationCycles) * frameDuration)
+    );
+    const highlightCount = introStatement.querySelectorAll(".home-interactive .home-intro-word").length;
+    const highlightTimes = Array.from({ length: highlightCount }, (_, index) => characterEnd + index * highlightStagger);
+    return { characterTimes, highlightTimes };
   }
 
   function clearRunTimers() {
@@ -531,10 +561,45 @@ if (introStatement) {
     entryPortal.classList.add("is-entering");
     entryPortal.setAttribute("aria-hidden", "true");
 
+    const isTrumanLanding = entryPortal.hasAttribute("data-truman-landing");
+    if (isTrumanLanding) {
+      const trumanFrame = entryPortal.querySelector("[data-truman-frame]");
+
+      // At full white, release the door's WebGL context and prepare the home
+      // scene beneath the overlay. Keeping this in one page preserves audio.
+      window.setTimeout(() => {
+        trumanFrame?.contentWindow?.postMessage({ type: "truman-door-release" }, window.location.origin);
+
+        window.setTimeout(() => {
+          entryPortal.classList.add("is-home-ready");
+          startHeroSphere();
+          document.body.classList.remove("entry-pending");
+          homeTop?.removeAttribute("inert");
+          homeTop?.removeAttribute("aria-hidden");
+          homeFooter?.removeAttribute("inert");
+          homeFooter?.removeAttribute("aria-hidden");
+        }, reduceMotion.matches ? 40 : 140);
+      }, reduceMotion.matches ? 220 : 2460);
+
+      window.setTimeout(() => {
+        trumanFrame?.contentWindow?.postMessage(
+          { type: "truman-intro-sound", ...introSoundSchedule() },
+          window.location.origin
+        );
+        playIntro({ withSound: true });
+      }, reduceMotion.matches ? 360 : 3080);
+
+      window.setTimeout(() => {
+        entryPortal.hidden = true;
+        document.body.classList.remove("portal-entering");
+      }, reduceMotion.matches ? 820 : 3860);
+      return;
+    }
+
     if (soundReady) playPortalSwell();
 
     const introDelay = reduceMotion.matches ? 120 : 820;
-    const finishDelay = reduceMotion.matches ? 430 : 1450;
+    const finishDelay = reduceMotion.matches ? 850 : 1450;
 
     window.setTimeout(() => revealHomepage({ withSound: soundReady }), introDelay);
     window.setTimeout(() => {
@@ -584,6 +649,15 @@ if (introStatement) {
     entrySoundButton?.addEventListener("click", () => enterPortfolio({ withSound: true, requireSound: true }));
     entryMutedButton?.addEventListener("click", () => enterPortfolio({ withSound: false }));
     entryPortal.addEventListener("wheel", handleEntryWheel, { passive: false });
+
+    const trumanFrame = entryPortal.querySelector("[data-truman-frame]");
+    if (trumanFrame) {
+      window.addEventListener("message", (event) => {
+        if (event.source !== trumanFrame.contentWindow || event.origin !== window.location.origin) return;
+        if (event.data?.type !== "truman-door-enter") return;
+        enterPortfolio({ withSound: true, requireSound: false });
+      });
+    }
   } else {
     requestAnimationFrame(() => playIntro());
   }
