@@ -22,6 +22,18 @@
     <button type="button" data-entry-muted hidden>Enter muted</button>
   </div>
 
+  <script>
+    // Phones skip the WebGL door and begin directly with the homepage intro.
+    // The inline check runs before the homepage module so no landing state is
+    // mounted or briefly flashed on a narrow screen.
+    const phoneUserAgent = /iPhone|iPod|Android.+Mobile|Windows Phone/i.test(navigator.userAgent);
+    const phonePreview = new URLSearchParams(window.location.search).get("phone-preview") === "1";
+    if (phoneUserAgent || phonePreview) {
+      document.querySelector("[data-entry-portal]")?.remove();
+      document.body.classList.remove("entry-pending");
+    }
+  </script>
+
   <div class="home-top">
     <div id="liquid-ether-root" class="liquid-ether-root" aria-hidden="true"></div>
 
