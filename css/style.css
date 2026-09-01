@@ -962,6 +962,21 @@ a:focus-visible, button:focus-visible {
   --intro-highlight-color: var(--home-role-color);
 }
 
+.home-desktop-break {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .home-statement {
+    max-width: 30ch;
+    text-wrap: initial;
+  }
+
+  .home-desktop-break {
+    display: initial;
+  }
+}
+
 .home-interactive {
   --home-intro-animation-color: var(--home-interactive-color);
   display: inline;
@@ -1957,6 +1972,23 @@ a:focus-visible, button:focus-visible {
   margin-bottom: 2.5rem;
 }
 
+.about-headline__serif {
+  color: var(--color-emphasis);
+  font-family: var(--font-serif-highlight);
+  font-size: 0.8em;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: -0.035em;
+}
+
+.about-headline__pixel {
+  color: var(--color-emphasis);
+  font-family: "VT323", monospace;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
 /* Sequential reveal: design -> prototype -> build, once on load. Each
    clause fades up in turn, echoing the order of the process itself. */
 .about-headline .reveal-word {
@@ -2036,10 +2068,10 @@ a:focus-visible, button:focus-visible {
 .about-portrait {
   position: relative;
   align-self: start;
-  width: clamp(20rem, 32vw, 24rem);
-  max-width: min(46vw, 36rem);
+  width: clamp(18rem, 28vw, 21rem);
+  max-width: min(42vw, 32rem);
   aspect-ratio: 3546 / 5233;
-  margin: 3.25rem 0 0;
+  margin: 2.2rem 0 0;
   overflow: visible;
   background: transparent;
   outline: none;

@@ -80,6 +80,8 @@ export function createHeroSphere(container, opts = {}) {
     litColor: "#ffe3ad",
     shadowColor: "#aecdf2",
     fillFraction: 0.86, // sphere diameter as a fraction of the smaller viewport dimension
+    offsetX: 0, // horizontal position as a fraction of the sphere diameter
+    offsetY: 0, // vertical position as a fraction of the sphere diameter (positive = up)
     blurPx: 3,
     idleRotateSpeed: 0.12, // radians/sec of the auto-drift light orbit, while the cursor is off-page
     followEase: 0.055, // per-frame lerp factor toward the target light dir (smaller = smoother/slower)
@@ -134,6 +136,11 @@ export function createHeroSphere(container, opts = {}) {
     const minDim = Math.min(visibleWidth, visibleHeight);
     const radius = (minDim * options.fillFraction) / 2;
     sphere.scale.setScalar(radius);
+    sphere.position.set(
+      radius * 2 * options.offsetX,
+      radius * 2 * options.offsetY,
+      0
+    );
   }
 
   // --- Cursor tracking -> target light direction, with idle auto-drift ---
