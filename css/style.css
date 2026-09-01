@@ -1647,6 +1647,90 @@ a:focus-visible, button:focus-visible {
   color: #9a5538;
 }
 
+/* Make has its own dark visual world. The scoped tokens carry through the
+   collection and every physical-computing project without changing Work,
+   Play, About, or the homepage. */
+.make-index,
+.make-project {
+  --color-bg: #0b0c0f;
+  --color-bg-alt: #17191e;
+  --color-text: #f4f2ed;
+  --color-text-muted: #aeb2bb;
+  --color-border: rgba(244, 242, 237, 0.18);
+  --color-emphasis: #f0a07b;
+  color-scheme: dark;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+.make-index::selection,
+.make-project::selection,
+.make-index *::selection,
+.make-project *::selection {
+  color: #0b0c0f;
+  background: #f0a07b;
+}
+
+.make-index .collection-hero--make .collection-hero__index,
+.make-index .collection-hero--make h1 {
+  color: #e3a6dc;
+}
+
+.make-index .segmented-control,
+.make-project .segmented-control,
+.make-project .nav-morph__trigger {
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.make-index .segmented-control__pill,
+.make-project .segmented-control__pill {
+  background: #2b2d33;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.42);
+}
+
+.make-index .segmented-control__item,
+.make-project .segmented-control__item,
+.make-project .nav-morph__icon {
+  color: var(--color-text-muted);
+}
+
+.make-index .segmented-control__item:hover,
+.make-index .segmented-control__item.is-active,
+.make-project .segmented-control__item:hover,
+.make-project .segmented-control__item.is-active {
+  color: var(--color-text);
+}
+
+.make-index .project-info h2,
+.make-index .project-info h3,
+.make-index .card-meta-value,
+.make-project .project-detail-hero h1,
+.make-project .project-section h2,
+.make-project .project-section h3,
+.make-project .meta-value,
+.make-project .related-card-title {
+  color: var(--color-text);
+}
+
+.make-index .project-visual,
+.make-project .project-visual {
+  background: var(--color-bg-alt);
+}
+
+.make-project .related-card:hover {
+  background: var(--color-bg-alt);
+  border-color: rgba(240, 160, 123, 0.48);
+}
+
+.make-project .back-link:hover,
+.make-project .media-note a,
+.make-project .instagram-embed-link a,
+.make-project .footer-links a:hover,
+.make-index .footer-links a:hover {
+  color: var(--color-text);
+}
+
 .collection-hero--play .collection-hero__index,
 .collection-hero--play h1 {
   color: #3f8f91;
