@@ -76,8 +76,8 @@ if (liquidRoot && homeTop && !window.matchMedia("(prefers-reduced-motion: reduce
 }
 
 // Character-by-character homepage introduction. The pacing mirrors the
-// reference interaction the portfolio is responding to: 23 frames per second,
-// four temporary glyph treatments, and a 150ms stagger between visual lines.
+// reference interaction the portfolio is responding to: 16 frames per second,
+// four temporary glyph treatments, and a 230ms stagger between visual lines.
 // Sounds are original Web Audio tones generated in the browser; no third-party
 // audio or animation code is used.
 const introStatement = document.querySelector("[data-home-intro]");
@@ -90,11 +90,11 @@ const homeFooter = document.querySelector(".home-footer");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 if (introStatement) {
-  const frameDuration = 1000 / 18;
+  const frameDuration = 1000 / 16;
   const variationCycles = 4;
-  const lineStagger = 200;
-  const highlightDuration = 240;
-  const highlightStagger = 52;
+  const lineStagger = 230;
+  const highlightDuration = 280;
+  const highlightStagger = 60;
   const variationClasses = [
     "is-char-fill",
     "is-char-inverse",
@@ -270,7 +270,7 @@ if (introStatement) {
     const detunePattern = [-45, 0, 35, 0];
     const voice = createTone({
       frequency: 420,
-      duration: 0.085,
+      duration: 0.1,
       volume: activeCharacterVoices.length ? 0.035 : 0.055,
       type: pulseIndex % 2 ? "sine" : "triangle",
       detune: detunePattern[pulseIndex % detunePattern.length]
@@ -287,7 +287,7 @@ if (introStatement) {
     const notePattern = [392, 440, 493.88, 523.25, 587.33, 659.25];
     const voice = createTone({
       frequency: notePattern[index % notePattern.length],
-      duration: 0.18,
+      duration: 0.22,
       volume: 0.055,
       type: "sine"
     });
