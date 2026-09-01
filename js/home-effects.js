@@ -5,7 +5,7 @@
 // The background is a soft 3D sphere (see hero-sphere.js) — the earlier
 // LiquidEther fluid animation (liquid-ether.js) is hidden, not deleted, in
 // case we want it back.
-import { createHeroSphere } from "./hero-sphere.js?v=sphere-offset-2";
+import { createHeroSphere } from "./hero-sphere.js?v=sphere-offset-4";
 
 const liquidRoot = document.getElementById("liquid-ether-root");
 const homeTop = document.querySelector(".home-top");
@@ -56,8 +56,8 @@ if (liquidRoot && homeTop && !window.matchMedia("(prefers-reduced-motion: reduce
       litColor: "#dff3f6",
       shadowColor: "#9dd3f2",
       fillFraction: 0.86,
-      offsetX: 0.75,
-      offsetY: 0.3,
+      offsetX: 0.45,
+      offsetY: 0.06,
       blurPx: 4,
       idleRotateSpeed: 0.12,
       followEase: 0.055

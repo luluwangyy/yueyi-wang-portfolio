@@ -1628,6 +1628,20 @@ a:focus-visible, button:focus-visible {
   line-height: 1.45;
 }
 
+.work-index .collection-hero > p:last-child,
+.make-index .collection-hero > p:last-child {
+  width: min(65vw, 68rem);
+  max-width: none;
+}
+
+.make-index .collection-hero h1 {
+  max-width: 19ch;
+}
+
+.collection-hero__nowrap {
+  white-space: nowrap;
+}
+
 .collection-hero--make .collection-hero__index,
 .collection-hero--make h1 {
   color: #9a5538;
@@ -3786,6 +3800,15 @@ html.nomi-fullscreen-lock body {
    Responsive
    ============================================ */
 @media (max-width: 900px) {
+  .work-index .collection-hero > p:last-child,
+  .make-index .collection-hero > p:last-child {
+    width: 100%;
+  }
+
+  .collection-hero__nowrap {
+    white-space: normal;
+  }
+
   .project-grid {
     grid-template-columns: repeat(2, 1fr);
   }
