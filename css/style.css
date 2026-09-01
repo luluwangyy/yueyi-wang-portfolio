@@ -2033,6 +2033,82 @@ a:focus-visible, button:focus-visible {
   font-style: italic;
 }
 
+.about-portrait {
+  position: relative;
+  align-self: start;
+  width: clamp(20rem, 32vw, 24rem);
+  max-width: min(46vw, 36rem);
+  aspect-ratio: 3546 / 5233;
+  margin: 3.25rem 0 0;
+  overflow: visible;
+  background: transparent;
+  outline: none;
+  perspective: 1300px;
+}
+
+.about-portrait__card {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  transition: transform 1450ms cubic-bezier(0.2, 0.68, 0.18, 1);
+  will-change: transform;
+}
+
+.about-portrait__face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: transparent;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.about-portrait__face--front {
+  transform: rotateY(0deg) translateZ(1px);
+}
+
+.about-portrait__face--back {
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+.about-portrait__image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.about-portrait__image--secondary {
+  object-position: center 48%;
+}
+
+.about-portrait__label {
+  position: absolute;
+  right: clamp(1.25rem, 3vw, 2rem);
+  bottom: clamp(1.25rem, 3vw, 2rem);
+  left: clamp(1.25rem, 3vw, 2rem);
+  color: #ffffff;
+  font-family: var(--font-serif-highlight);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.4;
+  opacity: 0.78;
+  text-shadow: 0 1px 12px rgba(13, 20, 19, 0.48);
+  transform: translateZ(2px);
+}
+
+.about-portrait:hover .about-portrait__card,
+.about-portrait:focus-visible .about-portrait__card {
+  transform: rotateY(-180deg);
+}
+
 .about-canvas {
   position: relative;
   display: grid;
@@ -2627,6 +2703,12 @@ a:focus-visible, button:focus-visible {
 
   .about-content-grid {
     grid-template-columns: 1fr;
+  }
+
+  .about-portrait {
+    width: min(100%, 30rem);
+    max-width: none;
+    margin-top: 0;
   }
 
   .about-canvas {
