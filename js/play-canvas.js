@@ -117,6 +117,9 @@
     const soundButtonLabel = soundButton?.querySelector("span");
     const infoButton = instrument.querySelector("[data-canvas-info]");
     const infoWrap = infoButton?.closest(".about-canvas__info-wrap");
+    const danceHintStatus = instrument.querySelector("[data-dance-hint-status]");
+    const danceHintMessage = instrument.querySelector("[data-dance-hint-message]");
+    const canShowDanceHint = instrument.classList.contains("about-canvas--stage");
     if (!canvas || !context || !resetButton || !swatches.length || !toolButtons.length || !magicButton) return;
 
     let strokes = [];
@@ -140,6 +143,11 @@
     let audioContext;
     let drawingVoice;
     let strokeCounter = 0;
+    let completedStrokeCount = 0;
+    let danceHintShown = false;
+    let pauseHintShown = false;
+    let danceHintTimeout = 0;
+    let pauseHintTimeout = 0;
     let eraserSoundAt = 0;
     let eraseAnimationFrame = 0;
     let magicAnimationFrame = 0;
@@ -744,6 +752,9 @@
 
     function stopMagic(settle = true) {
       if (!magicActive) return;
+      window.clearTimeout(pauseHintTimeout);
+      pauseHintTimeout = 0;
+      clearDanceHint();
       magicActive = false;
       cancelAnimationFrame(magicAnimationFrame);
       if (settle) settleBodiesIntoStrokes();
@@ -802,12 +813,51 @@
       updateDrawingVoice(point);
     });
 
+    const showDanceHint = () => {
+      if (!canShowDanceHint || danceHintShown || magicActive) return;
+      danceHintShown = true;
+      if (danceHintMessage) danceHintMessage.textContent = "Your drawing is ready — try Dance";
+      magicButton.classList.add("is-dance-hint");
+      danceHintMessage?.classList.add("is-visible");
+      if (danceHintStatus) danceHintStatus.textContent = "Try Dance to animate your drawing.";
+      window.clearTimeout(danceHintTimeout);
+      danceHintTimeout = window.setTimeout(clearDanceHint, 4600);
+    };
+
+    const clearDanceHint = () => {
+      window.clearTimeout(danceHintTimeout);
+      danceHintTimeout = 0;
+      magicButton.classList.remove("is-dance-hint");
+      danceHintMessage?.classList.remove("is-visible");
+      if (danceHintStatus) danceHintStatus.textContent = "";
+    };
+
+    const schedulePauseHint = () => {
+      if (!canShowDanceHint || pauseHintShown || !magicActive) return;
+      window.clearTimeout(pauseHintTimeout);
+      pauseHintTimeout = window.setTimeout(() => {
+        pauseHintTimeout = 0;
+        if (!magicActive) return;
+        pauseHintShown = true;
+        if (danceHintMessage) danceHintMessage.textContent = "You can pause and add more strokes";
+        magicButton.classList.add("is-dance-hint");
+        danceHintMessage?.classList.add("is-visible");
+        if (danceHintStatus) danceHintStatus.textContent = "You can pause Dance and add more strokes.";
+        danceHintTimeout = window.setTimeout(clearDanceHint, 4600);
+      }, 5000);
+    };
+
     const endStroke = () => {
+      const completedStroke = activeStroke?.points.length > 1;
       drawing = false;
       if (activeStroke?.points.length === 1) strokes.pop();
       activeStroke = null;
       stopDrawingVoice();
       drawStatic();
+      if (completedStroke) {
+        completedStrokeCount += 1;
+        if (completedStrokeCount >= 5) showDanceHint();
+      }
     };
 
     canvas.addEventListener("pointerup", endStroke);
@@ -906,6 +956,8 @@
     });
 
     magicButton.addEventListener("click", async () => {
+      danceHintShown = true;
+      clearDanceHint();
       if (magicActive) stopMagic(true);
       else {
         const audio = ensureAudio();
@@ -917,6 +969,7 @@
           }
         }
         startMagic();
+        schedulePauseHint();
       }
     });
 
@@ -931,6 +984,10 @@
       collisionFlashes = [];
       drawing = false;
       activeStroke = null;
+      if (!danceHintShown) completedStrokeCount = 0;
+      window.clearTimeout(pauseHintTimeout);
+      pauseHintTimeout = 0;
+      clearDanceHint();
       drawStatic();
     });
 
