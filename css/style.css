@@ -968,13 +968,22 @@ a:focus-visible, button:focus-visible {
 
 @media (min-width: 900px) {
   .home-statement {
-    max-width: 30ch;
+    max-width: 100%;
+    font-size: clamp(2.65rem, min(4.55vw, 7vh), 4.4rem);
     text-wrap: initial;
   }
 
   .home-desktop-break {
     display: initial;
   }
+
+  .home-statement__line {
+    white-space: nowrap;
+  }
+}
+
+.home-statement__emphasis {
+  font: inherit;
 }
 
 .home-interactive {
@@ -1012,6 +1021,11 @@ a:focus-visible, button:focus-visible {
 
 .hero-verbs:hover {
   color: #214d33;
+}
+
+.hero-verbs--black,
+.hero-verbs--black:hover {
+  color: #111111;
 }
 
 .hero-verbs span {
@@ -2183,7 +2197,7 @@ a:focus-visible, button:focus-visible {
   transform: rotateY(0deg);
   transform-style: preserve-3d;
   transform-origin: center center;
-  transition: transform 1450ms cubic-bezier(0.2, 0.68, 0.18, 1);
+  transition: transform 800ms cubic-bezier(0.2, 0.68, 0.18, 1);
   will-change: transform;
 }
 
@@ -2218,6 +2232,138 @@ a:focus-visible, button:focus-visible {
   object-position: center 48%;
 }
 
+.about-portrait__paper-person {
+  position: absolute;
+  z-index: 2;
+  top: 5.5%;
+  right: 4.5%;
+  display: block;
+  width: 28%;
+  aspect-ratio: 5 / 8;
+  opacity: 0;
+  transform: translate3d(0, -10%, 46px) rotateX(0deg) rotateY(0deg) rotateZ(-5deg);
+  transform-origin: 50% 22%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  will-change: transform, opacity;
+  filter: drop-shadow(0.22rem 0.38rem 0.3rem rgba(10, 18, 24, 0.42));
+}
+
+.about-portrait__paper-hole {
+  position: absolute;
+  z-index: 1;
+  top: 5.5%;
+  right: 4.5%;
+  display: block;
+  width: 28%;
+  aspect-ratio: 5 / 8;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.about-portrait__paper-hole svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: var(--color-bg);
+  stroke: none;
+}
+
+.about-portrait:hover .about-portrait__paper-hole,
+.about-portrait:focus-visible .about-portrait__paper-hole {
+  animation: aboutPaperHoleReveal 0.28s 0.8s ease-out both;
+}
+
+@keyframes aboutPaperHoleReveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.about-portrait__paper-person svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: center 22%;
+  transform-box: fill-box;
+}
+
+.about-portrait__paper-person image {
+  filter: saturate(0.92) contrast(1.03) brightness(1.03);
+}
+
+.about-portrait__paper-curl {
+  mix-blend-mode: soft-light;
+  opacity: 0.9;
+}
+
+.about-portrait:hover .about-portrait__paper-person,
+.about-portrait:focus-visible .about-portrait__paper-person {
+  animation: aboutPaperPersonFall 2.45s 0.52s linear both;
+}
+
+.about-portrait:hover .about-portrait__paper-person svg,
+.about-portrait:focus-visible .about-portrait__paper-person svg {
+  animation: aboutPaperSurfaceFold 2.15s 0.8s ease-in-out both;
+}
+
+@keyframes aboutPaperSurfaceFold {
+  0%, 100% {
+    transform: scaleX(1) skewY(0deg);
+  }
+  24% {
+    transform: scaleX(0.88) skewY(-2.5deg);
+  }
+  49% {
+    transform: scaleX(0.96) skewY(2deg);
+  }
+  72% {
+    transform: scaleX(0.84) skewY(-1.5deg);
+  }
+  89% {
+    transform: scaleX(0.93) skewY(1.5deg);
+  }
+}
+
+@keyframes aboutPaperPersonFall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 2px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  3% {
+    opacity: 0.98;
+  }
+  8% {
+    opacity: 0.98;
+    transform: translate3d(-1%, -1%, 14px) rotateX(4deg) rotateY(-11deg) rotateZ(-2deg);
+  }
+  15% {
+    opacity: 0.98;
+    transform: translate3d(-3%, 3%, 42px) rotateX(11deg) rotateY(-30deg) rotateZ(4deg);
+  }
+  31% {
+    opacity: 0.96;
+    transform: translate3d(-10%, 42%, 68px) rotateX(38deg) rotateY(-24deg) rotateZ(13deg);
+  }
+  52% {
+    opacity: 0.94;
+    transform: translate3d(9%, 125%, 35px) rotateX(-46deg) rotateY(34deg) rotateZ(-18deg);
+  }
+  72% {
+    opacity: 0.9;
+    transform: translate3d(-7%, 220%, 58px) rotateX(27deg) rotateY(-42deg) rotateZ(16deg);
+  }
+  89% {
+    opacity: 0.82;
+    transform: translate3d(6%, 315%, 18px) rotateX(-34deg) rotateY(24deg) rotateZ(-12deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-3%, 390%, 4px) rotateX(24deg) rotateY(-18deg) rotateZ(8deg);
+  }
+}
+
 .about-portrait__label {
   position: absolute;
   right: clamp(1.25rem, 3vw, 2rem);
@@ -2237,6 +2383,26 @@ a:focus-visible, button:focus-visible {
 .about-portrait:hover .about-portrait__card,
 .about-portrait:focus-visible .about-portrait__card {
   transform: rotateY(-180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-portrait:hover .about-portrait__paper-person,
+  .about-portrait:focus-visible .about-portrait__paper-person {
+    animation: none;
+    opacity: 0.92;
+    transform: translate3d(0, 0, 2px) rotateZ(-4deg);
+  }
+
+  .about-portrait:hover .about-portrait__paper-person svg,
+  .about-portrait:focus-visible .about-portrait__paper-person svg {
+    animation: none;
+  }
+
+  .about-portrait:hover .about-portrait__paper-hole,
+  .about-portrait:focus-visible .about-portrait__paper-hole {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 .about-canvas {
