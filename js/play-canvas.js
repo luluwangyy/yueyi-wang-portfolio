@@ -119,7 +119,7 @@
     const infoWrap = infoButton?.closest(".about-canvas__info-wrap");
     const danceHintStatus = instrument.querySelector("[data-dance-hint-status]");
     const danceHintMessage = instrument.querySelector("[data-dance-hint-message]");
-    const canShowDanceHint = instrument.classList.contains("about-canvas--stage");
+    const canShowDanceHint = instrument.classList.contains("about-canvas--stage") || instrument.classList.contains("about-canvas--play");
     if (!canvas || !context || !resetButton || !swatches.length || !toolButtons.length || !magicButton) return;
 
     let strokes = [];
@@ -166,8 +166,31 @@
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       if (!AudioContextClass) return null;
       if (!audioContext) audioContext = new AudioContextClass();
-      if (audioContext.state === "suspended") audioContext.resume();
       return audioContext;
+    };
+
+    const unlockAudio = async () => {
+      const audio = ensureAudio();
+      if (!audio) return null;
+
+      // Safari needs a source to start inside the direct tap/pointer gesture,
+      // in addition to resuming the AudioContext.
+      const primeOutput = () => {
+        const buffer = audio.createBuffer(1, 1, audio.sampleRate || 44100);
+        const source = audio.createBufferSource();
+        source.buffer = buffer;
+        source.connect(audio.destination);
+        source.start(0);
+      };
+
+      try {
+        primeOutput();
+        if (audio.state !== "running") await audio.resume();
+        primeOutput();
+        return audio;
+      } catch (error) {
+        return null;
+      }
     };
 
     const canvasSize = () => ({ width: canvas.clientWidth, height: canvas.clientHeight });
@@ -772,6 +795,7 @@
     canvas.addEventListener("pointerdown", (event) => {
       if (magicActive) return;
       event.preventDefault();
+      unlockAudio();
       canvas.setPointerCapture(event.pointerId);
       drawing = true;
       const point = canvasPoint(event);
@@ -941,14 +965,8 @@
     });
 
     soundButton?.addEventListener("click", async () => {
-      const audio = ensureAudio();
-      if (audio?.state === "suspended") {
-        try {
-          await audio.resume();
-        } catch (error) {
-          return;
-        }
-      }
+      const audio = await unlockAudio();
+      if (!audio || audio.state !== "running") return;
       soundButton.classList.add("is-active");
       soundButton.setAttribute("aria-pressed", "true");
       if (soundButtonLabel) soundButtonLabel.textContent = "Sound ready";
@@ -960,14 +978,7 @@
       clearDanceHint();
       if (magicActive) stopMagic(true);
       else {
-        const audio = ensureAudio();
-        if (audio?.state === "suspended") {
-          try {
-            await audio.resume();
-          } catch (error) {
-            // The next direct interaction can still unlock audio in restrictive browsers.
-          }
-        }
+        await unlockAudio();
         startMagic();
         schedulePauseHint();
       }

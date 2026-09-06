@@ -2755,7 +2755,8 @@ a:focus-visible, button:focus-visible {
   color: #fff;
 }
 
-.about-canvas--stage .sound-canvas__sound-toggle {
+.about-canvas--stage .sound-canvas__sound-toggle,
+.about-canvas--play .sound-canvas__sound-toggle {
   display: inline-flex;
 }
 
@@ -2897,10 +2898,6 @@ a:focus-visible, button:focus-visible {
 
 .about-canvas--stage .about-canvas__topbar,
 .about-canvas--play .about-canvas__topbar {
-  justify-content: flex-end;
-}
-
-.about-canvas--stage .about-canvas__topbar {
   justify-content: space-between;
 }
 
@@ -4489,7 +4486,7 @@ html.nomi-fullscreen-lock body {
 
 .case-layout {
   display: grid;
-  grid-template-columns: minmax(10rem, 1fr) minmax(0, 5fr);
+  grid-template-columns: minmax(10rem, 22.667fr) minmax(0, 77.333fr);
   gap: clamp(2rem, 3.5vw, 3.5rem);
   max-width: 1280px;
   margin-inline: auto;
