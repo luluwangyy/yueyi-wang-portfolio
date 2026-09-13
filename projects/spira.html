@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spira — Yueyi Lulu Wang</title>
+  <meta name="description" content="Spira is an interactive astrology atlas that turns a birth chart into a personal visual and audio experience.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;family=Averia+Serif+Libre:ital,wght@0,300;1,300&amp;family=Source+Code+Pro:wght@400;500&amp;display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/style.css?v=spira-1">
+</head>
+<body class="case-study spira-case">
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="nav-morph">
+        <button type="button" class="nav-morph__trigger" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-nav">
+          <svg class="nav-morph__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <nav class="segmented-control" aria-label="Primary" id="primary-nav">
+          <span class="segmented-control__pill" aria-hidden="true"></span>
+          <a href="../index.html" class="segmented-control__item">Home</a>
+          <a href="../work.html" class="segmented-control__item">Work</a>
+          <a href="../play.html" class="segmented-control__item">Play</a>
+          <a href="../make.html" class="segmented-control__item">Make</a>
+          <a href="../about.html" class="segmented-control__item">About</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="case-mobile-nav">
+      <button class="case-mobile-nav__trigger" type="button" aria-label="Open section navigation" aria-expanded="false" aria-controls="case-mobile-menu">
+        <span class="case-mobile-nav__index" aria-hidden="true">01</span>
+      </button>
+      <nav class="case-mobile-nav__menu" id="case-mobile-menu" aria-label="Case study sections">
+        <a class="is-active" href="#overview" aria-current="true"><span>01</span> Overview</a>
+        <a href="#moments"><span>02</span> Key Moments</a>
+        <a href="#outcome"><span>03</span> Outcome</a>
+      </nav>
+    </div>
+
+    <div class="case-layout">
+      <aside class="case-rail" aria-label="Spira case study navigation">
+        <div class="case-rail__sticky">
+          <a href="../play.html#spira-project" class="case-back-link">← Back to Play</a>
+
+          <p class="case-rail__eyebrow">In this case study</p>
+          <nav class="case-nav" aria-label="On this page">
+            <a class="case-nav__link is-active" href="#overview" aria-current="true">Overview</a>
+            <a class="case-nav__link" href="#moments">Key Design Moments</a>
+            <a class="case-nav__link" href="#outcome">Outcome</a>
+          </nav>
+
+          <div class="case-rail__actions" aria-label="Project links">
+            <a href="https://spira-atlas.vercel.app/" target="_blank" rel="noopener">Explore Spira ↗</a>
+          </div>
+
+          <dl class="case-rail__meta">
+            <div>
+              <dt>Role</dt>
+              <dd>Product designer + creative lead</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>React · TypeScript · Vite · OpenAI · ElevenLabs</dd>
+            </div>
+            <div>
+              <dt>Platform</dt>
+              <dd>Responsive web</dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+
+      <article class="case-story">
+        <section class="case-section case-overview" id="overview" aria-labelledby="overview-label">
+          <div class="spira-orbit-hero" aria-hidden="true">
+            <span class="spira-orbit spira-orbit--outer"></span>
+            <span class="spira-orbit spira-orbit--middle"></span>
+            <span class="spira-orbit spira-orbit--inner"></span>
+            <span class="spira-star spira-star--one">✦</span>
+            <span class="spira-star spira-star--two">✦</span>
+            <span class="spira-star spira-star--three">✦</span>
+            <span class="spira-orbit-hero__title">SPIRA</span>
+          </div>
+
+          <h1>Spira</h1>
+          <p class="case-kicker" id="overview-label">An interactive astrology atlas</p>
+          <p class="case-statement case-statement--hero">Spira turns a birth chart into a <span class="case-accent">personal, visual experience</span>. Visitors can explore planetary placements, ask questions about their chart, and listen to a short, poetic reading.</p>
+
+          <div class="case-role" aria-labelledby="role-title">
+            <p class="case-kicker" id="role-title">My Role</p>
+            <p class="case-role__summary">Product designer and creative lead, directing the visual identity, interaction design, AI voice, and frontend development through iterative prototyping.</p>
+          </div>
+
+          <div class="spira-stack" aria-labelledby="stack-title">
+            <p class="case-kicker" id="stack-title">Tech Stack</p>
+            <p>React, TypeScript, Vite, SVG/CSS, Astronomy Engine, OpenAI, ElevenLabs, Upstash Redis, and Vercel.</p>
+          </div>
+        </section>
+
+        <section class="case-section case-moments" id="moments" aria-labelledby="moments-label">
+          <p class="case-kicker" id="moments-label">Key Design and Engineering Moments</p>
+
+          <div class="spira-moments">
+            <article class="spira-moment">
+              <span>01</span>
+              <div>
+                <h2>Translating art into interaction</h2>
+                <p>Inspired by Hilma af Klint, I developed a palette of charcoal, ivory, and rainbow bands, paired with Junicode typography and aged-paper textures. Four-point stars reveal planetary symbols on interaction.</p>
+              </div>
+            </article>
+            <article class="spira-moment">
+              <span>02</span>
+              <div>
+                <h2>Making a complex chart approachable</h2>
+                <p>I removed decorative copy, clarified the hierarchy, and adapted the experience for touch: compact summaries, direct line-to-chat interactions, and a shorter mobile transition.</p>
+              </div>
+            </article>
+            <article class="spira-moment">
+              <span>03</span>
+              <div>
+                <h2>Giving AI a specific voice</h2>
+                <p>I shaped the opening reading into two brief paragraphs: an encouraging observation followed by a gentle caution. Follow-up answers stay concise and grounded in calculated placements.</p>
+              </div>
+            </article>
+            <article class="spira-moment">
+              <span>04</span>
+              <div>
+                <h2>Connecting speech and text</h2>
+                <p>ElevenLabs narration drives the text reveal through speech timestamps, keeping pauses, playback, and replay synchronized.</p>
+              </div>
+            </article>
+            <article class="spira-moment">
+              <span>05</span>
+              <div>
+                <h2>Building within constraints</h2>
+                <p>Server-side credentials and persistent usage controls protect the API budget. Visitors can also save their chart as a textured PNG.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="case-section" id="outcome" aria-labelledby="outcome-label">
+          <p class="case-kicker" id="outcome-label">Outcome</p>
+          <p class="case-final-statement">A deployed experience that brings <span class="case-accent">chart exploration, conversational interpretation, and narration</span> together across desktop and mobile.</p>
+          <div class="case-prose spira-outcome-copy">
+            <p>Visitor analytics are enabled; usability and engagement outcomes have not yet been measured.</p>
+          </div>
+          <div class="impact-actions">
+            <a href="https://spira-atlas.vercel.app/" target="_blank" rel="noopener">Explore Spira ↗</a>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 Yueyi Lulu Wang</span>
+      <div class="footer-links">
+        <a href="mailto:lulu.yueyi.wang@gmail.com">Email</a>
+        <a href="https://github.com/luluwangyy" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js?v=spira-1"></script>
+</body>
+</html>
