@@ -6499,8 +6499,8 @@ html.nomi-fullscreen-lock body {
 
 .story-film-comparison {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2rem;
+  grid-template-columns: 1fr;
+  gap: 3.5rem;
 }
 
 .story-film-comparison__heading {
@@ -6529,8 +6529,8 @@ html.nomi-fullscreen-lock body {
 }
 
 .story-film-comparison > .story-film + .story-film {
-  padding-left: 2rem;
-  border-left: 1px solid var(--color-border);
+  padding-top: 3.5rem;
+  border-top: 1px solid var(--color-border);
 }
 
 .story-film h2 {
@@ -6635,15 +6635,10 @@ html.nomi-fullscreen-lock body {
   .story-findings,
   .story-principles { grid-template-columns: 1fr; }
 
-  .story-film-comparison { grid-template-columns: 1fr; }
-
   .story-film-comparison__heading { grid-column: auto; }
 
   .story-film-comparison > .story-film + .story-film {
     padding-top: 2.5rem;
-    padding-left: 0;
-    border-top: 1px solid var(--color-border);
-    border-left: 0;
   }
 
   .story-section-heading {
