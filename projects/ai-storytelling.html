@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,300..700;1,300..700&family=Averia+Serif+Libre:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../css/reset.css">
-  <link rel="stylesheet" href="../css/style.css?v=47">
+  <link rel="stylesheet" href="../css/style.css?v=48">
 </head>
 <body class="case-study ai-story-case">
 
@@ -148,11 +148,11 @@
             <span>Generative Disco · 2024–2025</span>
           </div>
 
-          <p class="case-statement story-research-intro">Before teaching generative storytelling, I spent nearly a year researching how these tools fit into a <span class="case-accent">creative workflow</span>.</p>
+          <p class="case-statement story-research-intro">At Columbia Computational Design Lab, I worked on the <span class="case-accent">prototyping and creative-workflow side</span> of a generative-video research project.</p>
 
           <div class="case-prose">
-            <p>As a Research Assistant at Columbia Computational Design Lab, I tested text-to-video and image-to-video models and prototyped workflows using React, Vue, and Replicate APIs.</p>
-            <p>The goal wasn’t just comparing model quality. I wanted to understand where generative AI helped audiovisual creators—and where it created new friction.</p>
+            <p>I tested generative-video models and prompting methods, translating how audiovisual artists think into structures a generative system could understand.</p>
+            <p>Generating an interesting clip was relatively easy. Giving artists <strong>meaningful creative control</strong> was much harder.</p>
           </div>
 
           <div class="story-paper-disclosure" data-paper-disclosure>
@@ -167,18 +167,42 @@
             </figure>
           </div>
 
-          <div class="story-workflow case-reveal" aria-label="Generative Disco creative workflow">
-            <span>Idea</span><i aria-hidden="true">→</i>
-            <span>Prompt / image</span><i aria-hidden="true">→</i>
-            <span>Model</span><i aria-hidden="true">→</i>
-            <span>Generate</span><i aria-hidden="true">→</i>
-            <span>Review + iterate</span><i aria-hidden="true">→</i>
-            <span>Edit</span>
+          <p class="case-statement case-statement--spaced">We stopped asking, “What can this model generate?” and started asking <span class="case-accent">“Where should this model fit into the creative process?”</span></p>
+
+          <div class="case-prose">
+            <p>One workflow I developed focused on how an artist might decide the ending of a music video.</p>
+            <p>I mapped <strong>musical characteristics to visual behaviors</strong> that AI could interpret.</p>
+          </div>
+
+          <figure class="story-notion-embed">
+            <div class="story-notion-embed__header">
+              <span>Disco Instruction · How to Decide an Ending for Your Music Video</span>
+              <a href="https://mewing-close-db8.notion.site/Disco-Instruction-How-to-Decide-an-Ending-for-Your-Music-Video-eb10f792442a4c78a3f7da3a6c4079b7?pvs=143" target="_blank" rel="noopener">Open in Notion ↗</a>
+            </div>
+            <iframe
+              src="https://mewing-close-db8.notion.site/ebd/eb10f792442a4c78a3f7da3a6c4079b7"
+              title="Scrollable Disco instruction on deciding an ending for a music video"
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+            ></iframe>
+          </figure>
+
+          <div class="case-prose story-research-documentation">
+            <p>From these experiments, I created structured documentation connecting music, visual cues, prompts, and generation parameters—giving creators a framework beyond “just write a prompt.”</p>
+          </div>
+
+          <div class="story-workflow case-reveal" aria-label="Music-to-video ending workflow">
+            <span>Musical characteristics</span><i aria-hidden="true">→</i>
+            <span>Visual behaviors</span><i aria-hidden="true">→</i>
+            <span>Visual cues</span><i aria-hidden="true">→</i>
+            <span>Prompts</span><i aria-hidden="true">→</i>
+            <span>Generation parameters</span><i aria-hidden="true">→</i>
+            <span>Video ending</span>
           </div>
 
           <div class="story-research-slider" data-research-slider>
             <div class="story-research-slider__header">
-              <p>Research notes</p>
+              <p>Workflow research notes</p>
               <div class="story-research-slider__controls" aria-label="Research note slider controls">
                 <button type="button" data-research-prev aria-label="Show previous research note">←</button>
                 <button type="button" data-research-next aria-label="Show next research note">→</button>
@@ -229,27 +253,11 @@
             </dialog>
           </div>
 
-          <p class="story-small-label">Key findings</p>
-          <div class="story-findings case-reveal" aria-label="Three key research findings">
-            <div><strong>Consistency</strong><p>Generations could quickly drift in character, color, composition, and style.</p></div>
-            <div><strong>Control</strong><p>No single model worked best for every stage.</p></div>
-            <div><strong>Workflow</strong><p>Generation worked better as one part of a larger creative process.</p></div>
+          <div class="case-prose">
+            <p>The guidance was incorporated into a web prototype where creators could enter <strong>adjectives, keywords, and creative intentions</strong> to generate audiovisual outputs.</p>
           </div>
 
-          <p class="case-statement case-statement--spaced">The question shifted from “What can this model generate?” to <span class="case-accent">“Where should this model fit into the creative process?”</span></p>
-
-          <figure class="story-notion-embed">
-            <div class="story-notion-embed__header">
-              <span>Disco Instruction · How to Decide an Ending for Your Music Video</span>
-              <a href="https://mewing-close-db8.notion.site/Disco-Instruction-How-to-Decide-an-Ending-for-Your-Music-Video-eb10f792442a4c78a3f7da3a6c4079b7?pvs=143" target="_blank" rel="noopener">Open in Notion ↗</a>
-            </div>
-            <iframe
-              src="https://mewing-close-db8.notion.site/ebd/eb10f792442a4c78a3f7da3a6c4079b7"
-              title="Scrollable Disco instruction on deciding an ending for a music video"
-              loading="lazy"
-              referrerpolicy="strict-origin-when-cross-origin"
-            ></iframe>
-          </figure>
+          <p class="case-statement case-statement--spaced">Making AI useful for creatives means translating creative knowledge into structures the technology can understand—while keeping <span class="case-accent">meaningful creative decisions in the artist’s hands</span>.</p>
         </section>
 
         <section class="case-section" id="practice" aria-labelledby="practice-label">

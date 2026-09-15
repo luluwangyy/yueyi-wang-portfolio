@@ -5879,6 +5879,10 @@ html.nomi-fullscreen-lock body {
   margin: 1.35rem 0 1.5rem;
 }
 
+.story-research-documentation {
+  margin-top: 2rem;
+}
+
 .story-paper-disclosure {
   width: 100%;
   margin: 2rem 0 0;
