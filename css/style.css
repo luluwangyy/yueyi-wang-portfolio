@@ -5964,6 +5964,10 @@ html.nomi-fullscreen-lock body {
   line-height: 1.45;
 }
 
+.story-campaign-deck {
+  margin-top: 2.5rem;
+}
+
 .story-notion-embed {
   width: 100%;
   margin: 2.5rem 0 0;
