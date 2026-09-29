@@ -147,7 +147,7 @@ if (revealTargets.length) {
 }
 
 // Collapsed nav (project detail pages): click/tap the circular trigger to
-// toggle the Home/Work/Make/About switcher open. Clicking outside, or the trigger
+// toggle the Home/Work/Play/Make/Thoughts/About switcher open. Clicking outside, or the trigger
 // again, closes it.
 document.querySelectorAll(".nav-morph").forEach((morph) => {
   const trigger = morph.querySelector(".nav-morph__trigger");
